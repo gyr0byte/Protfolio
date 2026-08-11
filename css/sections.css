@@ -263,8 +263,18 @@
     background: rgba(48, 54, 61, 0.4);
     padding: 1px 6px;
     border-radius: 3px;
+    border-radius: 3px;
     border: 1px solid var(--border);
     font-size: 0.85rem;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+}
+
+.file-line .tech-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(63, 185, 80, 0.2);
+    color: var(--terminal-green);
+    border-color: var(--terminal-green);
 }
 
 .badge-in-progress {
@@ -632,18 +642,10 @@ textarea.form-control {
 
 /* Footer */
 footer {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    color: var(--white-text);
-    cursor: default;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.tech-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(63, 185, 80, 0.2);
-    color: var(--terminal-green);
-    border-color: var(--terminal-green);
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 0.88rem;
 }
 
 /* ─── Section Dividers ────────────────────────── */

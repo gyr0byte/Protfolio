@@ -47,32 +47,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Contact Form Handler
+    // 4. Contact Form Handler — Web3Forms API
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const subject = document.getElementById('formSubject').value;
-            const message = document.getElementById('formMessage').value;
             const statusDiv = document.getElementById('formStatus');
+            const submitBtn = document.getElementById('formSubmitBtn');
 
+            // Show sending state
             if (statusDiv) {
                 statusDiv.style.display = 'block';
-                statusDiv.textContent = '> Encrypting payload... Transmitting to gqurav69@gmail.com via SMTP...';
+                statusDiv.style.color = 'var(--amber-yellow)';
+                statusDiv.textContent = '> Encrypting payload... Transmitting via Web3Forms SMTP relay...';
+            }
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = '[Transmitting...]';
             }
 
             playClickSound(900, 0.04);
 
-            setTimeout(() => {
-                if (statusDiv) {
-                    statusDiv.innerHTML = '&gt; <span style="color: var(--terminal-green);">[SUCCESS] Message transmitted successfully. Response expected shortly.</span>';
+            try {
+                const formData = new FormData(contactForm);
+                // Sync the subject hidden field with user input
+                const subjectInput = document.getElementById('formSubject');
+                if (subjectInput) {
+                    formData.set('subject', `Portfolio Contact: ${subjectInput.value}`);
                 }
-                document.getElementById('formSubject').value = '';
-                document.getElementById('formMessage').value = '';
-                
-                showToast('Opening native mail client...');
+
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    if (statusDiv) {
+                        statusDiv.style.color = 'var(--terminal-green)';
+                        statusDiv.innerHTML = '&gt; <span style="color: var(--terminal-green);">[SUCCESS] Message delivered to gqurav69@gmail.com. Response expected shortly.</span>';
+                    }
+                    showToast('Message sent successfully!');
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            } catch (err) {
+                if (statusDiv) {
+                    statusDiv.style.color = 'var(--accent-orange)';
+                    statusDiv.innerHTML = `&gt; <span style="color: var(--accent-orange);">[ERROR] ${err.message}. Falling back to mailto...</span>`;
+                }
+                // Fallback to mailto
+                const subject = document.getElementById('formSubject')?.value || '';
+                const message = document.getElementById('formMessage')?.value || '';
                 window.location.href = `mailto:gqurav69@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-            }, 1000);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '[Send Message ↵]';
+                }
+            }
         });
     }
 

@@ -482,20 +482,13 @@
                     <span></span>
                 </div>
                 <div class="terminal-body">
-                    <form class="contact-form" id="contactForm">
-                        <!-- 
-                            ╔═══════════════════════════════════════════════════╗
-                            ║  TO RECEIVE MESSAGES:                            ║
-                            ║  1. Go to https://web3forms.com                  ║
-                            ║  2. Enter your email: gqurav69@gmail.com         ║
-                            ║  3. Check inbox for your Access Key              ║
-                            ║  4. Replace YOUR_ACCESS_KEY_HERE below           ║
-                            ╚═══════════════════════════════════════════════════╝
-                        -->
+                    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key -->
                         <input type="hidden" name="access_key" value="0c87bb68-65f7-4b08-a72b-446c382dc55d">
-                        <input type="hidden" name="subject" id="formSubjectHidden" value="New Portfolio Message from gyr0byte.dev">
-                        <input type="hidden" name="from_name" value="gyr0byte Portfolio Contact Form">
-                        <!-- Honeypot anti-spam (hidden from humans) -->
+                        <!-- Redirect back to portfolio after submit -->
+                        <input type="hidden" name="redirect" value="https://gyr0byte.github.io/Protfolio/?sent=true">
+                        <input type="hidden" name="from_name" value="gyr0byte Portfolio Contact">
+                        <!-- Honeypot anti-spam -->
                         <input type="checkbox" name="botcheck" style="display: none;">
 
                         <div class="form-group">
@@ -512,7 +505,7 @@
                         </div>
                         <div class="form-group">
                             <label>&gt; Subject:</label>
-                            <input type="text" name="subject_line" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
+                            <input type="text" name="subject" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
                         </div>
                         <div class="form-group">
                             <label>&gt; Message:</label>

@@ -47,68 +47,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Contact Form Handler — Web3Forms API
+    // 4. Contact Form — Native HTML POST to Web3Forms
+    // The form submits directly via action="https://api.web3forms.com/submit"
+    // We just add a brief terminal animation before it goes through
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const statusDiv = document.getElementById('formStatus');
+        contactForm.addEventListener('submit', () => {
             const submitBtn = document.getElementById('formSubmitBtn');
-
-            // Show sending state
+            const statusDiv = document.getElementById('formStatus');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = '[Transmitting...]';
+            }
             if (statusDiv) {
                 statusDiv.style.display = 'block';
                 statusDiv.style.color = 'var(--amber-yellow)';
                 statusDiv.textContent = '> Encrypting payload... Transmitting via Web3Forms SMTP relay...';
             }
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = '[Transmitting...]';
-            }
-
             playClickSound(900, 0.04);
-
-            try {
-                const formData = new FormData(contactForm);
-                // Sync the subject hidden field with user input
-                const subjectInput = document.getElementById('formSubject');
-                if (subjectInput) {
-                    formData.set('subject', `Portfolio Contact: ${subjectInput.value}`);
-                }
-
-                const res = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await res.json();
-
-                if (data.success) {
-                    if (statusDiv) {
-                        statusDiv.style.color = 'var(--terminal-green)';
-                        statusDiv.innerHTML = '&gt; <span style="color: var(--terminal-green);">[SUCCESS] Message delivered to gqurav69@gmail.com. Response expected shortly.</span>';
-                    }
-                    showToast('Message sent successfully!');
-                    contactForm.reset();
-                } else {
-                    throw new Error(data.message || 'Submission failed');
-                }
-            } catch (err) {
-                if (statusDiv) {
-                    statusDiv.style.color = 'var(--accent-orange)';
-                    statusDiv.innerHTML = `&gt; <span style="color: var(--accent-orange);">[ERROR] ${err.message}. Falling back to mailto...</span>`;
-                }
-                // Fallback to mailto
-                const subject = document.getElementById('formSubject')?.value || '';
-                const message = document.getElementById('formMessage')?.value || '';
-                window.location.href = `mailto:gqurav69@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '[Send Message ↵]';
-                }
-            }
+            // Form submits natively — browser navigates to Web3Forms then redirects back
         });
+
+        // Show success toast if redirected back after submission
+        if (window.location.search.includes('sent=true')) {
+            setTimeout(() => {
+                showToast('[SUCCESS] Message delivered to gqurav69@gmail.com!');
+                const statusDiv = document.getElementById('formStatus');
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.color = 'var(--terminal-green)';
+                    statusDiv.innerHTML = '&gt; <span style="color: var(--terminal-green);">[SUCCESS] Message delivered successfully. Response expected shortly.</span>';
+                }
+                // Clean URL
+                window.history.replaceState({}, '', window.location.pathname);
+            }, 500);
+        }
     }
 
     // 5. Initialize Modules

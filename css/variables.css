@@ -1,0 +1,49 @@
+:root {
+    /* Color Palette - Default GitHub Green Terminal */
+    --bg: #0D1117;
+    --card-bg: #161B22;
+    --border: #30363D;
+    --white-text: #E6EDF3;
+    --secondary-text: #8B949E;
+    
+    --terminal-green: #3FB950;
+    --accent-orange: #F78166;
+    --amber-yellow: #D29922;
+    --cyan-blue: #58A6FF;
+    --cursor-color: #3FB950;
+    --glow-color: rgba(63, 185, 80, 0.4);
+
+    /* Fonts */
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-size-base: 15px;
+    --line-height-base: 1.6;
+}
+
+/* Theme Variances */
+body.theme-amber {
+    --terminal-green: #D29922;
+    --accent-orange: #F78166;
+    --cursor-color: #D29922;
+    --glow-color: rgba(210, 153, 34, 0.4);
+}
+
+body.theme-cyan {
+    --terminal-green: #58A6FF;
+    --accent-orange: #BC8CFF;
+    --cursor-color: #58A6FF;
+    --glow-color: rgba(88, 166, 255, 0.4);
+}
+
+body.theme-matrix {
+    --bg: #050A05;
+    --card-bg: #0A120A;
+    --border: #1B381B;
+    --white-text: #A3FFA3;
+    --secondary-text: #4E8B4E;
+    --terminal-green: #00FF41;
+    --accent-orange: #008F11;
+    --amber-yellow: #00FF41;
+    --cyan-blue: #00FF41;
+    --cursor-color: #00FF41;
+    --glow-color: rgba(0, 255, 65, 0.6);
+}

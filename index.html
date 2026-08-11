@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaurav Dulal (gyr0byte) | Machine Learning Engineer & Researcher</title>
+    <meta name="description" content="Modular Terminal/CLI Portfolio of Gaurav Dulal (gyr0byte) — Machine Learning Engineer & Researcher targeting Tübingen MSc ML 2028.">
+    <meta name="author" content="Gaurav Dulal">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Modular CSS Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <!-- CRT Scanline Effect Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Canvas Layer for Matrix Digital Rain -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Mouse Crosshair Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Navigation Header -->
+    <header class="nav-header">
+        <div class="nav-left">
+            <a href="#hero" class="nav-logo">
+                <span>&gt;</span> gyr0byte_<span class="blink-cursor"></span>
+            </a>
+
+            <!-- Extra Navigation Controls -->
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="toggleTerminalModal()" title="Press Ctrl + ~">
+                    ⚡ CLI MODAL
+                </button>
+                <button class="nav-btn" id="soundToggleBtn" onclick="toggleAudio()">
+                    🔇 AUDIO: OFF
+                </button>
+                <button class="nav-btn" onclick="toggleMatrix()">
+                    🌧️ MATRIX
+                </button>
+            </div>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">≡ MENU</button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#whoami" class="active">whoami</a></li>
+            <li><a href="#skills">skills/</a></li>
+            <li><a href="#projects">git log</a></li>
+            <li><a href="#research">research</a></li>
+            <li><a href="#stats">stats</a></li>
+            <li><a href="#contact">contact</a></li>
+        </ul>
+    </header>
+
+    <main class="container">
+
+        <!-- SECTION 1: HERO / BOOT SEQUENCE -->
+        <section id="hero">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red" onclick="toggleTerminalModal()" title="Launch Terminal Modal"></span>
+                        <span class="dot yellow" onclick="toggleMatrix()" title="Toggle Matrix Rain"></span>
+                        <span class="dot green" onclick="toggleAudio()" title="Toggle Sound"></span>
+                    </div>
+                    <span class="terminal-title">gaurav@gyr0byte: ~</span>
+                    <span style="font-size: 0.75rem; color: var(--secondary-text);">[Ctrl + ~ for full CLI]</span>
+                </div>
+                <div class="terminal-body">
+                    <!-- Boot Sequence Output -->
+                    <div class="boot-sequence" id="bootSequence">
+                        <!-- Boot sequence lines populated dynamically via JS -->
+                    </div>
+
+                    <!-- ASCII Glitch Header -->
+                    <div class="ascii-banner-container" id="asciiContainer" style="display: none;">
+                        <pre class="ascii-art">
+   ██████╗ ██╗   ██╗██████╗  ██████╗ ██████╗ ██╗   ██╗████████╗███████╗
+  ██╔════╝ ╚██╗ ██╔╝██╔══██╗██╔═████╗██╔══██╗╚██╗ ██╔╝╚══██╔══╝██╔════╝
+  ██║  ███╗ ╚████╔╝ ██████╔╝██║██╔██║██████╔╝ ╚████╔╝    ██║   █████╗  
+  ██║   ██║  ╚██╔╝  ██╔══██╗████╔═██║██╔══██╗  ╚██╔╝     ██║   ██╔══╝  
+  ╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝   ██║      ██║   ███████╗
+   ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝    ╚═╝      ╚═╝   ╚══════╝
+                        </pre>
+                        <h1 class="glitch-title" data-text="GYR0BYTE">GYR0BYTE</h1>
+                    </div>
+
+                    <!-- Dynamic Role Switcher -->
+                    <div class="role-wrapper" id="roleWrapper" style="display: none;">
+                        <span class="prompt-symbol">&gt; </span><span id="roleText"></span><span class="blink-cursor"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-down-hint">
+                <span>↓</span> <span>scroll to explore_</span>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: ABOUT / WHOAMI -->
+        <section id="whoami">
+            <div class="command-header">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                <span>whoami</span>
+            </div>
+
+            <div class="whoami-box">
+                <div class="whoami-row">
+                    <span class="whoami-label">NAME</span>
+                    <span class="whoami-val">: Gaurav Dulal</span>
+                </div>
+                <div class="whoami-row">
+                    <span class="whoami-label">ALIAS</span>
+                    <span class="whoami-val">: gyr0byte</span>
+                </div>
+                <div class="whoami-row">
+                    <span class="whoami-label">AGE</span>
+                    <span class="whoami-val">: 20</span>
+                </div>
+                <div class="whoami-row">
+                    <span class="whoami-label">LOCATION</span>
+                    <span class="whoami-val">: Belbari, Morang, Nepal</span>
+                </div>
+                <div class="whoami-row">
+                    <span class="whoami-label">STATUS</span>
+                    <span class="whoami-val">: Always building</span>
+                </div>
+                <div class="whoami-row">
+                    <span class="whoami-label">GOAL</span>
+                    <span class="whoami-val">: Tübingen MSc ML 2028</span>
+                </div>
+            </div>
+
+            <div class="whoami-bio">
+                <p><strong>"Not a person, a process — always building, never stopping."</strong></p>
+                <p style="margin-top: 0.6rem;">
+                    Currently an undergraduate computing student at London Metropolitan University (IIC). Driven by mathematical rigor and practical AI deployment, I craft machine learning pipelines, deep learning models, and analytical tools. I commit code at 2 AM out of pure passion, aiming to contribute meaningfully to modern machine learning research.
+                </p>
+            </div>
+
+            <!-- GitHub Stats Progress Bars -->
+            <div class="stats-bars">
+                <div class="bar-row">
+                    <span class="bar-label">STREAK</span>
+                    <div class="bar-track">[████████████████████]</div>
+                    <span class="bar-text">158 days</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">COMMITS</span>
+                    <div class="bar-track">[█████████████████░░░]</div>
+                    <span class="bar-text">1900+</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">LEETCODE</span>
+                    <div class="bar-track">[████████░░░░░░░░░░░░]</div>
+                    <span class="bar-text">57+ solved</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: SKILLS / ls -la skills/ -->
+        <section id="skills">
+            <div class="command-header">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                <span>ls -la skills/</span>
+            </div>
+
+            <div style="display: flex; gap: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                <span style="color: var(--secondary-text); font-size: 0.85rem;">[Click directory headers or use controls]:</span>
+                <button class="nav-btn" onclick="expandAllSkills()">[+ Expand All]</button>
+                <button class="nav-btn" onclick="collapseAllSkills()">[- Collapse All]</button>
+            </div>
+
+            <div class="terminal-window">
+                <div class="terminal-body">
+                    <ul class="skills-tree">
+                        <!-- Machine Learning -->
+                        <li class="dir-item">
+                            <div class="dir-header" onclick="toggleDir(this)">
+                                <span>📁</span> <span>drwxr-xr-x Machine_Learning/</span>
+                            </div>
+                            <div class="dir-contents">
+                                <div class="file-line">├── <span class="tech-item">numpy</span> <span class="tech-item">pandas</span> <span class="tech-item">matplotlib</span> <span class="tech-item">seaborn</span></div>
+                                <div class="file-line">├── <span class="tech-item">scikit-learn</span> <span class="tech-item">xgboost</span> <span class="tech-item">random-forest</span></div>
+                                <div class="file-line">├── <span class="tech-item">linear-regression</span> <span class="tech-item">logistic-regression</span></div>
+                                <div class="file-line">├── <span class="tech-item">decision-trees</span> <span class="tech-item">svm</span> <span class="tech-item">kmeans</span> <span class="tech-item">dbscan</span> <span class="tech-item">pca</span></div>
+                                <div class="file-line">└── <span class="tech-item">grid-searchcv</span> <span class="tech-item">cross-validation</span></div>
+                            </div>
+                        </li>
+
+                        <!-- Deep Learning -->
+                        <li class="dir-item">
+                            <div class="dir-header" onclick="toggleDir(this)">
+                                <span>📁</span> <span>drwxr-xr-x Deep_Learning/</span>
+                                <span class="badge-in-progress"><span class="pulse-dot"></span>IN PROGRESS</span>
+                            </div>
+                            <div class="dir-contents">
+                                <div class="file-line">├── <span class="tech-item">tensorflow</span> <span class="tech-item">keras</span></div>
+                                <div class="file-line">├── <span class="tech-item">ann</span> <span class="tech-item">cnn</span> <span class="tech-item">rnn</span></div>
+                                <div class="file-line">└── <span class="tech-item">transformers</span></div>
+                            </div>
+                        </li>
+
+                        <!-- Languages -->
+                        <li class="dir-item">
+                            <div class="dir-header" onclick="toggleDir(this)">
+                                <span>📁</span> <span>drwxr-xr-x Languages/</span>
+                            </div>
+                            <div class="dir-contents">
+                                <div class="file-line">├── <span class="tech-item">python</span> <span class="tech-item">java</span> <span class="tech-item">javascript</span> <span class="tech-item">c</span></div>
+                                <div class="file-line">└── <span class="tech-item">sql</span> <span class="tech-item">postgresql</span></div>
+                            </div>
+                        </li>
+
+                        <!-- Tools -->
+                        <li class="dir-item">
+                            <div class="dir-header" onclick="toggleDir(this)">
+                                <span>📁</span> <span>drwxr-xr-x Tools/</span>
+                            </div>
+                            <div class="dir-contents">
+                                <div class="file-line">├── <span class="tech-item">git</span> <span class="tech-item">github</span> <span class="tech-item">streamlit</span> <span class="tech-item">flask</span></div>
+                                <div class="file-line">├── <span class="tech-item">jupyter</span> <span class="tech-item">vscode</span> <span class="tech-item">linux</span></div>
+                                <div class="file-line">└── <span class="tech-item">plotly</span> <span class="tech-item">seaborn</span></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 4: PROJECTS / git log -->
+        <section id="projects">
+            <div class="command-header">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                <span>git log --oneline --all</span>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <article class="commit-card">
+                    <div class="commit-meta">
+                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('a3f8c2d')" title="Click to copy hash">a3f8c2d</span> (<span style="color: var(--accent-orange);">HEAD -&gt; main</span>)</div>
+                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    </div>
+                    <div class="project-title-row">
+                        <h3 class="project-name">1. OOP Purity Analyzer</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Flask</span>
+                        <span class="tag">GitHub API</span>
+                        <span class="tag">Plotly</span>
+                        <span class="tag">Research</span>
+                    </div>
+                    <ul class="bullets-list">
+                        <li>7-category 24-sub-criterion OOP purity scoring framework</li>
+                        <li>Scrapes GitHub repos and scores code quality 0-100</li>
+                        <li>Interactive Plotly dashboard with CSV export</li>
+                        <li>Underlies undergraduate research paper</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/gyr0byte/OOP_Purity_Analyzer" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="commit-card">
+                    <div class="commit-meta">
+                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('b7e21a9')" title="Click to copy hash">b7e21a9</span></div>
+                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    </div>
+                    <div class="project-title-row">
+                        <h3 class="project-name">2. WhatsApp Chat Analyzer</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Streamlit</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">NLP</span>
+                        <span class="tag">Visualization</span>
+                    </div>
+                    <ul class="bullets-list">
+                        <li>Parses WhatsApp .txt exports into structured analysis</li>
+                        <li>WordCloud, message frequency, activity heatmaps</li>
+                        <li>User-level filtering and statistical insights</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/gyr0byte/whatsapp-chat-analyzer" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
+                    </div>
+                </article>
+
+                <!-- Project 3: CodeRoast -->
+                <article class="commit-card coming-soon">
+                    <div class="commit-meta">
+                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('c4d90ef')" title="Click to copy hash">c4d90ef</span></div>
+                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    </div>
+                    <div class="project-title-row">
+                        <h3 class="project-name">3. CodeRoast</h3>
+                        <span class="status-tag">[STATUS: BUILDING 🔥]</span>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Deep Learning</span>
+                        <span class="tag">AST</span>
+                        <span class="tag">Streamlit</span>
+                    </div>
+                    <ul class="bullets-list">
+                        <li>AI that brutally reviews your code with humor</li>
+                        <li>Static AST analysis + LSTM severity scoring</li>
+                        <li>Roast templates + radar chart scoring</li>
+                    </ul>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="commit-card">
+                    <div class="commit-meta">
+                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('d910fe3')" title="Click to copy hash">d910fe3</span></div>
+                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    </div>
+                    <div class="project-title-row">
+                        <h3 class="project-name">4. ML-Foundations</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Jupyter</span>
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">XGBoost</span>
+                    </div>
+                    <ul class="bullets-list">
+                        <li>Complete ML learning repository NumPy → Transformers</li>
+                        <li>1900+ contributions, 158-day streak</li>
+                        <li>Structured notebooks with real datasets</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/gyr0byte/ML-Foundations" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
+                    </div>
+                </article>
+
+                <!-- Project 5 -->
+                <article class="commit-card">
+                    <div class="commit-meta">
+                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('e12f84b')" title="Click to copy hash">e12f84b</span></div>
+                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    </div>
+                    <div class="project-title-row">
+                        <h3 class="project-name">5. Titanic Kaggle</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Kaggle</span>
+                        <span class="tag">XGBoost</span>
+                        <span class="tag">Feature Engineering</span>
+                    </div>
+                    <ul class="bullets-list">
+                        <li>First Kaggle competition — 78% accuracy</li>
+                        <li>Binary classification with ensemble methods</li>
+                    </ul>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- SECTION 5: RESEARCH / cat research.txt -->
+        <section id="research">
+            <div class="command-header">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                <span>cat research.txt</span>
+            </div>
+
+            <div class="paper-box">
+                <div class="paper-title">
+                    PAPER: A Quantitative Framework for Evaluating Object-Oriented Purity in Modern Programming Languages
+                </div>
+                <div class="paper-meta">
+                    <div>AUTHORS: <span>Gaurav Dulal + 3 collaborators</span></div>
+                    <div>STATUS: <span>In Progress → Journal Submission</span></div>
+                    <div>YEAR: <span>2026</span></div>
+                </div>
+
+                <div style="border-top: 1px dashed var(--border); padding-top: 1rem; margin-top: 1rem;">
+                    <div style="color: var(--terminal-green); font-weight: 600; margin-bottom: 0.5rem;">KEY CONTRIBUTIONS:</div>
+                    <ul class="bullets-list">
+                        <li>Formulated a 7-category, 24-sub-criterion objective scoring matrix for Object-Oriented paradigm compliance.</li>
+                        <li>Developed automated static AST analyzer parsing codebases across Python, Java, C++, and JavaScript.</li>
+                        <li>Benchmarked 100+ open-source GitHub repositories to empirical purity score distribution.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 1.2rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span style="color: var(--secondary-text); font-size: 0.85rem;">LANGUAGES EVALUATED:</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 6: GITHUB STATS / curl stats -->
+        <section id="stats">
+            <div class="command-header" style="justify-content: space-between; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                    <span>curl github.com/gyr0byte/stats</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--terminal-green); border: 1px solid var(--terminal-green); padding: 2px 8px; border-radius: 3px; background: rgba(63, 185, 80, 0.1);">
+                    <span class="pulse-dot" style="display: inline-block; vertical-align: middle; margin-right: 4px;"></span>
+                    LIVE GITHUB API CONNECTED
+                </div>
+            </div>
+
+            <div class="counter-grid">
+                <div class="counter-card">
+                    <div class="counter-label">STREAK</div>
+                    <div class="counter-val" data-target="158">0</div>
+                    <div class="counter-bar">[████████████]</div>
+                    <div style="color: var(--secondary-text); font-size: 0.8rem; margin-top: 4px;">days active</div>
+                </div>
+
+                <div class="counter-card">
+                    <div class="counter-label">COMMITS</div>
+                    <div class="counter-val" data-target="1900">0</div>
+                    <div class="counter-bar">[█████████░░]</div>
+                    <div style="color: var(--secondary-text); font-size: 0.8rem; margin-top: 4px;">total contributions</div>
+                </div>
+
+                <div class="counter-card">
+                    <div class="counter-label">PROJECTS</div>
+                    <div class="counter-val" data-target="5">0</div>
+                    <div class="counter-bar">[████████████]</div>
+                    <div style="color: var(--secondary-text); font-size: 0.8rem; margin-top: 4px;">deployed & built</div>
+                </div>
+            </div>
+
+            <!-- GitHub Heatmap Grid -->
+            <div class="heatmap-container">
+                <div class="heatmap-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Contribution Matrix (Live GitHub Activity Feed for @gyr0byte)</span>
+                    <span style="font-size: 0.75rem; color: var(--terminal-green);">[Real-time API Sync]</span>
+                </div>
+                <div class="heatmap-grid" id="heatmapGrid">
+                    <!-- 364 cells generated dynamically -->
+                </div>
+                <div style="display: flex; justify-content: flex-end; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.75rem; color: var(--secondary-text);">
+                    <span>Less</span>
+                    <span class="cell lvl-0"></span>
+                    <span class="cell lvl-1"></span>
+                    <span class="cell lvl-2"></span>
+                    <span class="cell lvl-3"></span>
+                    <span class="cell lvl-4"></span>
+                    <span>More</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 7: CONTACT / send --message -->
+        <section id="contact">
+            <div class="command-header">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span>
+                <span>send --message --to=gaurav</span>
+            </div>
+
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="terminal-title">compose-message.sh</span>
+                    <span></span>
+                </div>
+                <div class="terminal-body">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label>&gt; To:</label>
+                            <input type="text" class="form-control" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
+                        </div>
+                        <div class="form-group">
+                            <label>&gt; Subject:</label>
+                            <input type="text" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>&gt; Message:</label>
+                            <textarea id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            [Send Message ↵]
+                        </button>
+                    </form>
+                    <div id="formStatus" style="margin-top: 1rem; color: var(--terminal-green); display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Social Commands -->
+            <div class="social-cmds">
+                <a href="https://github.com/gyr0byte" target="_blank" rel="noopener" class="social-cmd-link">
+                    $ <span class="cmd">open</span> github.com/gyr0byte ↗
+                </a>
+                <a href="https://linkedin.com/in/gaurav-dulal" target="_blank" rel="noopener" class="social-cmd-link">
+                    $ <span class="cmd">open</span> linkedin.com/in/gaurav-dulal ↗
+                </a>
+                <a href="https://leetcode.com/u/gyr0byte" target="_blank" rel="noopener" class="social-cmd-link">
+                    $ <span class="cmd">open</span> leetcode.com/u/gyr0byte ↗
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SECTION 8: FOOTER -->
+    <footer>
+        <div class="container">
+            <p class="command-header" style="justify-content: center; font-size: 1.1rem;">
+                <span class="prompt-user">gaurav@gyr0byte:~$</span> <span>exit</span>
+            </p>
+            <p class="footer-quote">"Not a person, a process — always building, never stopping."</p>
+            <p>© 2026 gyr0byte | Targeting Tübingen MSc ML 2028</p>
+            <div class="uptime-badge" id="uptimeBadge">[System uptime: calculating...]</div>
+        </div>
+    </footer>
+
+    <!-- Floating Interactive Command Input -->
+    <div class="cli-floating-bar">
+        <span style="color: var(--terminal-green);">$</span>
+        <input type="text" id="cliCommandInput" class="cli-input" placeholder="type 'help'..." autocomplete="off">
+    </div>
+
+    <!-- Interactive Terminal Emulator Modal Overlay -->
+    <div class="terminal-modal-overlay" id="terminalModal">
+        <div class="terminal-modal-window">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red" onclick="toggleTerminalModal()"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <span class="terminal-title">Gyr0shell v2.6.0 — Interactive CLI Emulator</span>
+                <button class="nav-btn" onclick="toggleTerminalModal()">[ESC / CLOSE]</button>
+            </div>
+            <div class="terminal-modal-body" id="modalCliBody">
+                <div style="color: var(--terminal-green);">
+                    Gyr0shell v2.6.0 (x86_64-pc-nepal-os)<br>
+                    Type '<span style="color: var(--accent-orange);">help</span>' for a list of available commands.<br>
+                    Try '<span style="color: var(--amber-yellow);">neofetch</span>', '<span style="color: var(--cyan-blue);">cowsay hello</span>', '<span style="color: var(--terminal-green);">theme matrix</span>', or '<span style="color: var(--accent-orange);">sudo hire</span>'.
+                </div>
+            </div>
+            <div class="terminal-modal-input-row">
+                <span style="color: var(--accent-orange);">gaurav@gyr0byte:~$</span>
+                <input type="text" id="modalCliInput" class="terminal-modal-input" placeholder="Enter command..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modular JS Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/matrix.js"></script>
+    <script src="js/boot.js"></script>
+    <script src="js/typewriter.js"></script>
+    <script src="js/skills.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/cli.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

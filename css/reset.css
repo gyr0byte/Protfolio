@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg);
+    color: var(--white-text);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+}
+::-webkit-scrollbar-thumb {
+    background: #21262D;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terminal-green);
+}
+
+/* Scanline Effect Overlay */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
+    );
+    background-size: 100% 4px, 6px 100%;
+    z-index: 9999;
+    opacity: 0.7;
+}
+
+/* Matrix Canvas Background Layer */
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+    display: none;
+}
+
+/* Custom Cursor Follower */
+.cursor-follower {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--terminal-green);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease-out, opacity 0.2s ease;
+    opacity: 0;
+    box-shadow: 0 0 10px var(--glow-color);
+}
+.cursor-follower::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background-color: var(--terminal-green);
+    transform: translate(-50%, -50%);
+}
+
+body:hover .cursor-follower {
+    opacity: 0.85;
+}
+
+/* Blinking Terminal Cursor */
+.blink-cursor {
+    display: inline-block;
+    width: 9px;
+    height: 1.1em;
+    background-color: var(--cursor-color);
+    vertical-align: sub;
+    animation: cursor-blink 1s step-start infinite;
+    margin-left: 2px;
+    box-shadow: 0 0 8px var(--glow-color);
+}
+
+@keyframes cursor-blink {
+    50% { opacity: 0; }
+}
+
+/* Selection */
+::selection {
+    background-color: var(--terminal-green);
+    color: #0D1117;
+}

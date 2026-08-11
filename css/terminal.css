@@ -1,0 +1,169 @@
+/* Navigation Header */
+header.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54px;
+    background-color: rgba(13, 17, 23, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-logo {
+    font-weight: 700;
+    color: var(--terminal-green);
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--secondary-text);
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.nav-btn:hover {
+    color: var(--terminal-green);
+    border-color: var(--terminal-green);
+    box-shadow: 0 0 8px var(--glow-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--secondary-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--terminal-green);
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+.nav-links a.active::before {
+    content: '$ ';
+    color: var(--accent-orange);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--terminal-green);
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+}
+
+/* Container Structure */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+section {
+    padding: 4.5rem 0;
+    border-bottom: 1px dashed rgba(48, 54, 61, 0.6);
+}
+
+/* Command Prompt Section Header */
+.command-header {
+    font-size: 1.3rem;
+    color: var(--terminal-green);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.command-header .prompt-user {
+    color: var(--accent-orange);
+}
+
+/* Terminal Window Frame */
+.terminal-window {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin: 1.5rem 0;
+}
+
+.terminal-header {
+    background-color: #161B22;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.red { background-color: #FF5F56; }
+.dot.yellow { background-color: #FFBD2E; }
+.dot.green { background-color: #27C93F; }
+
+.terminal-title {
+    color: var(--secondary-text);
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+}
+
+.terminal-body {
+    padding: 1.5rem;
+    color: var(--white-text);
+    overflow-x: auto;
+}

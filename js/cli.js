@@ -255,16 +255,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') {
                 const val = floatingInput.value;
                 floatingInput.value = '';
-                processCommand(val);
+                if (val.trim()) {
+                    const modal = document.getElementById('terminalModal');
+                    if (modal && !modal.classList.contains('active')) {
+                        toggleTerminalModal();
+                    }
+                    processCommand(val);
+                }
             }
         });
     }
 
-    // Global keyboard shortcut `Ctrl + ~` to open Terminal Modal
+    // Global keyboard shortcut `Ctrl + ~` to open Terminal Modal and `Escape` to close
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === '`') {
             e.preventDefault();
             toggleTerminalModal();
+        } else if (e.key === 'Escape') {
+            const modal = document.getElementById('terminalModal');
+            if (modal && modal.classList.contains('active')) {
+                toggleTerminalModal();
+            }
         }
     });
 });

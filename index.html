@@ -73,6 +73,7 @@
 
         <!-- SECTION 1: HERO / BOOT SEQUENCE -->
         <section id="hero">
+            <canvas id="particleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6;"></canvas>
             <div class="terminal-window">
                 <div class="terminal-header">
                     <div class="terminal-dots">
@@ -582,6 +583,8 @@
     </div>
 
     <!-- Modular JS Scripts -->
+    <script src="js/animations.js"></script>
+    <script src="js/particles.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/matrix.js"></script>
     <script src="js/boot.js"></script>

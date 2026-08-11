@@ -1,91 +1,147 @@
-// Live Real-Time GitHub Stats & Contribution Matrix Fetcher
+// Real-Time GitHub Stats & Live Contribution Heatmap
+// Uses: api.github.com (user profile) + github-contributions-api.jogruber.de (contribution graph)
+
+const GH_USERNAME = 'gyr0byte';
 let animatedCounters = false;
 
-// 1. Fetch Real Live Data from GitHub API for gyr0byte
-async function fetchLiveGitHubStats() {
-    const username = 'gyr0byte';
-    
+// ─── Main Data Fetcher ─────────────────────────────────────────────
+async function fetchAllGitHubData() {
+    const statusBadge = document.getElementById('apiStatusBadge');
+
     try {
-        // Fetch User Profile Data
-        const userRes = await fetch(`https://api.github.com/users/${username}`);
-        if (!userRes.ok) throw new Error('GitHub API response error');
-        const userData = await userRes.json();
+        // Run both API calls in parallel
+        const [profileData, contribData] = await Promise.all([
+            fetchGitHubProfile(),
+            fetchContributionGraph()
+        ]);
 
-        // Fetch User Events (to compute recent live commits & streak)
-        const eventsRes = await fetch(`https://api.github.com/users/${username}/events/public?per_page=100`);
-        let recentCommitsCount = 0;
-        let streakDays = 158; // Fallback or dynamic base
+        // Compute real stats from live data
+        if (contribData) {
+            const { totalContribs, currentStreak, longestStreak } = computeStatsFromContribs(contribData);
 
-        if (eventsRes.ok) {
-            const events = await eventsRes.json();
-            const pushEvents = events.filter(e => e.type === 'PushEvent');
-            
-            // Calculate total commits in recent public events
-            pushEvents.forEach(e => {
-                recentCommitsCount += (e.payload.commits ? e.payload.commits.length : 1);
-            });
-
-            // Calculate current streak from event timestamps
-            const commitDates = new Set();
-            pushEvents.forEach(e => {
-                const dateStr = e.created_at.split('T')[0];
-                commitDates.add(dateStr);
-            });
-
-            // Calculate streak count dynamically
-            let currentStreak = 0;
-            let checkDate = new Date();
-            for (let i = 0; i < 365; i++) {
-                const dateKey = checkDate.toISOString().split('T')[0];
-                if (commitDates.has(dateKey)) {
-                    currentStreak++;
-                } else if (i === 0) {
-                    // Check yesterday if today has no commits yet
-                    checkDate.setDate(checkDate.getDate() - 1);
-                    continue;
-                } else {
-                    break;
-                }
-                checkDate.setDate(checkDate.getDate() - 1);
-            }
-
-            if (currentStreak > 0) {
-                streakDays = Math.max(streakDays, currentStreak);
-            }
+            // Update counter card targets with REAL data
+            setCounterTarget(0, currentStreak);      // STREAK
+            setCounterTarget(1, totalContribs);       // COMMITS (total contributions)
         }
 
-        // Update Counter Targets with Live GitHub Data
-        const streakCard = document.querySelector('.counter-card:nth-child(1) .counter-val');
-        const commitCard = document.querySelector('.counter-card:nth-child(2) .counter-val');
-        const projectCard = document.querySelector('.counter-card:nth-child(3) .counter-val');
-
-        if (streakCard) streakCard.setAttribute('data-target', streakDays);
-        if (projectCard && userData.public_repos) {
-            projectCard.setAttribute('data-target', userData.public_repos);
+        if (profileData) {
+            setCounterTarget(2, profileData.public_repos); // PROJECTS (real repo count)
         }
 
-        console.log(`[GitHub API] Fetched live data for ${username}: ${userData.public_repos} repos, ${userData.followers} followers.`);
+        // Mark API as connected
+        if (statusBadge) {
+            statusBadge.innerHTML = '<span class="pulse-dot" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span> LIVE · DATA SYNCED';
+            statusBadge.style.borderColor = 'var(--terminal-green)';
+            statusBadge.style.color = 'var(--terminal-green)';
+        }
+
+        console.log('[GitHub Live] All data synced successfully.');
+
     } catch (err) {
-        console.warn('[GitHub API] Using stored stats cache due to API rate limit or offline mode:', err);
+        console.warn('[GitHub Live] API error, using fallback values:', err.message);
+        if (statusBadge) {
+            statusBadge.textContent = '⚠ OFFLINE · CACHED DATA';
+            statusBadge.style.borderColor = 'var(--amber-yellow)';
+            statusBadge.style.color = 'var(--amber-yellow)';
+        }
     }
 }
 
-// 2. Animate Counters with Target Values
+// ─── GitHub User Profile ───────────────────────────────────────────
+async function fetchGitHubProfile() {
+    const res = await fetch(`https://api.github.com/users/${GH_USERNAME}`);
+    if (!res.ok) throw new Error(`Profile API ${res.status}`);
+    return await res.json();
+}
+
+// ─── Contribution Graph (jogruber API — verified working) ──────────
+async function fetchContributionGraph() {
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${GH_USERNAME}?y=last`);
+    if (!res.ok) throw new Error(`Contributions API ${res.status}`);
+    const data = await res.json();
+    return data.contributions || [];
+}
+
+// ─── Compute Real Stats from Contribution Data ────────────────────
+function computeStatsFromContribs(contributions) {
+    let totalContribs = 0;
+    let currentStreak = 0;
+    let longestStreak = 0;
+    let tempStreak = 0;
+
+    // Sum total contributions
+    contributions.forEach(day => {
+        totalContribs += day.count;
+    });
+
+    // Calculate current streak (walk backwards from today)
+    const today = new Date().toISOString().split('T')[0];
+    const reversed = [...contributions].reverse();
+
+    let startedCounting = false;
+    for (const day of reversed) {
+        if (!startedCounting) {
+            // Skip today if it has 0 (day might not be over yet)
+            if (day.date === today && day.count === 0) continue;
+            if (day.count > 0) {
+                startedCounting = true;
+                currentStreak = 1;
+            } else {
+                // No contributions yesterday either — streak is 0
+                break;
+            }
+        } else {
+            if (day.count > 0) {
+                currentStreak++;
+            } else {
+                break;
+            }
+        }
+    }
+
+    // Calculate longest streak
+    contributions.forEach(day => {
+        if (day.count > 0) {
+            tempStreak++;
+            longestStreak = Math.max(longestStreak, tempStreak);
+        } else {
+            tempStreak = 0;
+        }
+    });
+
+    console.log(`[GitHub Live] Total: ${totalContribs}, Current Streak: ${currentStreak}, Longest: ${longestStreak}`);
+
+    return { totalContribs, currentStreak, longestStreak };
+}
+
+// ─── Set Counter Card Target by Index ──────────────────────────────
+function setCounterTarget(index, value) {
+    const cards = document.querySelectorAll('.counter-val');
+    if (cards[index]) {
+        cards[index].setAttribute('data-target', value);
+    }
+}
+
+// ─── Animate Counters on Scroll ────────────────────────────────────
 function animateCounters() {
     const counterCards = document.querySelectorAll('.counter-val');
     counterCards.forEach(card => {
         const target = parseInt(card.getAttribute('data-target')) || 0;
         let current = 0;
-        const increment = Math.max(1, Math.ceil(target / 45));
+        const duration = 1200; // ms
+        const steps = 50;
+        const increment = Math.max(1, Math.ceil(target / steps));
+        const interval = duration / steps;
+
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
-                card.textContent = target + (target >= 100 ? '+' : '');
+                card.textContent = target + (target >= 10 ? '+' : '');
                 clearInterval(timer);
             } else {
                 card.textContent = current;
             }
-        }, 25);
+        }, interval);
     });
 }
 
@@ -105,52 +161,47 @@ function initStatsObserver() {
     observer.observe(statsSection);
 }
 
-// 3. Fetch Live Contribution Matrix from GitHub Contributions API
+// ─── Live Contribution Heatmap Renderer ────────────────────────────
 async function generateContributionHeatmap() {
     const heatmapGrid = document.getElementById('heatmapGrid');
     if (!heatmapGrid) return;
 
-    const username = 'gyr0byte';
-    let loadedLiveHeatmap = false;
+    let liveLoaded = false;
 
     try {
-        // Fetch Live Contribution Heatmap Data from GitHub Contributions API
-        const res = await fetch(`https://github-contributions-api.deno.dev/${username}.json`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data.contributions && Array.isArray(data.contributions)) {
-                // Flat array of daily contributions over last year
-                const flatContributions = data.contributions.flat().slice(-364);
-                
-                if (flatContributions.length > 0) {
-                    heatmapGrid.innerHTML = '';
-                    flatContributions.forEach(day => {
-                        const cell = document.createElement('div');
-                        let lvl = 'lvl-0';
-                        const count = day.count || 0;
+        const contributions = await fetchContributionGraph();
 
-                        if (count > 8) lvl = 'lvl-4';
-                        else if (count > 5) lvl = 'lvl-3';
-                        else if (count > 2) lvl = 'lvl-2';
-                        else if (count > 0) lvl = 'lvl-1';
+        if (contributions.length > 0) {
+            heatmapGrid.innerHTML = '';
 
-                        cell.className = `cell ${lvl}`;
-                        cell.title = `${day.date || 'Date'}: ${count} contribution${count === 1 ? '' : 's'}`;
-                        heatmapGrid.appendChild(cell);
-                    });
-                    loadedLiveHeatmap = true;
-                    console.log(`[GitHub Heatmap API] Loaded live contribution graph (${flatContributions.length} days).`);
-                }
+            // Pad to align grid to start on a Sunday (GitHub style)
+            const firstDate = new Date(contributions[0].date);
+            const startDayOfWeek = firstDate.getDay(); // 0 = Sunday
+            for (let i = 0; i < startDayOfWeek; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'cell lvl-0';
+                empty.style.opacity = '0.3';
+                heatmapGrid.appendChild(empty);
             }
+
+            contributions.forEach(day => {
+                const cell = document.createElement('div');
+                cell.className = `cell lvl-${day.level}`;
+                cell.title = `${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`;
+                heatmapGrid.appendChild(cell);
+            });
+
+            liveLoaded = true;
+            console.log(`[GitHub Heatmap] Rendered ${contributions.length} days of live contribution data.`);
         }
     } catch (e) {
-        console.warn('[GitHub Heatmap API] Using simulated contribution matrix fallback:', e);
+        console.warn('[GitHub Heatmap] API unavailable, generating fallback:', e.message);
     }
 
-    // Fallback if live contribution API is rate-limited or unreachable
-    if (!loadedLiveHeatmap) {
+    // Fallback: simulated heatmap
+    if (!liveLoaded) {
         heatmapGrid.innerHTML = '';
-        for (let i = 0; i < 364; i++) {
+        for (let i = 0; i < 371; i++) {
             const cell = document.createElement('div');
             const rand = Math.random();
             let lvl = 'lvl-0';
@@ -158,13 +209,9 @@ async function generateContributionHeatmap() {
             else if (rand > 0.7) lvl = 'lvl-3';
             else if (rand > 0.5) lvl = 'lvl-2';
             else if (rand > 0.3) lvl = 'lvl-1';
-
             cell.className = `cell ${lvl}`;
-            cell.title = `Simulated Contribution Matrix`;
+            cell.title = 'Simulated data (API offline)';
             heatmapGrid.appendChild(cell);
         }
     }
 }
-
-// Automatically fetch live stats on initialization
-fetchLiveGitHubStats();

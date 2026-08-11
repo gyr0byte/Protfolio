@@ -79,6 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Initialize Modules
     runBootSequence();
     updateUptimeBadge();
-    initStatsObserver();
+
+    // 6. Fetch LIVE GitHub Data, then initialize counters & heatmap
+    fetchAllGitHubData().then(() => {
+        initStatsObserver();
+    });
     generateContributionHeatmap();
 });

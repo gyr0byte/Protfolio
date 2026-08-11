@@ -632,10 +632,42 @@ textarea.form-control {
 
 /* Footer */
 footer {
-    padding: 3rem 0;
-    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: var(--white-text);
+    cursor: default;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tech-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(63, 185, 80, 0.2);
+    color: var(--terminal-green);
+    border-color: var(--terminal-green);
+}
+
+/* ─── Section Dividers ────────────────────────── */
+.section-divider {
+    font-family: var(--font-mono);
     color: var(--secondary-text);
-    font-size: 0.88rem;
+    text-align: center;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    opacity: 0.6;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.section-divider::before, .section-divider::after {
+    content: '──────────────────────────';
+    letter-spacing: -1px;
+    display: block;
+}
+
+.section-divider span {
+    display: inline-block;
+    padding: 0.5rem 0;
+    color: var(--terminal-green);
 }
 
 .footer-quote {

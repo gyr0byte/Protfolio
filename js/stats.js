@@ -1,31 +1,85 @@
-// Real-Time GitHub Stats & Live Contribution Heatmap
-// Uses: api.github.com (user profile) + github-contributions-api.jogruber.de (contribution graph)
+// Real-Time GitHub Stats, LeetCode Stats & Live Contribution Heatmap
+// APIs:
+//   - api.github.com/users/gyr0byte (profile: repos, followers)
+//   - github-contributions-api.jogruber.de/v4/gyr0byte?y=last (contribution graph)
+//   - alfa-leetcode-api.onrender.com/gyr0byte/solved (leetcode problems solved)
 
 const GH_USERNAME = 'gyr0byte';
+const LC_USERNAME = 'gyr0byte';
 let animatedCounters = false;
+
+// ─── Terminal Progress Bar Builder ─────────────────────────────────
+function buildProgressBar(filled, total = 20) {
+    const count = Math.min(total, Math.round(filled));
+    const empty = total - count;
+    return '[' + '█'.repeat(count) + '░'.repeat(empty) + ']';
+}
 
 // ─── Main Data Fetcher ─────────────────────────────────────────────
 async function fetchAllGitHubData() {
     const statusBadge = document.getElementById('apiStatusBadge');
 
     try {
-        // Run both API calls in parallel
-        const [profileData, contribData] = await Promise.all([
+        // Run all API calls in parallel
+        const [profileData, contribData, leetcodeData] = await Promise.allSettled([
             fetchGitHubProfile(),
-            fetchContributionGraph()
+            fetchContributionGraph(),
+            fetchLeetCodeStats()
         ]);
 
-        // Compute real stats from live data
-        if (contribData) {
-            const { totalContribs, currentStreak, longestStreak } = computeStatsFromContribs(contribData);
+        // ── GitHub Contributions ───────────────────────────────────
+        if (contribData.status === 'fulfilled' && contribData.value) {
+            const { totalContribs, currentStreak, longestStreak } = computeStatsFromContribs(contribData.value);
 
-            // Update counter card targets with REAL data
-            setCounterTarget(0, currentStreak);      // STREAK
-            setCounterTarget(1, totalContribs);       // COMMITS (total contributions)
+            // Update Section 6 counter card targets
+            setCounterTarget(0, currentStreak);
+            setCounterTarget(1, totalContribs);
+
+            // Update Section 2 (whoami) progress bars
+            const streakBar = document.getElementById('whoamiStreakBar');
+            const streakVal = document.getElementById('whoamiStreakVal');
+            const commitsBar = document.getElementById('whoamiCommitsBar');
+            const commitsVal = document.getElementById('whoamiCommitsVal');
+
+            if (streakBar && streakVal) {
+                streakBar.textContent = buildProgressBar(20); // full bar for active streak
+                streakVal.textContent = `${currentStreak} days`;
+            }
+            if (commitsBar && commitsVal) {
+                // Scale bar: assume 3000 as "full" for visual purposes
+                const commitFill = Math.round((totalContribs / 3000) * 20);
+                commitsBar.textContent = buildProgressBar(commitFill);
+                commitsVal.textContent = `${totalContribs}+`;
+            }
+
+            console.log(`[GitHub Live] Streak: ${currentStreak}, Commits: ${totalContribs}, Longest: ${longestStreak}`);
         }
 
-        if (profileData) {
-            setCounterTarget(2, profileData.public_repos); // PROJECTS (real repo count)
+        // ── GitHub Profile ─────────────────────────────────────────
+        if (profileData.status === 'fulfilled' && profileData.value) {
+            setCounterTarget(2, profileData.value.public_repos);
+        }
+
+        // ── LeetCode Stats ─────────────────────────────────────────
+        if (leetcodeData.status === 'fulfilled' && leetcodeData.value) {
+            const lc = leetcodeData.value;
+            const lcBar = document.getElementById('whoamiLeetcodeBar');
+            const lcVal = document.getElementById('whoamiLeetcodeVal');
+
+            if (lcBar && lcVal) {
+                // Scale bar: assume 200 as "full" for visual purposes
+                const lcFill = Math.round((lc.solvedProblem / 200) * 20);
+                lcBar.textContent = buildProgressBar(lcFill);
+                lcVal.textContent = `${lc.solvedProblem} solved (E:${lc.easySolved} M:${lc.mediumSolved} H:${lc.hardSolved})`;
+            }
+
+            console.log(`[LeetCode Live] Solved: ${lc.solvedProblem} (E:${lc.easySolved} M:${lc.mediumSolved} H:${lc.hardSolved})`);
+        } else {
+            // Fallback for LeetCode if API is down
+            const lcBar = document.getElementById('whoamiLeetcodeBar');
+            const lcVal = document.getElementById('whoamiLeetcodeVal');
+            if (lcBar) lcBar.textContent = buildProgressBar(7);
+            if (lcVal) lcVal.textContent = '66+ solved (cached)';
         }
 
         // Mark API as connected
@@ -39,11 +93,29 @@ async function fetchAllGitHubData() {
 
     } catch (err) {
         console.warn('[GitHub Live] API error, using fallback values:', err.message);
+        applyFallbackBars();
         if (statusBadge) {
             statusBadge.textContent = '⚠ OFFLINE · CACHED DATA';
             statusBadge.style.borderColor = 'var(--amber-yellow)';
             statusBadge.style.color = 'var(--amber-yellow)';
         }
+    }
+}
+
+// ─── Fallback for Whoami Bars When All APIs Fail ───────────────────
+function applyFallbackBars() {
+    const map = {
+        whoamiStreakBar: buildProgressBar(20),
+        whoamiStreakVal: '158+ days (cached)',
+        whoamiCommitsBar: buildProgressBar(17),
+        whoamiCommitsVal: '2400+ (cached)',
+        whoamiLeetcodeBar: buildProgressBar(7),
+        whoamiLeetcodeVal: '66+ solved (cached)',
+    };
+
+    for (const [id, val] of Object.entries(map)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
     }
 }
 
@@ -62,6 +134,13 @@ async function fetchContributionGraph() {
     return data.contributions || [];
 }
 
+// ─── LeetCode Stats (alfa-leetcode-api — verified working) ────────
+async function fetchLeetCodeStats() {
+    const res = await fetch(`https://alfa-leetcode-api.onrender.com/${LC_USERNAME}/solved`);
+    if (!res.ok) throw new Error(`LeetCode API ${res.status}`);
+    return await res.json();
+}
+
 // ─── Compute Real Stats from Contribution Data ────────────────────
 function computeStatsFromContribs(contributions) {
     let totalContribs = 0;
@@ -69,25 +148,22 @@ function computeStatsFromContribs(contributions) {
     let longestStreak = 0;
     let tempStreak = 0;
 
-    // Sum total contributions
     contributions.forEach(day => {
         totalContribs += day.count;
     });
 
-    // Calculate current streak (walk backwards from today)
+    // Current streak: walk backwards from today
     const today = new Date().toISOString().split('T')[0];
     const reversed = [...contributions].reverse();
 
     let startedCounting = false;
     for (const day of reversed) {
         if (!startedCounting) {
-            // Skip today if it has 0 (day might not be over yet)
             if (day.date === today && day.count === 0) continue;
             if (day.count > 0) {
                 startedCounting = true;
                 currentStreak = 1;
             } else {
-                // No contributions yesterday either — streak is 0
                 break;
             }
         } else {
@@ -99,7 +175,7 @@ function computeStatsFromContribs(contributions) {
         }
     }
 
-    // Calculate longest streak
+    // Longest streak
     contributions.forEach(day => {
         if (day.count > 0) {
             tempStreak++;
@@ -108,8 +184,6 @@ function computeStatsFromContribs(contributions) {
             tempStreak = 0;
         }
     });
-
-    console.log(`[GitHub Live] Total: ${totalContribs}, Current Streak: ${currentStreak}, Longest: ${longestStreak}`);
 
     return { totalContribs, currentStreak, longestStreak };
 }
@@ -128,7 +202,7 @@ function animateCounters() {
     counterCards.forEach(card => {
         const target = parseInt(card.getAttribute('data-target')) || 0;
         let current = 0;
-        const duration = 1200; // ms
+        const duration = 1200;
         const steps = 50;
         const increment = Math.max(1, Math.ceil(target / steps));
         const interval = duration / steps;
@@ -176,7 +250,7 @@ async function generateContributionHeatmap() {
 
             // Pad to align grid to start on a Sunday (GitHub style)
             const firstDate = new Date(contributions[0].date);
-            const startDayOfWeek = firstDate.getDay(); // 0 = Sunday
+            const startDayOfWeek = firstDate.getDay();
             for (let i = 0; i < startDayOfWeek; i++) {
                 const empty = document.createElement('div');
                 empty.className = 'cell lvl-0';
@@ -192,7 +266,7 @@ async function generateContributionHeatmap() {
             });
 
             liveLoaded = true;
-            console.log(`[GitHub Heatmap] Rendered ${contributions.length} days of live contribution data.`);
+            console.log(`[GitHub Heatmap] Rendered ${contributions.length} days of live data.`);
         }
     } catch (e) {
         console.warn('[GitHub Heatmap] API unavailable, generating fallback:', e.message);

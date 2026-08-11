@@ -44,12 +44,22 @@
                 <button class="nav-btn" onclick="toggleMatrix()">
                     🌧️ MATRIX
                 </button>
+                <a href="resume/Gaurav_Dulal_Resume.pdf" target="_blank" class="nav-btn" style="text-decoration: none;">
+                    📄 RESUME.pdf ↓
+                </a>
             </div>
         </div>
 
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">≡ MENU</button>
 
         <ul class="nav-links" id="navLinks">
+            <!-- Mobile Extra Controls (hidden on desktop) -->
+            <li class="mobile-nav-controls" style="display: none;">
+                <button class="nav-btn" onclick="toggleTerminalModal()">⚡ CLI</button>
+                <button class="nav-btn" id="soundToggleBtnMobile" onclick="toggleAudio()">🔇 AUDIO</button>
+                <button class="nav-btn" onclick="toggleMatrix()">🌧️ MATRIX</button>
+                <a href="resume/Gaurav_Dulal_Resume.pdf" target="_blank" class="nav-btn" style="text-decoration: none;">📄 RESUME</a>
+            </li>
             <li><a href="#whoami" class="active">whoami</a></li>
             <li><a href="#skills">skills/</a></li>
             <li><a href="#projects">git log</a></li>

@@ -483,19 +483,42 @@
                 </div>
                 <div class="terminal-body">
                     <form class="contact-form" id="contactForm">
+                        <!-- 
+                            ╔═══════════════════════════════════════════════════╗
+                            ║  TO RECEIVE MESSAGES:                            ║
+                            ║  1. Go to https://web3forms.com                  ║
+                            ║  2. Enter your email: gqurav69@gmail.com         ║
+                            ║  3. Check inbox for your Access Key              ║
+                            ║  4. Replace YOUR_ACCESS_KEY_HERE below           ║
+                            ╚═══════════════════════════════════════════════════╝
+                        -->
+                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                        <input type="hidden" name="subject" id="formSubjectHidden" value="New Portfolio Message from gyr0byte.dev">
+                        <input type="hidden" name="from_name" value="gyr0byte Portfolio Contact Form">
+                        <!-- Honeypot anti-spam (hidden from humans) -->
+                        <input type="checkbox" name="botcheck" style="display: none;">
+
                         <div class="form-group">
                             <label>&gt; To:</label>
                             <input type="text" class="form-control" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
                         </div>
                         <div class="form-group">
+                            <label>&gt; From (your name):</label>
+                            <input type="text" name="name" id="formName" class="form-control" placeholder="Enter your name..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>&gt; Reply-to (your email):</label>
+                            <input type="email" name="email" id="formEmail" class="form-control" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
                             <label>&gt; Subject:</label>
-                            <input type="text" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
+                            <input type="text" name="subject_line" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
                         </div>
                         <div class="form-group">
                             <label>&gt; Message:</label>
-                            <textarea id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
+                            <textarea name="message" id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
                         </div>
-                        <button type="submit" class="btn-submit">
+                        <button type="submit" class="btn-submit" id="formSubmitBtn">
                             [Send Message ↵]
                         </button>
                     </form>

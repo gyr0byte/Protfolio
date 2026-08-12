@@ -774,15 +774,16 @@ footer {
     }
 
     .terminal-body {
-        padding: 0.8rem;
-        font-size: 0.82rem;
+        padding: 0.6rem;
+        font-size: 0.8rem;
     }
 
     /* ── Section Headings ─────────── */
     .command-header {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         flex-wrap: wrap;
-        gap: 0.3rem;
+        gap: 0.2rem;
+        word-break: break-word;
     }
 
     /* ── Whoami ────────────────────── */

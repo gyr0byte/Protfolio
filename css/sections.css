@@ -790,6 +790,16 @@ footer {
         word-break: break-word;
     }
 
+    /* ── Skills Controls ──────────── */
+    .skills-controls-hint {
+        display: none;
+    }
+
+    .skills-controls .nav-btn {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+
     /* ── Whoami ────────────────────── */
     .whoami-box {
         padding: 1rem;

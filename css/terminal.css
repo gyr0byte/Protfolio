@@ -137,6 +137,7 @@ section {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     margin: 1.5rem 0;
+    max-width: 100%;
 }
 
 .terminal-header {
@@ -146,6 +147,8 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .terminal-dots {
@@ -158,6 +161,7 @@ section {
     height: 12px;
     border-radius: 50%;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .dot.red { background-color: #FF5F56; }
@@ -168,10 +172,16 @@ section {
     color: var(--secondary-text);
     font-size: 0.82rem;
     letter-spacing: 0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
 }
 
 .terminal-body {
     padding: 1.5rem;
     color: var(--white-text);
     overflow-x: auto;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }

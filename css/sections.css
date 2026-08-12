@@ -757,25 +757,29 @@ footer {
     /* ── Terminal Window ───────────── */
     .terminal-window {
         margin: 0.8rem 0;
+        max-width: 100%;
     }
 
     .terminal-header {
-        padding: 6px 10px;
+        padding: 6px 8px;
         flex-wrap: wrap;
         gap: 4px;
     }
 
-    .terminal-header > span[style] {
-        display: none;
+    .cli-hint {
+        display: none !important;
     }
 
     .terminal-title {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
+        max-width: 140px;
     }
 
     .terminal-body {
         padding: 0.6rem;
         font-size: 0.8rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     /* ── Section Headings ─────────── */

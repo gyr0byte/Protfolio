@@ -5,7 +5,7 @@ const bootLines = [
     "> Location: Belbari-2, Morang, Nepal",
     "> Status: <span class='highlight'>BHons Computing @ IIC | London Met University</span>",
     "> Mission: <span class='highlight-accent'>MSc Machine Learning → University of Tübingen (2028)</span>",
-    "> GitHub streak: <span class='highlight'>158 days and counting...</span>",
+    "> GitHub streak: <span class='highlight' id='heroStreakVal'>158+ days and counting...</span>",
     "> [<span style='color: var(--terminal-green);'>████████████████████</span>] 100% — System ready."
 ];
 
@@ -16,6 +16,10 @@ function runBootSequence() {
     if (!bootContainer) return;
 
     if (bootIndex < bootLines.length) {
+        if (bootIndex === 5 && window.liveCurrentStreak) {
+            bootLines[5] = `> GitHub streak: <span class='highlight' id='heroStreakVal'>${window.liveCurrentStreak} days and counting...</span>`;
+        }
+
         const line = document.createElement('div');
         line.className = 'boot-line';
         line.innerHTML = bootLines[bootIndex];

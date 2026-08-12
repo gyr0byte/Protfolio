@@ -31,6 +31,13 @@ async function fetchAllGitHubData() {
         if (contribData.status === 'fulfilled' && contribData.value) {
             const { totalContribs, currentStreak, longestStreak } = computeStatsFromContribs(contribData.value);
 
+            // Save live current streak globally & update hero section boot line
+            window.liveCurrentStreak = currentStreak;
+            const heroStreak = document.getElementById('heroStreakVal');
+            if (heroStreak) {
+                heroStreak.textContent = `${currentStreak} days and counting...`;
+            }
+
             // Update Section 6 counter card targets
             setCounterTarget(0, currentStreak);
             setCounterTarget(1, totalContribs);

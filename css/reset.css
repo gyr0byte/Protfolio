@@ -11,6 +11,11 @@ html {
     font-family: var(--font-mono);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 /* Custom Scrollbar */

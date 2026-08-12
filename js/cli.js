@@ -68,7 +68,20 @@ function processCommand(rawCmd) {
 
         case 'neofetch':
         case 'fastfetch':
-            appendCliOutput(
+            if (window.innerWidth <= 600) {
+                appendCliOutput(
+`gaurav@gyr0byte
+---------------
+OS: Nepal-OS Linux x86_64
+Host: IIC / London Met University
+Uptime: 158 days commit streak
+Target: Univ of Tübingen MSc ML ('28)
+Shell: Gyr0shell v2.6.0
+Primary: Python 3.12, C++, SQL
+ML Stack: Scikit-learn, PyTorch`
+                );
+            } else {
+                appendCliOutput(
 `  ██████╗ ██╗   ██╗██████╗  ██████╗ 
  ██╔════╝ ╚██╗ ██╔╝██╔══██╗██╔═████╗  gaurav@gyr0byte
  ██║  ███╗ ╚████╔╝ ██████╔╝██║██╔██║  ---------------
@@ -79,7 +92,8 @@ function processCommand(rawCmd) {
                                       Shell: Gyr0shell v2.6.0
                                       Primary Lang: Python 3.12, C++, SQL
                                       ML Stack: Scikit-learn, PyTorch, XGBoost`
-            );
+                );
+            }
             break;
 
         case 'whoami':

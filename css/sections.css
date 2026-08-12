@@ -721,7 +721,8 @@ footer {
     }
 
     .container {
-        padding: 0 1rem;
+        padding: 0 0.8rem;
+        max-width: 100vw;
     }
 
     /* ── Hero ──────────────────────── */

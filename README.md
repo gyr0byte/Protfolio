@@ -1,83 +1,112 @@
 # Gyr0byte Portfolio (Terminal / CLI Edition)
 
-Welcome to the source code of my interactive, terminal-themed portfolio website. This project merges a classic retro CLI aesthetic with modern web capabilities, live API integrations, and robust object-oriented/functional JavaScript architecture.
+Welcome to the official repository of my interactive, terminal-themed portfolio website. This project combines a retro CLI aesthetic with modern web capabilities, real-time API integrations, lightweight canvas animations, and a responsive mobile-first design.
+
+---
 
 ## 🚀 Features
 
-- **Gyr0shell v2.6.0 Terminal Emulator**: A fully interactive, custom-built CLI modal accessible via `Ctrl + ~` or the floating bottom-right prompt. It supports commands like `neofetch`, `cowsay`, `whoami`, `theme`, `audio`, and `sudo hire`.
-- **Live GitHub Integration**: Dynamically fetches and displays real-time GitHub statistics, commit streaks, and a live contribution heatmap matrix.
-- **LeetCode Sync**: Pulls real-time problem-solving statistics utilizing a community-maintained API.
-- **Backend-less Contact System**: Contact form powered by Web3Forms for direct inbox delivery without needing a server-side backend or exposing email addresses.
-- **Dynamic Themes**: Multiple color themes including `green` (default), `amber`, `cyan`, and `matrix` mode.
-- **Audio Feedback**: Optional mechanical keyboard typing sounds to enhance the retro terminal experience.
-- **Responsive Design**: fully optimized for desktop and mobile viewports with smooth scroll-triggered section reveal animations.
+- **Gyr0shell v2.6.0 Terminal Emulator**: Fully interactive modal CLI accessible via `Ctrl + ~`, floating input prompt, or terminal window controls. Supports commands like `neofetch`, `cowsay`, `whoami`, `theme`, `audio`, `clear`, and `sudo hire`.
+- **Live GitHub Integration**: Automatically fetches live commit streaks, total contributions, active repositories, and renders a 364-cell contribution matrix feed for `@gyr0byte`.
+- **LeetCode Stats Sync**: Pulls real-time problem-solving progress using a serverless API fetch.
+- **Hero Canvas Particle Network**: Interactive, lightweight canvas-rendered floating particle nodes with dynamic connection lines.
+- **Scroll Reveal Animations**: Smooth section reveals driven by `IntersectionObserver` with adaptive thresholds for mobile and desktop screens.
+- **Terminal Section Dividers**: Styled CLI separators (`cd ~/whoami`, `cd ~/skills`, etc.) marking major section transitions.
+- **Mobile-First & Touch Reactive**: Complete responsiveness across all device sizes (down to 320px screens) with `@media (hover: hover)` protection against sticky mobile touch states, auto-wrapping code lines, and touch-optimized navigation drawers.
+- **Resume Integration**: Direct PDF download link (`assets/Gaurav_Dulal_Resume.pdf`) embedded in navigation controls.
+- **Backend-less Contact System**: Web3Forms integration delivering direct user messages without exposing server endpoints or email addresses.
+- **Custom Themes & Audio**: Supports color themes (`green`, `amber`, `cyan`, `matrix`) and mechanical keyboard audio feedback.
+- **SEO & Social Meta**: Equipped with Open Graph, Twitter Cards, and a custom SVG terminal favicon.
 
-## 🛠️ Technologies Used
+---
 
-- **Core**: Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **APIs**: GitHub REST API, LeetCode API, Web3Forms
-- **Design System**: Custom responsive flex/grid layouts with CSS variables for dynamic theme switching.
-- **Animations**: Custom Canvas API logic for Matrix digital rain and background particle networks; IntersectionObserver for scroll reveals.
+## 🛠️ Tech Stack
 
-## 📂 Project Structure
+- **Frontend**: Vanilla HTML5, Modern CSS3 (Variables, Flexbox, Grid), JavaScript (ES6+)
+- **APIs**: GitHub REST API, LeetCode Public API, Web3Forms
+- **Graphics**: HTML5 Canvas API (Particle system & Matrix digital rain)
+- **Design System**: Monospaced terminal UI with dark mode color schemes and neon accent glows
+
+---
+
+## 📂 Repository Structure
 
 ```
-├── assets/             # Media and static assets (favicon, Open Graph images)
-├── css/                # Modular stylesheets
-│   ├── cli.css         # Terminal emulator & mobile navigation styles
-│   ├── main.css        # Global CSS variables and core resets
-│   ├── sections.css    # Layout and styling for specific page sections
-│   └── terminal.css    # General terminal window components
-├── js/                 # Modular JavaScript logic
-│   ├── animations.js   # Scroll-reveal logic (IntersectionObserver)
-│   ├── audio.js        # Mechanical typing sound effects
-│   ├── boot.js         # Boot sequence text generation in hero section
-│   ├── cli.js          # Main Terminal Emulator engine logic
-│   ├── main.js         # Core application setup & form handling
-│   ├── matrix.js       # Canvas-based digital rain effect
-│   ├── particles.js    # Canvas-based hero particle network
-│   ├── projects.js     # Project data injection
-│   ├── skills.js       # Expandable tree-view logic for skills
-│   ├── stats.js        # GitHub / LeetCode API integrations & heatmap
-│   └── typewriter.js   # Reusable typing animation utilities
-├── resume/             # PDF version of CV
-├── index.html          # Main HTML entry point
-└── README.md           # Project documentation
+├── assets/
+│   ├── favicon.svg             # Terminal prompt SVG favicon (>_)
+│   └── og-preview.png          # Social sharing preview banner
+├── css/
+│   ├── main.css                # Master stylesheet loader
+│   ├── variables.css           # CSS custom properties & color design tokens
+│   ├── reset.css               # Box-sizing resets, scrollbars, overflow guards
+│   ├── terminal.css           # Terminal window frames, navigation header, and dots
+│   ├── sections.css            # Section layouts, mobile media queries, section dividers
+│   └── cli.css                 # Terminal emulator modal, mobile drawer, toast notices
+├── js/
+│   ├── animations.js          # IntersectionObserver scroll reveal engine
+│   ├── audio.js               # Web Audio API / mechanical keyboard sound generator
+│   ├── boot.js                # Hero boot sequence text animator
+│   ├── cli.js                 # Terminal command processor & modal logic
+│   ├── main.js                # Core app initialization & form submission handler
+│   ├── matrix.js              # Canvas digital rain animation
+│   ├── particles.js           # Hero canvas particle network system
+│   ├── projects.js            # Commit card project renderer
+│   ├── skills.js              # Expandable interactive directory tree
+│   ├── stats.js               # GitHub / LeetCode API sync & heatmap renderer
+│   └── typewriter.js          # Asynchronous typing effect utility
+├── resume/
+│   └── Gaurav_Dulal_Resume.pdf# Downloadable resume document
+├── index.html                 # Main document markup
+└── README.md                  # Project documentation
 ```
 
-## ⚙️ Local Setup
+---
 
-This project uses entirely static files and vanilla technologies, meaning no build step (Webpack/Vite) is required.
+## ⚙️ Running Locally
 
-1. **Clone the repository**
+Because this project is built entirely with vanilla technologies, no build step or package manager is required.
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/gyr0byte/Protfolio.git
    cd Protfolio
    ```
 
-2. **Run a local development server**
-   You can use any local web server. For example, using Python:
-   ```bash
-   python -m http.server 8000
+2. **Launch a local server:**
+   - Using Python 3:
+     ```bash
+     python -m http.server 8000
+     ```
+   - Using Node.js / `npx`:
+     ```bash
+     npx serve .
+     ```
+
+3. **Open in your browser:**
    ```
-   Or using Node.js:
-   ```bash
-   npx serve
+   http://localhost:8000
    ```
 
-3. **Open in browser**
-   Navigate to `http://localhost:8000`
+---
 
-## 🔑 Configuration
+## 🔑 Contact Form Setup
 
-To enable the contact form, you need to replace the `YOUR_WEB3FORMS_ACCESS_KEY` in `index.html` with your actual access key from [Web3Forms](https://web3forms.com).
+To receive messages from the contact form directly in your inbox:
+1. Obtain an access key from [Web3Forms](https://web3forms.com).
+2. Update the `access_key` hidden field in `index.html`:
+   ```html
+   <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+   ```
 
-```html
-<input type="hidden" name="access_key" value="YOUR_ACTUAL_ACCESS_KEY_HERE">
-```
+---
 
-## 👨‍💻 About Me
+## 👨‍💻 Author
 
-I am Gaurav Dulal (gyr0byte), a Machine Learning Engineer and Researcher from Nepal, currently an undergraduate computing student at London Metropolitan University (IIC), targeting a Master's in ML at the University of Tübingen by 2028.
+**Gaurav Dulal (gyr0byte)**  
+*Undergraduate Computing Student @ London Metropolitan University (IIC)*  
+*Targeting MSc in Machine Learning @ University of Tübingen (2028)*  
+
+- **GitHub**: [@gyr0byte](https://github.com/gyr0byte)  
+- **Email**: gqurav69@gmail.com  
 
 *"Not a person, a process — always building, never stopping."*

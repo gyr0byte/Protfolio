@@ -294,6 +294,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function runQuickCmd(cmd) {
+    const modal = document.getElementById('terminalModal');
+    if (modal && !modal.classList.contains('active')) {
+        toggleTerminalModal();
+    }
+    processCommand(cmd);
+}
+
 window.toggleTerminalModal = toggleTerminalModal;
 window.setTheme = setTheme;
 window.showToast = showToast;
+window.runQuickCmd = runQuickCmd;

@@ -109,6 +109,57 @@
     outline: none;
 }
 
+/* Quick Command Tap Chips */
+.cli-quick-chips {
+    display: flex;
+    gap: 0.4rem;
+    padding: 6px 12px;
+    background-color: #161B22;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    align-items: center;
+}
+
+.cli-quick-chips::-webkit-scrollbar {
+    display: none;
+}
+
+.chip-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--terminal-green);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+@media (hover: hover) {
+    .chip-btn:hover {
+        background: var(--border);
+        border-color: var(--terminal-green);
+        box-shadow: 0 0 6px var(--glow-color);
+    }
+}
+
+.chip-btn:active {
+    transform: scale(0.94);
+    background: rgba(63, 185, 80, 0.2);
+}
+
+.mobile-text {
+    display: none;
+}
+
+.desktop-text {
+    display: inline;
+}
+
 /* Toast Notifications */
 .terminal-toast {
     position: fixed;
@@ -192,23 +243,101 @@
         font-size: 0.85rem;
     }
 
-    /* ── Terminal Modal ─────────────── */
+    /* ── Terminal Modal Overlay & Window ─ */
+    .terminal-modal-overlay {
+        padding: 0;
+    }
+
     .terminal-modal-window {
-        height: 90vh;
+        width: 100vw;
+        height: 100dvh;
         max-height: none;
         border-radius: 0;
+        border: none;
+    }
+
+    .terminal-modal-window .terminal-header {
+        padding: 8px 10px;
+    }
+
+    .terminal-modal-window .terminal-title {
+        font-size: 0.72rem;
+        max-width: 160px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .terminal-modal-body {
-        font-size: 0.82rem;
+        padding: 0.8rem;
+        font-size: 0.78rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cli-output-line {
+        font-size: 0.76rem;
+        word-break: break-word;
+    }
+
+    .terminal-modal-input-row {
+        padding: 8px 10px;
+        gap: 0.4rem;
+    }
+
+    .cli-modal-prompt {
+        font-size: 0.8rem;
+        flex-shrink: 0;
     }
 
     .terminal-modal-input {
-        font-size: 0.85rem;
+        font-size: 16px; /* 16px prevents iOS Safari viewport auto-zoom */
     }
 
-    /* ── Floating Bar ───────────────── */
-    .cli-floating-bar {
+    .desktop-text {
         display: none;
+    }
+
+    .mobile-text {
+        display: inline;
+    }
+
+    /* ── Floating CLI Bar on Mobile ────── */
+    .cli-floating-bar {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        padding: 6px 10px;
+        font-size: 0.78rem;
+        background: rgba(22, 27, 34, 0.95);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--terminal-green);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        border-radius: 4px;
+    }
+
+    .cli-input {
+        width: 100px;
+        font-size: 0.78rem;
+    }
+
+    /* ── Toast Notifications ─────────── */
+    .terminal-toast {
+        left: 50%;
+        bottom: 1.2rem;
+        transform: translate(-50%, 100px);
+        width: calc(100% - 2rem);
+        max-width: 380px;
+        text-align: center;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .terminal-toast.show {
+        transform: translate(-50%, 0);
     }
 }

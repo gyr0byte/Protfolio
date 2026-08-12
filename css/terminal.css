@@ -52,10 +52,12 @@ header.nav-header {
     gap: 0.4rem;
 }
 
-.nav-btn:hover {
-    color: var(--terminal-green);
-    border-color: var(--terminal-green);
-    box-shadow: 0 0 8px var(--glow-color);
+@media (hover: hover) {
+    .nav-btn:hover {
+        color: var(--terminal-green);
+        border-color: var(--terminal-green);
+        box-shadow: 0 0 8px var(--glow-color);
+    }
 }
 
 .nav-links {
@@ -71,7 +73,13 @@ header.nav-header {
     transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-.nav-links a:hover,
+@media (hover: hover) {
+    .nav-links a:hover {
+        color: var(--terminal-green);
+        text-shadow: 0 0 8px var(--glow-color);
+    }
+}
+
 .nav-links a.active {
     color: var(--terminal-green);
     text-shadow: 0 0 8px var(--glow-color);

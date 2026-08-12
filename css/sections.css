@@ -819,24 +819,31 @@ footer {
 
     /* ── Skills ────────────────────── */
     .dir-header {
-        padding: 8px 12px;
-        font-size: 0.85rem;
+        padding: 8px 10px;
+        font-size: 0.82rem;
+        width: 100%;
     }
 
     .dir-contents {
-        margin-left: 0.8rem;
-        padding-left: 0.6rem;
+        margin-left: 0.2rem;
+        padding-left: 0.4rem;
+        border-left: none;
     }
 
     .file-line {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         flex-wrap: wrap;
-        gap: 0.3rem;
+        gap: 4px;
+        align-items: flex-start;
     }
 
     .file-line .tech-item {
-        font-size: 0.75rem;
-        padding: 2px 5px;
+        font-size: 0.72rem;
+        padding: 3px 6px;
+    }
+
+    .terminal-window {
+        overflow-x: auto;
     }
 
     /* ── Projects ──────────────────── */

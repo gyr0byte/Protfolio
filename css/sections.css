@@ -232,8 +232,14 @@
     width: fit-content;
 }
 
-.dir-header:hover {
-    background-color: rgba(63, 185, 80, 0.1);
+@media (hover: hover) {
+    .dir-header:hover {
+        background-color: rgba(63, 185, 80, 0.1);
+    }
+}
+
+.dir-header:active {
+    background-color: rgba(63, 185, 80, 0.2);
 }
 
 .dir-contents {
@@ -270,11 +276,13 @@
     cursor: default;
 }
 
-.file-line .tech-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(63, 185, 80, 0.2);
-    color: var(--terminal-green);
-    border-color: var(--terminal-green);
+@media (hover: hover) {
+    .file-line .tech-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(63, 185, 80, 0.2);
+        color: var(--terminal-green);
+        border-color: var(--terminal-green);
+    }
 }
 
 .badge-in-progress {
@@ -320,10 +328,12 @@
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.commit-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--terminal-green);
-    box-shadow: 0 4px 20px var(--glow-color);
+@media (hover: hover) {
+    .commit-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--terminal-green);
+        box-shadow: 0 4px 20px var(--glow-color);
+    }
 }
 
 .commit-card.coming-soon {
@@ -355,8 +365,10 @@
     cursor: pointer;
 }
 
-.commit-hash:hover {
-    text-decoration: underline;
+@media (hover: hover) {
+    .commit-hash:hover {
+        text-decoration: underline;
+    }
 }
 
 .commit-author {
@@ -445,10 +457,12 @@
     cursor: pointer;
 }
 
-.btn-link:hover {
-    background: var(--terminal-green);
-    color: #0D1117;
-    box-shadow: 0 0 10px var(--glow-color);
+@media (hover: hover) {
+    .btn-link:hover {
+        background: var(--terminal-green);
+        color: #0D1117;
+        box-shadow: 0 0 10px var(--glow-color);
+    }
 }
 
 /* Section 5: Research */
@@ -495,8 +509,10 @@
     transition: border-color 0.2s ease;
 }
 
-.counter-card:hover {
-    border-color: var(--terminal-green);
+@media (hover: hover) {
+    .counter-card:hover {
+        border-color: var(--terminal-green);
+    }
 }
 
 .counter-label {
@@ -611,10 +627,16 @@ textarea.form-control {
     gap: 0.5rem;
 }
 
-.btn-submit:hover {
-    background: var(--terminal-green);
-    color: #0D1117;
-    box-shadow: 0 0 14px var(--glow-color);
+@media (hover: hover) {
+    .btn-submit:hover {
+        background: var(--terminal-green);
+        color: #0D1117;
+        box-shadow: 0 0 14px var(--glow-color);
+    }
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
 }
 
 .social-cmds {
@@ -632,8 +654,10 @@ textarea.form-control {
     width: fit-content;
 }
 
-.social-cmd-link:hover {
-    color: var(--accent-orange);
+@media (hover: hover) {
+    .social-cmd-link:hover {
+        color: var(--accent-orange);
+    }
 }
 
 .social-cmd-link .cmd {
@@ -687,4 +711,41 @@ footer {
     color: var(--terminal-green);
     font-size: 0.8rem;
     border-radius: 3px;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    section {
+        padding: 2.5rem 0;
+    }
+
+    #hero {
+        padding: 4rem 0 2rem 0;
+        min-height: 70vh;
+    }
+
+    .boot-sequence {
+        min-height: 140px;
+        font-size: 0.85rem;
+    }
+
+    .commit-card, .paper-box, .whoami-box, .terminal-body {
+        padding: 1rem;
+    }
+
+    .glitch-title {
+        font-size: 1.8rem;
+    }
+
+    .project-name {
+        font-size: 1.1rem;
+    }
+
+    .counter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dir-header {
+        padding: 8px 12px;
+    }
 }

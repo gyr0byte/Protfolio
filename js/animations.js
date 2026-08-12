@@ -9,9 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('reveal');
     });
 
+    const isMobile = window.innerWidth <= 768;
     const revealOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
+        threshold: isMobile ? 0.05 : 0.15,
+        rootMargin: isMobile ? "0px 0px -20px 0px" : "0px 0px -50px 0px"
     };
 
     const revealObserver = new IntersectionObserver((entries, observer) => {

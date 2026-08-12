@@ -109,49 +109,6 @@
     outline: none;
 }
 
-/* Quick Command Tap Chips */
-.cli-quick-chips {
-    display: flex;
-    gap: 0.4rem;
-    padding: 6px 12px;
-    background-color: #161B22;
-    border-top: 1px solid var(--border);
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    align-items: center;
-}
-
-.cli-quick-chips::-webkit-scrollbar {
-    display: none;
-}
-
-.chip-btn {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    color: var(--terminal-green);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    padding: 3px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-}
-
-@media (hover: hover) {
-    .chip-btn:hover {
-        background: var(--border);
-        border-color: var(--terminal-green);
-        box-shadow: 0 0 6px var(--glow-color);
-    }
-}
-
-.chip-btn:active {
-    transform: scale(0.94);
-    background: rgba(63, 185, 80, 0.2);
-}
-
 .mobile-text {
     display: none;
 }
@@ -245,15 +202,19 @@
 
     /* ── Terminal Modal Overlay & Window ─ */
     .terminal-modal-overlay {
-        padding: 0;
+        padding: 0.5rem;
+        align-items: flex-start;
     }
 
     .terminal-modal-window {
-        width: 100vw;
-        height: 100dvh;
-        max-height: none;
-        border-radius: 0;
-        border: none;
+        width: 100%;
+        height: 50dvh;
+        max-height: 52vh;
+        min-height: 250px;
+        border-radius: 6px;
+        border: 1px solid var(--terminal-green);
+        margin-top: 0.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
     .terminal-modal-window .terminal-header {
@@ -262,15 +223,16 @@
 
     .terminal-modal-window .terminal-title {
         font-size: 0.72rem;
-        max-width: 160px;
+        max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .terminal-modal-body {
-        padding: 0.8rem;
+        padding: 0.7rem;
         font-size: 0.78rem;
+        overflow-y: auto;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }

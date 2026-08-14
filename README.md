@@ -99,14 +99,3 @@ To receive messages from the contact form directly in your inbox:
    ```
 
 ---
-
-## 👨‍💻 Author
-
-**Gaurav Dulal (gyr0byte)**  
-*Undergraduate Computing Student @ London Metropolitan University (IIC)*  
-*Targeting MSc in Machine Learning @ University of Tübingen (2028)*  
-
-- **GitHub**: [@gyr0byte](https://github.com/gyr0byte)  
-- **Email**: gqurav69@gmail.com  
-
-*"Not a person, a process — always building, never stopping."*

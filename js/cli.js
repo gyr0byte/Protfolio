@@ -117,7 +117,6 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
             break;
 
         case 'research':
-        case 'cat':
             appendCliOutput(`PAPER: A Quantitative Framework for Evaluating Object-Oriented Purity in Modern Programming Languages\nAUTHORS: Gaurav Dulal + 3 collaborators\nSTATUS: In Progress → Journal Submission (2026)`);
             document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' });
             break;

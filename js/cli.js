@@ -48,21 +48,23 @@ function processCommand(rawCmd) {
         case 'help':
             appendCliOutput(
 `Available Commands:
-  neofetch      Display system & developer architecture info
-  whoami        Display profile information
-  skills        List engineering skills & tools
-  projects      List featured projects & commits
-  research      View research paper summary
-  stats         View GitHub stats & contribution metrics
-  contact       Open contact channel
-  matrix        Toggle Matrix digital rain canvas
-  theme         Switch color theme [green | amber | cyan | matrix]
-  audio         Toggle mechanical keyboard sound FX
-  cowsay <msg>  Render ASCII cow with custom message
-  sudo hire     Initiate recruitment sequence
-  clear         Clear terminal output buffer
-  exit / close  Close terminal modal window
-  top / home    Scroll to top of page`
+  neofetch        Display system & developer architecture info
+  whoami          Display profile information
+  skills          List engineering skills & tools
+  projects        List featured projects & commits
+  research        View research paper summary
+  stats           View GitHub stats & contribution metrics
+  contact         Open contact channel
+  cat resume.json Print structured resume as JSON
+  play snake      Launch ASCII Snake mini-game
+  matrix          Toggle Matrix digital rain canvas
+  theme           Switch color theme [green | amber | cyan | matrix]
+  audio           Toggle mechanical keyboard sound FX
+  cowsay <msg>    Render ASCII cow with custom message
+  sudo hire       Initiate recruitment sequence
+  clear           Clear terminal output buffer
+  exit / close    Close terminal modal window
+  top / home      Scroll to top of page`
             );
             break;
 
@@ -197,6 +199,50 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
         case 'home':
             window.scrollTo({ top: 0, behavior: 'smooth' });
             appendCliOutput(`Scrolled to top.`);
+            break;
+
+        case 'cat':
+            if (args[1]?.toLowerCase() === 'resume.json') {
+                appendCliOutput(
+`{
+  "name": "Gaurav Dulal",
+  "alias": "gyr0byte",
+  "age": 20,
+  "location": "Belbari, Morang, Nepal",
+  "education": {
+    "current": "BHons Computing @ IIC / London Met University",
+    "target": "MSc Machine Learning — University of Tübingen (2028)"
+  },
+  "languages": ["Python", "Java", "JavaScript", "C", "C++", "SQL", "Bash"],
+  "ml_stack": ["PyTorch", "Scikit-Learn", "XGBoost", "TensorFlow", "Keras"],
+  "nlp": ["TF-IDF", "LSTM", "AST Parsing", "Stacking Ensembles", "Transformers"],
+  "tools": ["Git", "Streamlit", "Flask", "Jupyter", "Plotly", "Linux"],
+  "deploy": ["Render", "Streamlit Cloud", "GitHub Pages"],
+  "projects": 6,
+  "repos": "28+",
+  "contributions": "1900+",
+  "streak": "${window.liveCurrentStreak || '175+'}+ days",
+  "research": "OOP Purity Quantitative Framework (Journal Submission 2026)",
+  "email": "gqurav69@gmail.com",
+  "github": "github.com/gyr0byte",
+  "linkedin": "linkedin.com/in/gaurav-dulal",
+  "motto": "Not a person, a process — always building, never stopping."
+}`
+                );
+            } else if (args[1] === 'research.txt') {
+                appendCliOutput(`PAPER: A Quantitative Framework for Evaluating Object-Oriented Purity in Modern Programming Languages\nAUTHORS: Gaurav Dulal + 3 collaborators\nSTATUS: In Progress → Journal Submission (2026)`);
+                document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                appendCliOutput(`cat: ${args[1] || ''}: No such file. Try 'cat resume.json' or 'cat research.txt'.`, 'error');
+            }
+            break;
+
+        case 'play':
+            if (args[1]?.toLowerCase() === 'snake') {
+                launchSnakeGame();
+            } else {
+                appendCliOutput(`play: unknown game '${args[1] || ''}'. Available: snake`, 'error');
+            }
             break;
 
         default:

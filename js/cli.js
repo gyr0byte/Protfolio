@@ -68,31 +68,31 @@ function processCommand(rawCmd) {
 
         case 'neofetch':
         case 'fastfetch':
-            const currentStreakDisplay = window.liveCurrentStreak ? `${window.liveCurrentStreak} days commit streak` : '158 days commit streak';
+            const currentStreakDisplay = window.liveCurrentStreak ? `${window.liveCurrentStreak} days commit streak` : '175+ days commit streak';
             if (window.innerWidth <= 600) {
                 appendCliOutput(
 `gaurav@gyr0byte
 ---------------
-OS: Nepal-OS Linux x86_64
+OS: Nepal-OS Linux x86_64 / WebKernel
 Host: IIC / London Met University
 Uptime: ${currentStreakDisplay}
 Target: Univ of Tübingen MSc ML ('28)
 Shell: Gyr0shell v2.6.0
-Primary: Python 3.12, C++, SQL
-ML Stack: Scikit-learn, PyTorch`
+Primary: Python 3.12, PyTorch, C++, SQL
+ML Stack: Scikit-learn, XGBoost, AST, NLP`
                 );
             } else {
                 appendCliOutput(
-`  ██████╗ ██╗   ██╗██████╗  ██████╗ 
- ██╔════╝ ╚██╗ ██╔╝██╔══██╗██╔═████╗  gaurav@gyr0byte
- ██║  ███╗ ╚████╔╝ ██████╔╝██║██╔██║  ---------------
- ██║   ██║  ╚██╔╝  ██╔══██╗████╔═██║  OS: Nepal-OS Linux x86_64
- ╚██████╔╝   ██║   ██║  ██║╚██████╔╝  Host: IIC / London Met University
-  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝   Uptime: ${currentStreakDisplay}
-                                      Target: University of Tübingen MSc ML (2028)
-                                      Shell: Gyr0shell v2.6.0
-                                      Primary Lang: Python 3.12, C++, SQL
-                                      ML Stack: Scikit-learn, PyTorch, XGBoost`
+`       /\\          gaurav@gyr0byte
+      /  \\         ---------------
+     / /\\ \\        OS: Nepal-OS Linux x86_64 (WebKernel v2.6)
+    / /  \\ \\       Host: IIC / London Met University
+   / /____\\ \\      Uptime: ${currentStreakDisplay}
+  /_/        \\_\\   Target: University of Tübingen MSc ML (2028)
+                   Shell: Gyr0shell v2.6.0
+                   Primary: Python 3.12, PyTorch, Scikit-Learn
+                   Focus: Applied NLP, Stacking Ensembles, AST
+                   Repos: 28+ Public | 1,900+ Commit Contributions`
                 );
             }
             break;

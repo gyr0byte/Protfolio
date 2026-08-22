@@ -19,7 +19,7 @@
         { id: 'tfidf', label: 'TF-IDF', category: 'NLP', color: '#d29922', r: 13, x: 0, y: 0, vx: 0, vy: 0 },
         { id: 'lstm', label: 'LSTM', category: 'NLP', color: '#d29922', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
         { id: 'ast', label: 'AST Parsing', category: 'NLP & Code', color: '#d29922', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'transformers', label: 'Transformers', category: 'NLP', color: '#d29922', r: 17, x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'transformers', label: 'Transformers', category: 'NLP & Transformers', color: '#d29922', r: 18, inProgress: true, x: 0, y: 0, vx: 0, vy: 0 },
 
         // Languages
         { id: 'python', label: 'Python', category: 'Languages', color: '#58a6ff', r: 20, x: 0, y: 0, vx: 0, vy: 0 },
@@ -256,6 +256,20 @@
             const isHover = hoveredNode === node;
             const r = isHover ? node.r + 4 : node.r;
 
+            // In-Progress Pulsing Aura Ring
+            if (node.inProgress) {
+                const pulseR = r + 5 + Math.sin(Date.now() * 0.005) * 4;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, pulseR, 0, Math.PI * 2);
+                ctx.strokeStyle = node.color;
+                ctx.globalAlpha = 0.45 + Math.sin(Date.now() * 0.005) * 0.25;
+                ctx.setLineDash([4, 3]);
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.globalAlpha = 1.0;
+            }
+
             // Outer Glow
             if (isHover) {
                 ctx.beginPath();
@@ -271,20 +285,24 @@
             ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
             ctx.fillStyle = '#0d1117';
             ctx.strokeStyle = isHover ? '#ffffff' : node.color;
-            ctx.lineWidth = isHover ? 2.5 : 1.8;
+            ctx.lineWidth = isHover ? 2.5 : (node.inProgress ? 2 : 1.8);
+            if (node.inProgress) ctx.setLineDash([4, 2]);
             ctx.fill();
             ctx.stroke();
+            ctx.setLineDash([]);
 
             // Label
             ctx.font = isHover ? 'bold 0.82rem JetBrains Mono, monospace' : '0.74rem JetBrains Mono, monospace';
             ctx.fillStyle = isHover ? '#ffffff' : 'rgba(230, 237, 243, 0.9)';
             ctx.textAlign = 'center';
-            ctx.fillText(node.label, node.x, node.y + r + 14);
+            const labelText = node.inProgress ? `${node.label} ⚡` : node.label;
+            ctx.fillText(labelText, node.x, node.y + r + 14);
         });
 
         // Draw Hover Tooltip Badge
         if (hoveredNode) {
-            const badgeText = `[${hoveredNode.category.toUpperCase()}] ${hoveredNode.label}`;
+            const statusTag = hoveredNode.inProgress ? ' [⚡ IN PROGRESS]' : '';
+            const badgeText = `[${hoveredNode.category.toUpperCase()}] ${hoveredNode.label}${statusTag}`;
             ctx.font = '600 0.78rem JetBrains Mono, monospace';
             const textWidth = ctx.measureText(badgeText).width;
             const bx = Math.max(10, Math.min(canvas.width - textWidth - 30, hoveredNode.x - textWidth / 2 - 10));

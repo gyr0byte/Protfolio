@@ -47,38 +47,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Contact Form — Native HTML POST to Web3Forms
-    // The form submits directly via action="https://api.web3forms.com/submit"
-    // We just add a brief terminal animation before it goes through
+    // 4. Contact Form — Native HTML POST to Web3Forms with Interactive Telemetry
     const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    const msgTelemetry = document.getElementById('messageTelemetry');
+
+    if (formMessage && msgTelemetry) {
+        formMessage.addEventListener('input', () => {
+            const txt = formMessage.value;
+            const charCount = txt.length;
+            const wordCount = txt.trim() === '' ? 0 : txt.trim().split(/\s+/).length;
+            const readTimeSec = Math.ceil(wordCount / 3.3);
+            msgTelemetry.textContent = `[CHARS: ${charCount} | WORDS: ${wordCount} | EST. READ: ${readTimeSec}s]`;
+        });
+    }
+
     if (contactForm) {
         contactForm.addEventListener('submit', () => {
             const submitBtn = document.getElementById('formSubmitBtn');
             const statusDiv = document.getElementById('formStatus');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.textContent = '[Transmitting...]';
+                submitBtn.textContent = '[ENCRYPTING PAYLOAD... 35%]';
             }
             if (statusDiv) {
                 statusDiv.style.display = 'block';
                 statusDiv.style.color = 'var(--amber-yellow)';
                 statusDiv.textContent = '> Encrypting payload... Transmitting via Web3Forms SMTP relay...';
             }
-            playClickSound(900, 0.04);
-            // Form submits natively — browser navigates to Web3Forms then redirects back
+            if (typeof playClickSound === 'function') playClickSound(900, 0.04);
         });
 
         // Show success toast if redirected back after submission
         if (window.location.search.includes('sent=true')) {
             setTimeout(() => {
-                showToast('[SUCCESS] Message delivered to gqurav69@gmail.com!');
+                if (typeof showToast === 'function') showToast('[SUCCESS] Message delivered to gqurav69@gmail.com!');
                 const statusDiv = document.getElementById('formStatus');
                 if (statusDiv) {
                     statusDiv.style.display = 'block';
                     statusDiv.style.color = 'var(--terminal-green)';
                     statusDiv.innerHTML = '&gt; <span style="color: var(--terminal-green);">[SUCCESS] Message delivered successfully. Response expected shortly.</span>';
                 }
-                // Clean URL
                 window.history.replaceState({}, '', window.location.pathname);
             }, 500);
         }

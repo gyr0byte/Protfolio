@@ -193,10 +193,16 @@
                 <span>ls -la skills/</span>
             </div>
 
-            <div class="skills-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
-                <span class="skills-controls-hint" style="color: var(--secondary-text); font-size: 0.85rem;">[Click to expand]:</span>
-                <button class="nav-btn" onclick="expandAllSkills()">[+ All]</button>
-                <button class="nav-btn" onclick="collapseAllSkills()">[- All]</button>
+            <div class="skills-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <span class="skills-controls-hint" style="color: var(--secondary-text); font-size: 0.85rem;">[Tree]:</span>
+                    <button class="nav-btn" onclick="expandAllSkills()">[+ All]</button>
+                    <button class="nav-btn" onclick="collapseAllSkills()">[- All]</button>
+                </div>
+                <div class="skills-view-toggle" style="display: flex; gap: 0.4rem;">
+                    <button class="chip-btn active" id="btnViewTree" onclick="switchSkillsView('tree')">[📂 Directory Tree View]</button>
+                    <button class="chip-btn" id="btnViewGraph" onclick="switchSkillsView('graph')">[🕸️ Neural Network Graph View]</button>
+                </div>
             </div>
 
             <div class="terminal-window">
@@ -265,6 +271,22 @@
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Neural Network Graph View Container -->
+                    <div id="skillsGraphContainer" style="display: none; position: relative; width: 100%;">
+                        <div class="skills-graph-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--secondary-text); border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem;">
+                            <span>🕸️ NEURAL_SKILL_GRAPH v1.0 (Interactive Nodes — Hover & Drag)</span>
+                            <span>● LIVE SIMULATION</span>
+                        </div>
+                        <canvas id="skillsGraphCanvas" style="width: 100%; height: 420px; display: block; background: rgba(13, 17, 23, 0.6); border-radius: 4px; border: 1px solid var(--border);"></canvas>
+                        <div class="skills-graph-legend" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;">
+                            <span><span style="color: #2ea44f;">●</span> Machine Learning</span>
+                            <span><span style="color: #d29922;">●</span> Deep Learning & NLP</span>
+                            <span><span style="color: #58a6ff;">●</span> Languages</span>
+                            <span><span style="color: #bc8cff;">●</span> Math & Architecture</span>
+                            <span><span style="color: #f0883e;">●</span> Tools & Deployment</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -714,6 +736,7 @@
     <script src="js/boot.js"></script>
     <script src="js/typewriter.js"></script>
     <script src="js/skills.js"></script>
+    <script src="js/skills-graph.js"></script>
     <script src="js/stats.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/cli.js"></script>

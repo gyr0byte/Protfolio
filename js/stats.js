@@ -297,3 +297,67 @@ async function generateContributionHeatmap() {
         }
     }
 }
+
+// ─── Live Activity Feed Fetcher ───────────────────────────────────────
+async function fetchLatestCommitEvent() {
+    try {
+        const res = await fetch(`https://api.github.com/users/${GH_USERNAME}/events/public?per_page=15`);
+        if (!res.ok) throw new Error('GitHub API rate limit or error');
+        const events = await res.json();
+
+        // Find the most recent PushEvent
+        const pushEvent = events.find(ev => ev.type === 'PushEvent' && ev.payload && ev.payload.commits && ev.payload.commits.length > 0);
+        if (pushEvent) {
+            const fullRepo = pushEvent.repo.name;
+            const shortRepo = fullRepo.replace(`${GH_USERNAME}/`, '');
+            const latestCommit = pushEvent.payload.commits[pushEvent.payload.commits.length - 1];
+            let msg = latestCommit.message.split('\n')[0];
+            if (msg.length > 65) msg = msg.substring(0, 62) + '...';
+            const timeAgo = formatTimeAgo(new Date(pushEvent.created_at));
+
+            updateLiveActivityUI(msg, shortRepo, timeAgo, fullRepo);
+            return;
+        }
+    } catch (err) {
+        console.warn('[GitHub Activity] API error:', err);
+    }
+
+    // Fallback if API fails or rate limited
+    updateLiveActivityUI(
+        "Add interactive neural skill network graph to skills section",
+        "Protfolio",
+        "3 hours ago",
+        "gyr0byte/Protfolio"
+    );
+}
+
+function formatTimeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    if (seconds < 60) return 'just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    return `${days}d ago`;
+}
+
+function updateLiveActivityUI(commitMsg, shortRepo, timeAgo, fullRepo) {
+    const msgEl = document.getElementById('liveCommitMsg');
+    const repoEl = document.getElementById('liveCommitRepo');
+    const timeEl = document.getElementById('liveCommitTime');
+
+    if (msgEl) msgEl.textContent = `"${commitMsg}"`;
+    if (repoEl) {
+        repoEl.textContent = `REPO: ${shortRepo}`;
+        repoEl.title = fullRepo;
+    }
+    if (timeEl) timeEl.textContent = timeAgo;
+
+    window.latestCommitData = {
+        msg: commitMsg,
+        repo: shortRepo,
+        fullRepo: fullRepo,
+        timeAgo: timeAgo
+    };
+}

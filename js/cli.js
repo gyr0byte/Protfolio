@@ -54,6 +54,7 @@ function processCommand(rawCmd) {
   projects        List featured projects & commits
   research        View research paper summary
   stats           View GitHub stats & contribution metrics
+  latest          Show live GitHub commit activity feed
   contact         Open contact channel
   cat resume.json Print structured resume as JSON
   play snake      Launch ASCII Snake mini-game

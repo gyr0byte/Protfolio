@@ -46,9 +46,9 @@ function processCommand(rawCmd) {
         appendCliOutput(
 `       /\\_/\\  
       ( o.o )   💖 "I love you Sanu! ❤️"
-       > ^ <    ~ from Gaurav
-      /     \\  
-     (  " "  )
+      ( >🌹< )  ~ from Gaurav with a flower for you!
+       /   \\  
+      ( " " )
 
 ┌────────────────────────────────────────────────────────┐
 │  ✨ SPECIAL SECRET ENCRYPTED TRANSMISSION UNLOCKED ✨  │

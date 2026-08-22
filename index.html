@@ -537,6 +537,13 @@
                 <span>send --message --to=gaurav</span>
             </div>
 
+            <!-- Telemetry Header Badges -->
+            <div class="contact-telemetry-header">
+                <span class="telemetry-badge">📍 Belbari, Nepal (UTC+5:45)</span>
+                <span class="telemetry-badge status-open"><span class="pulse-dot"></span> OPEN FOR ML OPPORTUNITIES</span>
+                <span class="telemetry-badge">⏱️ RESPONSE: &lt; 24 HRS</span>
+            </div>
+
             <div class="terminal-window">
                 <div class="terminal-header">
                     <div class="terminal-dots">
@@ -559,7 +566,10 @@
 
                         <div class="form-group">
                             <label>&gt; To:</label>
-                            <input type="text" class="form-control" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
+                            <div class="input-copy-wrapper">
+                                <input type="text" class="form-control" id="toEmailInput" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
+                                <button type="button" class="btn-copy-email" id="btnCopyEmail" onclick="copyEmailToClipboard()">[Copy 📋]</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>&gt; From (your name):</label>
@@ -571,19 +581,38 @@
                         </div>
                         <div class="form-group">
                             <label>&gt; Subject:</label>
-                            <input type="text" name="subject" id="formSubject" class="form-control" placeholder="Enter subject line..." required>
+                            <div class="subject-chips">
+                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '💼 ML / DS Opportunity')">[💼 ML / DS Opportunity]</button>
+                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '🔬 Research Collaboration')">[🔬 Research Collab]</button>
+                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '☕ CodeRoast / Coffee Chat')">[☕ CodeRoast / Chat]</button>
+                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '📩 General Inquiry')">[📩 General Inquiry]</button>
+                            </div>
+                            <input type="text" name="subject" id="formSubject" class="form-control" placeholder="Select a preset above or type subject line..." required>
                         </div>
                         <div class="form-group">
                             <label>&gt; Message:</label>
                             <textarea name="message" id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
+                            <div class="message-telemetry" id="messageTelemetry">[CHARS: 0 | WORDS: 0 | EST. READ: 0s]</div>
                         </div>
                         <button type="submit" class="btn-submit" id="formSubmitBtn">
                             [Send Message ↵]
                         </button>
+
+                        <div class="contact-security-footer">
+                            <span>🔒 TLS 1.3 / Web3Forms SSL Relay</span>
+                            <span>• PGP: 0x8F92...A72B</span>
+                        </div>
                     </form>
                     <div id="formStatus" style="margin-top: 1rem; color: var(--terminal-green); display: none;"></div>
                 </div>
             </div>
+
+            <!-- CLI Hint -->
+            <div class="cli-hint-box">
+                💡 <span>Prefer CLI? Open <strong>Gyr0shell</strong> below or type <code>send --message</code> in the interactive terminal.</span>
+            </div>
+
+            <!-- Social Commands -->
 
             <!-- Social Commands -->
             <div class="social-cmds">

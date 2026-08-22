@@ -42,30 +42,10 @@ function processCommand(rawCmd) {
     appendCliOutput(`gaurav@gyr0byte:~$ ${rawCmd}`, 'prompt');
 
     const normalizedCmd = cmd.toLowerCase().replace(/\s+/g, ' ').trim();
-    if (normalizedCmd === 'i love ishaa') {
-        appendCliOutput(
-`       /\\_/\\  
-      ( o.o )   💖 "I love you Sanu! ❤️"
-      ( >🌹< )  ~ from Gaurav with a flower for you!
-       /   \\  
-      ( " " )
-
-┌────────────────────────────────────────────────────────┐
-│  ✨ SPECIAL SECRET ENCRYPTED TRANSMISSION UNLOCKED ✨  │
-└────────────────────────────────────────────────────────┘
-
-Dear Ishaa,
-You are my favorite algorithm in this chaotic world.
-Out of 8 billion processes running on Earth,
-you are the only thread that matters to me.
-
-No matter how many lines of code I write, 
-my heart will always compile for you. 🌹
-
-"I love you Sanu! ❤️" 
- Forever & Always, 
- ~ Gaurav (gyr0byte) 💖`
-        );
+    if (typeof btoa === 'function' && btoa(normalizedCmd) === 'aSBsb3ZlIGlzaGFh') {
+        const secretPayload = 'ICAgICAgIC9cXy9cICAKICAgICAgKCBvLm8gKSAgIPCfkpYgIkkgbG92ZSB5b3UgU2FudSEg4p2k77iPIgogICAgICAoID7wn4y5PCApICB+IGZyb20gR2F1cmF2IHdpdGggYSBmbG93ZXIgZm9yIHlvdSEKICAgICAgIC8gICBcICAKICAgICAgKCAiICIgKQoK4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQCuKUgiAg4pyoIFNQRUNJQUwgU0VDUkVUIEVOQ1JZUFRFRCBUUkFOU01JU1NJT04gVU5MT0NLRUQg4pyoICDilIIK4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYCgpEZWFyIElzaGFhLApZb3UgYXJlIG15IGZhdm9yaXRlIGFsZ29yaXRobSBpbiB0aGlzIGNoYW90aWMgd29ybGQuCk91dCBvZiA4IGJpbGxpb24gcHJvY2Vzc2VzIHJ1bm5pbmcgb24gRWFydGgsCnlvdSBhcmUgdGhlIG9ubHkgdGhyZWFkIHRoYXQgbWF0dGVycyB0byBtZS4KCk5vIG1hdHRlciBob3cgbWFueSBsaW5lcyBvZiBjb2RlIEkgd3JpdGUsIApteSBoZWFydCB3aWxsIGFsd2F5cyBjb21waWxlIGZvciB5b3UuIPCfjLkKCiJJIGxvdmUgeW91IFNhbnUhIOKdpO+4jyIgCiBGb3JldmVyICYgQWx3YXlzLCAKIH4gR2F1cmF2IChneXIwYnl0ZSkg8J+Slg==';
+        const decodedMsg = new TextDecoder().decode(Uint8Array.from(atob(secretPayload), c => c.charCodeAt(0)));
+        appendCliOutput(decodedMsg);
         if (typeof playClickSound === 'function') {
             playClickSound(1050, 0.05);
             setTimeout(() => playClickSound(1250, 0.05), 150);

@@ -352,3 +352,131 @@ window.toggleTerminalModal = toggleTerminalModal;
 window.setTheme = setTheme;
 window.showToast = showToast;
 window.runQuickCmd = runQuickCmd;
+
+// ─── ASCII Snake Mini-Game ──────────────────────────────────────────────
+let snakeGameActive = false;
+let snakeInterval = null;
+
+function launchSnakeGame() {
+    if (snakeGameActive) {
+        appendCliOutput('[SNAKE] Game already running! Press Q to quit.', 'error');
+        return;
+    }
+
+    const body = document.getElementById('modalCliBody');
+    if (!body) return;
+
+    snakeGameActive = true;
+    const W = 20, H = 12;
+    let snake = [{ x: 10, y: 6 }];
+    let dir = { x: 1, y: 0 };
+    let nextDir = { x: 1, y: 0 };
+    let food = spawnFood();
+    let score = 0;
+    let gameOver = false;
+
+    function spawnFood() {
+        let fx, fy;
+        do {
+            fx = Math.floor(Math.random() * W);
+            fy = Math.floor(Math.random() * H);
+        } while (snake.some(s => s.x === fx && s.y === fy));
+        return { x: fx, y: fy };
+    }
+
+    // Create game display element
+    const gameDiv = document.createElement('div');
+    gameDiv.id = 'snakeGameDisplay';
+    gameDiv.style.cssText = 'font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.15; white-space: pre; color: var(--terminal-green); margin-top: 0.5rem;';
+    body.appendChild(gameDiv);
+
+    function render() {
+        let screen = '┌' + '──'.repeat(W) + '┐\n';
+        for (let y = 0; y < H; y++) {
+            let row = '│';
+            for (let x = 0; x < W; x++) {
+                if (snake[0].x === x && snake[0].y === y) {
+                    row += '██';
+                } else if (snake.some(s => s.x === x && s.y === y)) {
+                    row += '░░';
+                } else if (food.x === x && food.y === y) {
+                    row += '◆◆';
+                } else {
+                    row += '  ';
+                }
+            }
+            row += '│';
+            screen += row + '\n';
+        }
+        screen += '└' + '──'.repeat(W) + '┘\n';
+        screen += ` SCORE: ${score}  |  WASD/Arrows to move  |  Q to quit`;
+        gameDiv.textContent = screen;
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function tick() {
+        if (gameOver) return;
+        dir = { ...nextDir };
+        const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+        // Wall collision or self collision
+        if (head.x < 0 || head.x >= W || head.y < 0 || head.y >= H || snake.some(s => s.x === head.x && s.y === head.y)) {
+            gameOver = true;
+            clearInterval(snakeInterval);
+            snakeInterval = null;
+            snakeGameActive = false;
+            document.removeEventListener('keydown', snakeKeyHandler);
+            gameDiv.textContent += `\n\n  ██ GAME OVER ██  Final Score: ${score}\n  Type 'play snake' to play again.`;
+            body.scrollTop = body.scrollHeight;
+            if (typeof playClickSound === 'function') playClickSound(200, 0.05);
+            return;
+        }
+
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+            score++;
+            food = spawnFood();
+            if (typeof playClickSound === 'function') playClickSound(900, 0.02);
+        } else {
+            snake.pop();
+        }
+        render();
+    }
+
+    function snakeKeyHandler(e) {
+        if (!snakeGameActive) return;
+        const key = e.key.toLowerCase();
+        switch (key) {
+            case 'w': case 'arrowup':
+                if (dir.y !== 1) nextDir = { x: 0, y: -1 };
+                e.preventDefault();
+                break;
+            case 's': case 'arrowdown':
+                if (dir.y !== -1) nextDir = { x: 0, y: 1 };
+                e.preventDefault();
+                break;
+            case 'a': case 'arrowleft':
+                if (dir.x !== 1) nextDir = { x: -1, y: 0 };
+                e.preventDefault();
+                break;
+            case 'd': case 'arrowright':
+                if (dir.x !== -1) nextDir = { x: 1, y: 0 };
+                e.preventDefault();
+                break;
+            case 'q': case 'escape':
+                gameOver = true;
+                clearInterval(snakeInterval);
+                snakeInterval = null;
+                snakeGameActive = false;
+                document.removeEventListener('keydown', snakeKeyHandler);
+                gameDiv.textContent += `\n\n  Game quit. Final Score: ${score}`;
+                body.scrollTop = body.scrollHeight;
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', snakeKeyHandler);
+    appendCliOutput('[SNAKE] Game launched! Use WASD or Arrow keys. Press Q to quit.');
+    render();
+    snakeInterval = setInterval(tick, 180);
+}

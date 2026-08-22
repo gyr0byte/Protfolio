@@ -1287,19 +1287,52 @@ footer {
 
     /* ── Section Dividers ─────────── */
     .section-divider {
-        font-size: 0.8rem;
-        margin: 0.5rem 0;
-        padding: 0.5rem 0;
+        font-size: 0.75rem;
+        margin: 0.4rem 0;
+        padding: 0.4rem 0;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .section-divider::before,
     .section-divider::after {
-        content: '────────────────';
+        content: '───────';
     }
 
     /* ── Footer ────────────────────── */
     footer {
         padding: 2rem 0;
         font-size: 0.8rem;
+    }
+}
+
+/* ── Ultra Small Screens (< 480px Ergonomics) ────────────────────────── */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.8rem;
+    }
+    .glitch-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    .command-header {
+        font-size: 1.05rem;
+        flex-wrap: wrap;
+    }
+    .hero-quick-chips {
+        gap: 0.4rem;
+    }
+    .hero-quick-chips .chip-btn {
+        padding: 8px 10px;
+        font-size: 0.78rem;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .live-activity-box {
+        padding: 0.6rem 0.8rem;
+    }
+    .live-commit-msg {
+        font-size: 0.82rem;
     }
 }

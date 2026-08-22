@@ -28,4 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => {
         revealObserver.observe(el);
     });
+
+    // Section Divider Typing Animation — triggers once on scroll into view
+    const dividers = document.querySelectorAll('.section-divider');
+    const dividerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('typed');
+                dividerObserver.unobserve(entry.target);
+                if (typeof playClickSound === 'function') playClickSound(500, 0.012);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    dividers.forEach(d => dividerObserver.observe(d));
 });

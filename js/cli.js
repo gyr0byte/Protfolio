@@ -41,6 +41,38 @@ function processCommand(rawCmd) {
 
     appendCliOutput(`gaurav@gyr0byte:~$ ${rawCmd}`, 'prompt');
 
+    const normalizedCmd = cmd.toLowerCase().replace(/\s+/g, ' ').trim();
+    if (['i love ishaa', 'i love isha', 'love ishaa', 'love isha'].includes(normalizedCmd)) {
+        appendCliOutput(
+`       /\\_/\\  
+      ( o.o )   💖 "I love you Sanu! ❤️"
+       > ^ <    ~ from Gaurav
+      /     \\  
+     (  " "  )
+
+┌────────────────────────────────────────────────────────┐
+│  ✨ SPECIAL SECRET ENCRYPTED TRANSMISSION UNLOCKED ✨  │
+└────────────────────────────────────────────────────────┘
+
+Dear Ishaa,
+You are my favorite algorithm in this chaotic world.
+Out of 8 billion processes running on Earth,
+you are the only thread that matters to me.
+
+No matter how many lines of code I write, 
+my heart will always compile for you. 🌹
+
+"I love you Sanu! ❤️" 
+ Forever & Always, 
+ ~ Gaurav (gyr0byte) 💖`
+        );
+        if (typeof playClickSound === 'function') {
+            playClickSound(1050, 0.05);
+            setTimeout(() => playClickSound(1250, 0.05), 150);
+        }
+        return;
+    }
+
     const args = cmd.split(' ');
     const mainCmd = args[0].toLowerCase();
 

@@ -300,35 +300,53 @@ async function generateContributionHeatmap() {
 
 // ─── Live Activity Feed Fetcher ───────────────────────────────────────
 async function fetchLatestCommitEvent() {
+    let commitData = null;
+
     try {
         const res = await fetch(`https://api.github.com/users/${GH_USERNAME}/events/public?per_page=15`);
-        if (!res.ok) throw new Error('GitHub API rate limit or error');
-        const events = await res.json();
+        if (res.ok) {
+            const events = await res.json();
+            const pushEvent = events.find(ev => ev.type === 'PushEvent' && ev.payload && ev.payload.commits && ev.payload.commits.length > 0);
+            if (pushEvent) {
+                const fullRepo = pushEvent.repo.name;
+                const shortRepo = fullRepo.replace(`${GH_USERNAME}/`, '');
+                const latestCommit = pushEvent.payload.commits[pushEvent.payload.commits.length - 1];
+                let msg = latestCommit.message.split('\n')[0];
+                if (msg.length > 65) msg = msg.substring(0, 62) + '...';
 
-        // Find the most recent PushEvent
-        const pushEvent = events.find(ev => ev.type === 'PushEvent' && ev.payload && ev.payload.commits && ev.payload.commits.length > 0);
-        if (pushEvent) {
-            const fullRepo = pushEvent.repo.name;
-            const shortRepo = fullRepo.replace(`${GH_USERNAME}/`, '');
-            const latestCommit = pushEvent.payload.commits[pushEvent.payload.commits.length - 1];
-            let msg = latestCommit.message.split('\n')[0];
-            if (msg.length > 65) msg = msg.substring(0, 62) + '...';
-            const timeAgo = formatTimeAgo(new Date(pushEvent.created_at));
-
-            updateLiveActivityUI(msg, shortRepo, timeAgo, fullRepo);
-            return;
+                commitData = {
+                    msg: msg,
+                    repo: shortRepo,
+                    fullRepo: fullRepo,
+                    timestamp: new Date(pushEvent.created_at).getTime()
+                };
+                localStorage.setItem('gyr0byte_latest_commit', JSON.stringify(commitData));
+            }
         }
     } catch (err) {
-        console.warn('[GitHub Activity] API error:', err);
+        console.warn('[GitHub Activity] API query error or rate limited:', err);
     }
 
-    // Fallback if API fails or rate limited
-    updateLiveActivityUI(
-        "Add interactive neural skill network graph to skills section",
-        "Protfolio",
-        "3 hours ago",
-        "gyr0byte/Protfolio"
-    );
+    // Try reading from localStorage cache if live fetch failed / rate-limited
+    if (!commitData) {
+        try {
+            const cached = localStorage.getItem('gyr0byte_latest_commit');
+            if (cached) commitData = JSON.parse(cached);
+        } catch (e) {}
+    }
+
+    // Ultimate fallback
+    if (!commitData) {
+        commitData = {
+            msg: "Add interactive neural skill network graph to skills section",
+            repo: "Protfolio",
+            fullRepo: "gyr0byte/Protfolio",
+            timestamp: Date.now() - 2 * 60 * 1000 // 2 mins ago
+        };
+    }
+
+    const timeAgo = formatTimeAgo(new Date(commitData.timestamp));
+    updateLiveActivityUI(commitData.msg, commitData.repo, timeAgo, commitData.fullRepo);
 }
 
 function formatTimeAgo(date) {

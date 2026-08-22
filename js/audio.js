@@ -42,14 +42,19 @@ function playClickSound(frequency = 600, duration = 0.015) {
 
 function toggleAudio() {
     audioEnabled = !audioEnabled;
-    if (audioEnabled) initAudio();
+    if (audioEnabled) {
+        initAudio();
+        startAmbientHum();
+    } else {
+        stopAmbientHum();
+    }
 
     const soundBtn = document.getElementById('soundToggleBtn');
     if (soundBtn) {
         soundBtn.textContent = audioEnabled ? '🔊 AUDIO: ON' : '🔇 AUDIO: OFF';
     }
 
-    showToast(audioEnabled ? 'Terminal mechanical keyboard audio enabled.' : 'Terminal audio muted.');
+    showToast(audioEnabled ? 'Terminal audio + ambient server hum enabled.' : 'Terminal audio muted.');
     if (audioEnabled) playClickSound(800, 0.03);
 }
 

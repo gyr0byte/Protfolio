@@ -104,7 +104,7 @@ ML Stack: Scikit-learn, PyTorch`
 
         case 'skills':
         case 'ls':
-            appendCliOutput(`drwxr-xr-x Machine_Learning/ (numpy, pandas, sklearn, xgboost)\ndrwxr-xr-x Deep_Learning/ [IN PROGRESS] (tensorflow, cnn, rnn, transformers)\ndrwxr-xr-x Languages/ (python, java, javascript, c, sql)\ndrwxr-xr-x Tools/ (git, streamlit, flask, jupyter, linux)`);
+            appendCliOutput(`drwxr-xr-x Machine_Learning/ (numpy, pandas, sklearn, xgboost, cv, feature-eng)\ndrwxr-xr-x Deep_Learning_&_NLP/ [IN PROGRESS] (pytorch, tensorflow, lstm, tf-idf, transformers)\ndrwxr-xr-x Languages/ (python, java, javascript, c, c++, sql, html5, css3, bash)\ndrwxr-xr-x Math_&_Foundations/ (linear-algebra, stats, probability, oop-design, dsa)\ndrwxr-xr-x Tools_&_Deployment/ (git, streamlit, flask, jupyter, linux, plotly, render)`);
             document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
             break;
 

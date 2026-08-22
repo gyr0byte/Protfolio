@@ -42,7 +42,7 @@ function processCommand(rawCmd) {
     appendCliOutput(`gaurav@gyr0byte:~$ ${rawCmd}`, 'prompt');
 
     const normalizedCmd = cmd.toLowerCase().replace(/\s+/g, ' ').trim();
-    if (['i love ishaa', 'i love isha', 'love ishaa', 'love isha'].includes(normalizedCmd)) {
+    if (normalizedCmd === 'i love ishaa') {
         appendCliOutput(
 `       /\\_/\\  
       ( o.o )   💖 "I love you Sanu! ❤️"

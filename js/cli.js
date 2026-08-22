@@ -127,6 +127,16 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
             document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' });
             break;
 
+        case 'latest':
+        case 'activity':
+            const latest = window.latestCommitData || {
+                msg: "Add interactive neural skill network graph to skills section",
+                repo: "Protfolio",
+                timeAgo: "3 hours ago"
+            };
+            appendCliOutput(`[LIVE ACTIVITY FEED]\nLATEST COMMIT : "${latest.msg}"\nREPOSITORY    : ${latest.repo}\nTIME AGO      : ${latest.timeAgo}`);
+            break;
+
         case 'contact':
         case 'send':
             appendCliOutput(`Contact endpoint: gqurav69@gmail.com\nGitHub: github.com/gyr0byte\nLinkedIn: linkedin.com/in/gaurav-dulal`);

@@ -32,6 +32,81 @@ function selectSubjectChip(btn, text) {
     if (typeof playClickSound === 'function') playClickSound(700, 0.02);
 }
 
+// ─── Anime Quote Rotator ───────────────────────────────────────────────
+const animeQuotes = [
+    { quote: '"When do you think people die? When they are shot with a bullet? No. It\'s when they are forgotten!"', author: '— Dr. Hiriluk (One Piece)' },
+    { quote: '"Inherited Will, the Destiny of the Age, and Dreams. As long as people continue to seek freedom, these will never cease!"', author: '— Gol D. Roger (One Piece)' },
+    { quote: '"If you don\'t take risks, you can\'t create a future."', author: '— Monkey D. Luffy (One Piece)' },
+    { quote: '"If you don\'t like your destiny, don\'t accept it. Have the courage to change it the way you want!"', author: '— Naruto Uzumaki (Naruto)' },
+    { quote: '"Adversity drives people to grow. You can\'t reach the top without climbing through the dark."', author: '— Kisuke Urahara (Bleach)' },
+    { quote: '"If I can\'t protect them from your wheel of fate, then I\'ll break it."', author: '— Ichigo Kurosaki (Bleach)' },
+    { quote: '"There\'s nothing you can\'t do if you try. Get excited, this is ten billion percent scientific!"', author: '— Senku Ishigami (Dr. Stone)' },
+    { quote: '"You are young. You still have time to build something new."', author: '— Thorfinn (Vinland Saga)' },
+    { quote: '"I will level up. Until I reach the very top."', author: '— Sung Jin-Woo (Solo Leveling)' },
+    { quote: '"The weak get eaten. The strong survive. But I dictate my own rules."', author: '— Sung Jin-Woo (Solo Leveling)' },
+    { quote: '"Feel the rage. The powerful, pure rage of not giving up will become your unshakeable drive!"', author: '— Giyu Tomioka (Demon Slayer)' },
+    { quote: '"Knowledge is power, and supreme capability belongs to those who adapt."', author: '— Ainz Ooal Gown (Overlord)' },
+    { quote: '"Everyone has to die someday. But what they believed in will never fade as long as someone protects it."', author: '— Meliodas (Seven Deadly Sins)' },
+    { quote: '"El Psy Kongroo. The future is unwritten."', author: '— Rintaro Okabe (Steins;Gate)' }
+];
+
+let animeQuoteIndex = 0;
+let animeProgressInterval = null;
+let animeProgressVal = 0;
+
+function updateAnimeQuoteDisplay() {
+    const qText = document.getElementById('animeQuoteText');
+    const qAuthor = document.getElementById('animeQuoteAuthor');
+    const qBox = document.querySelector('.anime-quote-box');
+    
+    if (qText && qAuthor && qBox) {
+        qBox.style.opacity = '0';
+        setTimeout(() => {
+            qText.textContent = animeQuotes[animeQuoteIndex].quote;
+            qAuthor.textContent = animeQuotes[animeQuoteIndex].author;
+            qBox.style.opacity = '1';
+        }, 150);
+    }
+    resetAnimeProgress();
+}
+
+function resetAnimeProgress() {
+    animeProgressVal = 0;
+    const bar = document.getElementById('animeProgressBar');
+    if (bar) bar.style.width = '0%';
+}
+
+function startAnimeQuoteTimer() {
+    if (animeProgressInterval) clearInterval(animeProgressInterval);
+
+    animeProgressInterval = setInterval(() => {
+        animeProgressVal += 2;
+        const bar = document.getElementById('animeProgressBar');
+        if (bar) bar.style.width = `${Math.min(animeProgressVal, 100)}%`;
+        if (animeProgressVal >= 100) {
+            animeQuoteIndex = (animeQuoteIndex + 1) % animeQuotes.length;
+            updateAnimeQuoteDisplay();
+        }
+    }, 120);
+}
+
+function nextAnimeQuote() {
+    animeQuoteIndex = (animeQuoteIndex + 1) % animeQuotes.length;
+    updateAnimeQuoteDisplay();
+    startAnimeQuoteTimer();
+    if (typeof playClickSound === 'function') playClickSound(750, 0.02);
+}
+
+function prevAnimeQuote() {
+    animeQuoteIndex = (animeQuoteIndex - 1 + animeQuotes.length) % animeQuotes.length;
+    updateAnimeQuoteDisplay();
+    startAnimeQuoteTimer();
+    if (typeof playClickSound === 'function') playClickSound(650, 0.02);
+}
+
+window.nextAnimeQuote = nextAnimeQuote;
+window.prevAnimeQuote = prevAnimeQuote;
+
 // Main Application Initialization
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Mouse Follower Crosshair
@@ -130,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Initialize Modules
     runBootSequence();
     updateUptimeBadge();
+    startAnimeQuoteTimer();
 
     // 6. Fetch LIVE GitHub Data, then initialize counters & heatmap
     fetchAllGitHubData().then(() => {

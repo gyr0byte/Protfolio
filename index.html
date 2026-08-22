@@ -555,54 +555,82 @@
                     <span></span>
                 </div>
                 <div class="terminal-body">
-                    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-                        <!-- Web3Forms Access Key -->
-                        <input type="hidden" name="access_key" value="0c87bb68-65f7-4b08-a72b-446c382dc55d">
-                        <!-- Redirect back to portfolio after submit -->
-                        <input type="hidden" name="redirect" value="https://gyr0byte.github.io/Protfolio/?sent=true">
-                        <input type="hidden" name="from_name" value="gyr0byte Portfolio Contact">
-                        <!-- Honeypot anti-spam -->
-                        <input type="checkbox" name="botcheck" style="display: none;">
+                    <div class="contact-layout">
+                        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                            <!-- Web3Forms Access Key -->
+                            <input type="hidden" name="access_key" value="0c87bb68-65f7-4b08-a72b-446c382dc55d">
+                            <!-- Redirect back to portfolio after submit -->
+                            <input type="hidden" name="redirect" value="https://gyr0byte.github.io/Protfolio/?sent=true">
+                            <input type="hidden" name="from_name" value="gyr0byte Portfolio Contact">
+                            <!-- Honeypot anti-spam -->
+                            <input type="checkbox" name="botcheck" style="display: none;">
 
-                        <div class="form-group">
-                            <label>&gt; To:</label>
-                            <div class="input-copy-wrapper">
-                                <input type="text" class="form-control" id="toEmailInput" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
-                                <button type="button" class="btn-copy-email" id="btnCopyEmail" onclick="copyEmailToClipboard()">[Copy 📋]</button>
+                            <div class="form-group">
+                                <label>&gt; To:</label>
+                                <div class="input-copy-wrapper">
+                                    <input type="text" class="form-control" id="toEmailInput" value="gqurav69@gmail.com" readonly style="opacity: 0.7;">
+                                    <button type="button" class="btn-copy-email" id="btnCopyEmail" onclick="copyEmailToClipboard()">[Copy 📋]</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>&gt; From (your name):</label>
+                                <input type="text" name="name" id="formName" class="form-control" placeholder="Enter your name..." required>
+                            </div>
+                            <div class="form-group">
+                                <label>&gt; Reply-to (your email):</label>
+                                <input type="email" name="email" id="formEmail" class="form-control" placeholder="you@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>&gt; Subject:</label>
+                                <div class="subject-chips">
+                                    <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '💼 ML / DS Opportunity')">[💼 ML / DS Opportunity]</button>
+                                    <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '🔬 Research Collaboration')">[🔬 Research Collab]</button>
+                                    <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '☕ CodeRoast / Coffee Chat')">[☕ CodeRoast / Chat]</button>
+                                    <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '📩 General Inquiry')">[📩 General Inquiry]</button>
+                                </div>
+                                <input type="text" name="subject" id="formSubject" class="form-control" placeholder="Select a preset above or type subject line..." required>
+                            </div>
+                            <div class="form-group">
+                                <label>&gt; Message:</label>
+                                <textarea name="message" id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
+                                <div class="message-telemetry" id="messageTelemetry">[CHARS: 0 | WORDS: 0 | EST. READ: 0s]</div>
+                            </div>
+                            <button type="submit" class="btn-submit" id="formSubmitBtn">
+                                [Send Message ↵]
+                            </button>
+
+                            <div class="contact-security-footer">
+                                <span>🔒 TLS 1.3 / Web3Forms SSL Relay</span>
+                                <span>• PGP: 0x8F92...A72B</span>
+                            </div>
+                        </form>
+
+                        <!-- Anime Quote Rotator Panel -->
+                        <div class="anime-quote-panel">
+                            <div class="anime-panel-header">
+                                <span>🎌 ANIME_STDOUT // TRANSMISSION</span>
+                                <span class="anime-pulse">● STREAMING</span>
+                            </div>
+                            <div class="anime-ascii-watermark">
+                                <pre>
+  /\_/\   "Code with passion,
+ ( °.°)   build without limits."
+  > ^ <   [ 夢 • 創 • 志 ]
+                                </pre>
+                            </div>
+                            <div class="anime-quote-box">
+                                <div class="anime-quote-text" id="animeQuoteText">"People's dreams never end!"</div>
+                                <div class="anime-quote-author" id="animeQuoteAuthor">— Marshall D. Teach (One Piece)</div>
+                            </div>
+                            <div class="anime-progress-track">
+                                <div class="anime-progress-bar" id="animeProgressBar"></div>
+                            </div>
+                            <div class="anime-controls">
+                                <button type="button" class="chip-btn" onclick="prevAnimeQuote()">[⏮ Prev]</button>
+                                <button type="button" class="chip-btn" onclick="nextAnimeQuote()">[⏭ Next]</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>&gt; From (your name):</label>
-                            <input type="text" name="name" id="formName" class="form-control" placeholder="Enter your name..." required>
-                        </div>
-                        <div class="form-group">
-                            <label>&gt; Reply-to (your email):</label>
-                            <input type="email" name="email" id="formEmail" class="form-control" placeholder="you@example.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label>&gt; Subject:</label>
-                            <div class="subject-chips">
-                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '💼 ML / DS Opportunity')">[💼 ML / DS Opportunity]</button>
-                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '🔬 Research Collaboration')">[🔬 Research Collab]</button>
-                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '☕ CodeRoast / Coffee Chat')">[☕ CodeRoast / Chat]</button>
-                                <button type="button" class="chip-btn" onclick="selectSubjectChip(this, '📩 General Inquiry')">[📩 General Inquiry]</button>
-                            </div>
-                            <input type="text" name="subject" id="formSubject" class="form-control" placeholder="Select a preset above or type subject line..." required>
-                        </div>
-                        <div class="form-group">
-                            <label>&gt; Message:</label>
-                            <textarea name="message" id="formMessage" class="form-control" placeholder="Write your message here..." required></textarea>
-                            <div class="message-telemetry" id="messageTelemetry">[CHARS: 0 | WORDS: 0 | EST. READ: 0s]</div>
-                        </div>
-                        <button type="submit" class="btn-submit" id="formSubmitBtn">
-                            [Send Message ↵]
-                        </button>
-
-                        <div class="contact-security-footer">
-                            <span>🔒 TLS 1.3 / Web3Forms SSL Relay</span>
-                            <span>• PGP: 0x8F92...A72B</span>
-                        </div>
-                    </form>
+                    </div>
                     <div id="formStatus" style="margin-top: 1rem; color: var(--terminal-green); display: none;"></div>
                 </div>
             </div>

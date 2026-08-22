@@ -1,3 +1,37 @@
+// Global helper functions for Contact Form UI
+function copyEmailToClipboard() {
+    const emailVal = 'gqurav69@gmail.com';
+    navigator.clipboard.writeText(emailVal).then(() => {
+        const btn = document.getElementById('btnCopyEmail');
+        if (btn) {
+            btn.textContent = '[COPIED! ✓]';
+            btn.style.color = 'var(--amber-yellow)';
+            btn.style.borderColor = 'var(--amber-yellow)';
+            setTimeout(() => {
+                btn.textContent = '[Copy 📋]';
+                btn.style.color = 'var(--terminal-green)';
+                btn.style.borderColor = 'var(--border)';
+            }, 2000);
+        }
+        if (typeof showToast === 'function') {
+            showToast('[COPIED] gqurav69@gmail.com copied to clipboard!');
+        }
+    }).catch(() => {
+        alert('Email: gqurav69@gmail.com');
+    });
+}
+
+function selectSubjectChip(btn, text) {
+    const subjectInput = document.getElementById('formSubject');
+    if (subjectInput) {
+        subjectInput.value = text;
+        subjectInput.focus();
+    }
+    document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    if (typeof playClickSound === 'function') playClickSound(700, 0.02);
+}
+
 // Main Application Initialization
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Mouse Follower Crosshair

@@ -110,7 +110,7 @@ ML Stack: Scikit-learn, PyTorch`
 
         case 'projects':
         case 'git':
-            appendCliOutput(`1. OOP Purity Analyzer [Flask, Plotly, Research]\n2. WhatsApp Chat Analyzer [Streamlit, NLP, Pandas]\n3. CodeRoast [PyTorch, LLM, AST Analysis]\n4. ML-Foundations [NumPy → Transformers]\n5. Titanic Kaggle [78% accuracy]\n6. Text Emotion Classifier [NLP, Stacking Classifier, Streamlit]`);
+            appendCliOutput(`1. CodeRoast [PyTorch, LLM, AST Analysis]\n2. OOP Purity Analyzer [Flask, Plotly, Research]\n3. Text Emotion Classifier [NLP, Stacking Classifier, Streamlit]\n4. ML-Foundations [NumPy → Transformers]\n5. WhatsApp Chat Analyzer [Streamlit, NLP, Pandas]\n6. Titanic Kaggle [78% accuracy]`);
             document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
             break;
 

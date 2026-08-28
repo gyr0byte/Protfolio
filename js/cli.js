@@ -66,7 +66,6 @@ function processCommand(rawCmd) {
   projects        List featured projects & commits
   research        View research paper summary
   stats           View GitHub stats & contribution metrics
-  latest          Show live GitHub commit activity feed
   contact         Open contact channel
   cat resume.json Print structured resume as JSON
   play snake      Launch ASCII Snake mini-game
@@ -138,16 +137,6 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
         case 'curl':
             appendCliOutput(`STREAK: 158 days active\nCOMMITS: 1900+ contributions\nPROJECTS: 5+ deployed repositories`);
             document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' });
-            break;
-
-        case 'latest':
-        case 'activity':
-            const latest = window.latestCommitData || {
-                msg: "Add interactive neural skill network graph to skills section",
-                repo: "Protfolio",
-                timeAgo: "3 hours ago"
-            };
-            appendCliOutput(`[LIVE ACTIVITY FEED]\nLATEST COMMIT : "${latest.msg}"\nREPOSITORY    : ${latest.repo}\nTIME AGO      : ${latest.timeAgo}`);
             break;
 
         case 'contact':

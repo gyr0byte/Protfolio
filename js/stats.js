@@ -24,8 +24,7 @@ async function fetchAllGitHubData() {
         const [profileData, contribData, leetcodeData] = await Promise.allSettled([
             fetchGitHubProfile(),
             fetchContributionGraph(),
-            fetchLeetCodeStats(),
-            fetchLatestCommitEvent()
+            fetchLeetCodeStats()
         ]);
 
         // ── GitHub Contributions ───────────────────────────────────

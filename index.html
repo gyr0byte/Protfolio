@@ -740,7 +740,10 @@
     <!-- Floating Interactive Command Input -->
     <div class="cli-floating-bar">
         <span style="color: var(--terminal-green);">$</span>
-        <input type="text" id="cliCommandInput" class="cli-input" placeholder="type 'help'..." autocomplete="off">
+        <div class="cli-input-wrapper floating-input-wrapper">
+            <input type="text" id="cliCommandInput" class="cli-input" placeholder="type 'help'..." autocomplete="off" spellcheck="false">
+            <span id="floatingCliGhost" class="cli-ghost-text"></span>
+        </div>
     </div>
 
     <!-- Interactive Terminal Emulator Modal Overlay -->
@@ -762,13 +765,16 @@
                 <div style="color: var(--terminal-green);">
                     Gyr0shell v2.6.0 (x86_64-pc-nepal-os)<br>
                     Type '<span style="color: var(--accent-orange);">help</span>' for available commands. Try '<span style="color: var(--amber-yellow);">neofetch</span>', '<span style="color: var(--cyan-blue);">nvtop</span>', '<span style="color: var(--terminal-green);">ls</span>', or '<span style="color: var(--accent-orange);">tree</span>'.<br>
-                    <span style="color: var(--secondary-text); font-size: 0.8rem;">[Tip: Press <span style="color: var(--accent-orange);">Tab</span> to autocomplete commands, files & directories]</span>
+                    <span style="color: var(--secondary-text); font-size: 0.8rem;">[Tip: Autocomplete ghost suggestion appears as you type. Press <span style="color: var(--accent-orange);">Tab</span> or <span style="color: var(--accent-orange);">&rarr;</span> to accept]</span>
                 </div>
             </div>
 
             <div class="terminal-modal-input-row">
                 <span class="cli-modal-prompt" id="modalCliPrompt" style="color: var(--accent-orange);">gaurav@gyr0byte:~$</span>
-                <input type="text" id="modalCliInput" class="terminal-modal-input" placeholder="Enter command..." autocomplete="off">
+                <div class="cli-input-wrapper modal-input-wrapper">
+                    <input type="text" id="modalCliInput" class="terminal-modal-input" placeholder="Enter command..." autocomplete="off" spellcheck="false">
+                    <span id="modalCliGhost" class="cli-ghost-text"></span>
+                </div>
             </div>
         </div>
     </div>

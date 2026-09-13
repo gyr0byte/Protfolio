@@ -99,14 +99,86 @@
     gap: 0.6rem;
 }
 
-.terminal-modal-input {
+/* ─── Input Wrapper & Ghost Text Autosuggestion ──────────────────────── */
+.cli-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.modal-input-wrapper {
     flex-grow: 1;
+}
+
+.floating-input-wrapper {
+    width: 155px;
+}
+
+.cli-ghost-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    white-space: pre;
+    font-family: var(--font-mono);
+    line-height: 1.5;
+    letter-spacing: normal;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.modal-input-wrapper .cli-ghost-text {
+    font-size: 0.95rem;
+}
+
+.floating-input-wrapper .cli-ghost-text {
+    font-size: 0.85rem;
+}
+
+.ghost-faded {
+    color: var(--secondary-text);
+    opacity: 0.55;
+    text-shadow: 0 0 2px rgba(139, 148, 158, 0.2);
+}
+
+.terminal-modal-input {
+    width: 100%;
     background: transparent;
     border: none;
     color: var(--white-text);
     font-family: var(--font-mono);
     font-size: 0.95rem;
+    line-height: 1.5;
+    letter-spacing: normal;
     outline: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.cli-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--white-text);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    letter-spacing: normal;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
 }
 
 .mobile-text {

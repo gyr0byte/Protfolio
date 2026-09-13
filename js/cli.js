@@ -481,6 +481,103 @@ function displayCompletionOptions(options) {
     body.scrollTop = body.scrollHeight;
 }
 
+// ─── Autosuggestion Ghost Text Engine ─────────────────────────────────────
+function getAutoSuggestion(val) {
+    if (!val || !val.trim()) return null;
+
+    const trimmedLeading = val.trimStart();
+    const tokens = trimmedLeading.split(/\s+/);
+
+    // Typing base command (first token)
+    if (tokens.length === 1 && !val.endsWith(' ')) {
+        const prefix = tokens[0].toLowerCase();
+        const match = baseCommands.find(cmd => cmd.startsWith(prefix) && cmd !== prefix);
+        if (match) {
+            return {
+                full: match,
+                suffix: match.slice(prefix.length)
+            };
+        }
+        return null;
+    }
+
+    const cmd = tokens[0].toLowerCase();
+    const currentToken = val.endsWith(' ') ? '' : tokens[tokens.length - 1];
+
+    if (cmd === 'cd' || cmd === 'ls' || cmd === 'cat') {
+        const currNode = getVfsNode(currentVfsPath);
+        if (currNode && currNode.type === 'dir') {
+            let candidates = Object.keys(currNode.children || {});
+            if (cmd === 'cd') {
+                candidates = candidates.filter(k => currNode.children[k].type === 'dir');
+            }
+            const match = candidates.find(c => c.toLowerCase().startsWith(currentToken.toLowerCase()) && c.toLowerCase() !== currentToken.toLowerCase());
+            if (match) {
+                const isDir = currNode.children[match].type === 'dir';
+                const appendSlash = isDir ? '/' : '';
+                const remainder = (match + appendSlash).slice(currentToken.length);
+                return {
+                    full: val + remainder,
+                    suffix: remainder
+                };
+            }
+        }
+    } else if (cmd === 'theme') {
+        const themes = ['green', 'amber', 'cyan', 'matrix'];
+        const match = themes.find(t => t.startsWith(currentToken.toLowerCase()) && t !== currentToken.toLowerCase());
+        if (match) {
+            const remainder = match.slice(currentToken.length);
+            return {
+                full: val + remainder,
+                suffix: remainder
+            };
+        }
+    } else if (cmd === 'play') {
+        if ('snake'.startsWith(currentToken.toLowerCase()) && currentToken.toLowerCase() !== 'snake') {
+            const remainder = 'snake'.slice(currentToken.length);
+            return {
+                full: val + remainder,
+                suffix: remainder
+            };
+        }
+    } else if (cmd === 'sudo') {
+        if ('hire'.startsWith(currentToken.toLowerCase()) && currentToken.toLowerCase() !== 'hire') {
+            const remainder = 'hire'.slice(currentToken.length);
+            return {
+                full: val + remainder,
+                suffix: remainder
+            };
+        }
+    }
+
+    return null;
+}
+
+function updateGhostText(inputElem, ghostElem) {
+    if (!inputElem || !ghostElem) return;
+    const val = inputElem.value;
+    const suggestion = getAutoSuggestion(val);
+
+    if (suggestion && suggestion.suffix) {
+        ghostElem.innerHTML = `<span style="visibility: hidden;">${escapeHtml(val)}</span><span class="ghost-faded">${escapeHtml(suggestion.suffix)}</span>`;
+        ghostElem.dataset.suggestion = suggestion.full;
+    } else {
+        ghostElem.innerHTML = '';
+        ghostElem.dataset.suggestion = '';
+    }
+}
+
+function acceptGhostSuggestion(inputElem, ghostElem) {
+    if (ghostElem && ghostElem.dataset.suggestion) {
+        const full = ghostElem.dataset.suggestion;
+        inputElem.value = full + (full.endsWith('/') ? '' : ' ');
+        updateGhostText(inputElem, ghostElem);
+        if (typeof playClickSound === 'function') playClickSound(800, 0.02);
+        return true;
+    }
+    return false;
+}
+
 // ─── NVTOP / PyTorch GPU Monitor ─────────────────────────────────────────
 let nvtopActive = false;
 let nvtopInterval = null;
@@ -933,27 +1030,45 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePromptDisplay();
 
     const modalInput = document.getElementById('modalCliInput');
+    const modalGhost = document.getElementById('modalCliGhost');
+
     if (modalInput) {
+        modalInput.addEventListener('input', () => {
+            updateGhostText(modalInput, modalGhost);
+        });
+
         modalInput.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                handleTabCompletion(modalInput);
+                if (!acceptGhostSuggestion(modalInput, modalGhost)) {
+                    handleTabCompletion(modalInput);
+                }
+                updateGhostText(modalInput, modalGhost);
+            } else if (e.key === 'ArrowRight') {
+                if (modalInput.selectionStart === modalInput.value.length && modalGhost && modalGhost.dataset.suggestion) {
+                    e.preventDefault();
+                    acceptGhostSuggestion(modalInput, modalGhost);
+                }
             } else if (e.key === 'Enter') {
                 const value = modalInput.value;
                 modalInput.value = '';
+                updateGhostText(modalInput, modalGhost);
                 processCommand(value);
             } else if (e.key === 'ArrowUp') {
                 if (historyIndex > 0) {
                     historyIndex--;
                     modalInput.value = commandHistory[historyIndex] || '';
+                    updateGhostText(modalInput, modalGhost);
                 }
             } else if (e.key === 'ArrowDown') {
                 if (historyIndex < commandHistory.length - 1) {
                     historyIndex++;
                     modalInput.value = commandHistory[historyIndex] || '';
+                    updateGhostText(modalInput, modalGhost);
                 } else {
                     historyIndex = commandHistory.length;
                     modalInput.value = '';
+                    updateGhostText(modalInput, modalGhost);
                 }
             }
         });
@@ -961,14 +1076,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Floating bar CLI input
     const floatingInput = document.getElementById('cliCommandInput');
+    const floatingGhost = document.getElementById('floatingCliGhost');
+
     if (floatingInput) {
+        floatingInput.addEventListener('input', () => {
+            updateGhostText(floatingInput, floatingGhost);
+        });
+
         floatingInput.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                handleTabCompletion(floatingInput);
+                if (!acceptGhostSuggestion(floatingInput, floatingGhost)) {
+                    handleTabCompletion(floatingInput);
+                }
+                updateGhostText(floatingInput, floatingGhost);
+            } else if (e.key === 'ArrowRight') {
+                if (floatingInput.selectionStart === floatingInput.value.length && floatingGhost && floatingGhost.dataset.suggestion) {
+                    e.preventDefault();
+                    acceptGhostSuggestion(floatingInput, floatingGhost);
+                }
             } else if (e.key === 'Enter') {
                 const val = floatingInput.value;
                 floatingInput.value = '';
+                updateGhostText(floatingInput, floatingGhost);
                 if (val.trim()) {
                     const modal = document.getElementById('terminalModal');
                     if (modal && !modal.classList.contains('active')) {

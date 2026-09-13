@@ -64,6 +64,7 @@ async function fetchAllGitHubData() {
 
         // ── GitHub Profile ─────────────────────────────────────────
         if (profileData.status === 'fulfilled' && profileData.value) {
+            window.livePublicRepos = profileData.value.public_repos;
             setCounterTarget(2, profileData.value.public_repos);
         }
 

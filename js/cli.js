@@ -135,7 +135,9 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
 
         case 'stats':
         case 'curl':
-            appendCliOutput(`STREAK: 158 days active\nCOMMITS: 1900+ contributions\nPROJECTS: 5+ deployed repositories`);
+            const repoCount = window.livePublicRepos ? `${window.livePublicRepos}+` : '29+';
+            const streakDisplay = window.liveCurrentStreak ? `${window.liveCurrentStreak}` : '198+';
+            appendCliOutput(`STREAK: ${streakDisplay} days active\nCOMMITS: 3784+ contributions\nREPOSITORIES: ${repoCount} public repositories`);
             document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' });
             break;
 

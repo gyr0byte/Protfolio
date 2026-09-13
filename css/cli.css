@@ -303,3 +303,125 @@
         transform: translate(-50%, 0);
     }
 }
+
+/* ─── Tab Autocompletion Grid ─────────────────────────────────────────── */
+.cli-completion-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+    padding: 6px 10px;
+    background: rgba(22, 27, 34, 0.6);
+    border-left: 2px solid var(--terminal-green);
+    margin: 4px 0 8px 0;
+    font-size: 0.84rem;
+}
+
+.cli-completion-item {
+    color: var(--cyan-blue);
+    font-family: var(--font-mono);
+}
+
+.cli-completion-item.is-dir {
+    color: var(--terminal-green);
+    font-weight: 600;
+}
+
+.cli-completion-item.is-file {
+    color: var(--white-text);
+}
+
+/* ─── NVTOP / GPU & ML Training Monitor ────────────────────────────────── */
+.nvtop-container {
+    background: rgba(13, 17, 23, 0.95);
+    border: 1px solid var(--terminal-green);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.nvtop-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    color: var(--terminal-green);
+    font-weight: 700;
+}
+
+.nvtop-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.nvtop-stat-card {
+    background: rgba(22, 27, 34, 0.8);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+.nvtop-stat-label {
+    color: var(--secondary-text);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+}
+
+.nvtop-stat-val {
+    color: var(--white-text);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.nvtop-bar-track {
+    color: var(--terminal-green);
+    letter-spacing: -1px;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+.nvtop-training-box {
+    border-top: 1px dashed var(--border);
+    padding-top: 8px;
+    margin-top: 8px;
+}
+
+.nvtop-loss-ticker {
+    color: var(--amber-yellow);
+    font-weight: 600;
+}
+
+.nvtop-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--secondary-text);
+}
+
+.nvtop-quit-btn {
+    background: transparent;
+    border: 1px solid var(--accent-orange);
+    color: var(--accent-orange);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.nvtop-quit-btn:hover {
+    background: var(--accent-orange);
+    color: #0D1117;
+}

@@ -761,13 +761,13 @@
             <div class="terminal-modal-body" id="modalCliBody">
                 <div style="color: var(--terminal-green);">
                     Gyr0shell v2.6.0 (x86_64-pc-nepal-os)<br>
-                    Type '<span style="color: var(--accent-orange);">help</span>' for a list of available commands.<br>
-                    Try '<span style="color: var(--amber-yellow);">neofetch</span>', '<span style="color: var(--cyan-blue);">cowsay hello</span>', '<span style="color: var(--terminal-green);">theme matrix</span>', or '<span style="color: var(--accent-orange);">sudo hire</span>'.
+                    Type '<span style="color: var(--accent-orange);">help</span>' for available commands. Try '<span style="color: var(--amber-yellow);">neofetch</span>', '<span style="color: var(--cyan-blue);">nvtop</span>', '<span style="color: var(--terminal-green);">ls</span>', or '<span style="color: var(--accent-orange);">tree</span>'.<br>
+                    <span style="color: var(--secondary-text); font-size: 0.8rem;">[Tip: Press <span style="color: var(--accent-orange);">Tab</span> to autocomplete commands, files & directories]</span>
                 </div>
             </div>
 
             <div class="terminal-modal-input-row">
-                <span class="cli-modal-prompt" style="color: var(--accent-orange);">gaurav@gyr0byte:~$</span>
+                <span class="cli-modal-prompt" id="modalCliPrompt" style="color: var(--accent-orange);">gaurav@gyr0byte:~$</span>
                 <input type="text" id="modalCliInput" class="terminal-modal-input" placeholder="Enter command..." autocomplete="off">
             </div>
         </div>

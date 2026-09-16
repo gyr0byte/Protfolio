@@ -1,0 +1,7 @@
+# Gaurav Dulal (gyr0byte) — Portfolio
+# https://www.sirjan-dulal.com.np
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.sirjan-dulal.com.np/sitemap.xml

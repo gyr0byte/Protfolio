@@ -148,9 +148,12 @@
                         <!-- Boot sequence lines populated dynamically via JS -->
                     </div>
 
-                    <!-- ASCII Glitch Header -->
+                    <!-- SEO: Visually-hidden semantic H1 for crawlers & AI models -->
+                    <h1 class="sr-only">Gaurav Dulal (gyr0byte) — Machine Learning Engineer & Researcher from Belbari, Nepal</h1>
+
+                    <!-- ASCII Glitch Header (decorative, visible to users) -->
                     <div class="ascii-banner-container" id="asciiContainer" style="display: none;">
-                        <h1 class="glitch-title" data-text="GYR0BYTE">GYR0BYTE</h1>
+                        <span class="glitch-title" aria-hidden="true" data-text="GYR0BYTE">GYR0BYTE</span>
                     </div>
 
                     <!-- Dynamic Role Switcher -->
@@ -159,6 +162,16 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SEO: Fallback content for crawlers / JS-disabled browsers -->
+            <noscript>
+                <div style="padding: 1.5rem; color: #E6EDF3; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; line-height: 1.7;">
+                    <p><strong>Gaurav Dulal</strong> (also known as <strong>gyr0byte</strong>) is a Machine Learning Engineer and Researcher based in Belbari, Morang, Nepal.</p>
+                    <p>Currently pursuing BHons Computing at Itahari International College (London Metropolitan University), targeting the MSc Machine Learning program at the University of Tübingen, Germany (2028 cohort).</p>
+                    <p>Core expertise: Python, PyTorch, Scikit-Learn, XGBoost, NLP (TF-IDF, LSTM, Transformers, AST Parsing), Stacking Ensembles, and applied deep learning research.</p>
+                    <p>Contact: <a href="mailto:gqurav69@gmail.com" style="color: #3FB950;">gqurav69@gmail.com</a> | <a href="https://github.com/gyr0byte" style="color: #58A6FF;">GitHub</a> | <a href="https://www.linkedin.com/in/gaurav-dulal-66b7b4370/" style="color: #58A6FF;">LinkedIn</a></p>
+                </div>
+            </noscript>
 
             <div class="scroll-down-hint">
                 <span>↓</span> <span>scroll to explore_</span>

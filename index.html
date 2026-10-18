@@ -297,17 +297,17 @@
                             </div>
                         </li>
 
-                        <!-- Deep Learning & NLP -->
+                        <!-- Deep Learning, NLP & GenAI -->
                         <li class="dir-item">
                             <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Deep_Learning_&_NLP/</span>
+                                <span>📁</span> <span>drwxr-xr-x Deep_Learning,_NLP_&_GenAI/</span>
                                 <span class="badge-in-progress"><span class="pulse-dot"></span>IN PROGRESS</span>
                             </div>
                             <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">pytorch</span> <span class="tech-item">tensorflow</span> <span class="tech-item">keras</span></div>
-                                <div class="file-line">├── <span class="tech-item">ann</span> <span class="tech-item">cnn</span> <span class="tech-item">rnn</span> <span class="tech-item">lstm</span></div>
-                                <div class="file-line">├── <span class="tech-item">tf-idf</span> <span class="tech-item">ast-parsing</span> <span class="tech-item">stacking-ensemble</span></div>
-                                <div class="file-line">└── <span class="tech-item">transformers</span> <span class="tech-item">text-classification</span></div>
+                                <div class="file-line">├── <span class="tech-item">pytorch</span> <span class="tech-item">tensorflow</span> <span class="tech-item">keras</span> <span class="tech-item">huggingface</span></div>
+                                <div class="file-line">├── <span class="tech-item">ann</span> <span class="tech-item">cnn</span> <span class="tech-item">rnn</span> <span class="tech-item">lstm</span> <span class="tech-item">transformers</span></div>
+                                <div class="file-line">├── <span class="tech-item">langchain</span> <span class="tech-item">rag-pipelines</span> <span class="tech-item">ai-agents</span> <span class="tech-item">chromadb</span></div>
+                                <div class="file-line">└── <span class="tech-item">tf-idf</span> <span class="tech-item">ast-parsing</span> <span class="tech-item">stacking-ensemble</span> <span class="tech-item">text-classification</span></div>
                             </div>
                         </li>
 
@@ -340,27 +340,35 @@
                                 <span>📁</span> <span>drwxr-xr-x Tools_&_Deployment/</span>
                             </div>
                             <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">git</span> <span class="tech-item">github</span> <span class="tech-item">streamlit</span> <span class="tech-item">flask</span></div>
-                                <div class="file-line">├── <span class="tech-item">jupyter</span> <span class="tech-item">vscode</span> <span class="tech-item">linux</span> <span class="tech-item">plotly</span></div>
-                                <div class="file-line">└── <span class="tech-item">render</span> <span class="tech-item">streamlit-cloud</span> <span class="tech-item">postman</span></div>
+                                <div class="file-line">├── <span class="tech-item">git</span> <span class="tech-item">github</span> <span class="tech-item">fastapi</span> <span class="tech-item">streamlit</span> <span class="tech-item">flask</span></div>
+                                <div class="file-line">├── <span class="tech-item">jupyter</span> <span class="tech-item">vscode</span> <span class="tech-item">linux</span> <span class="tech-item">plotly</span> <span class="tech-item">pgvector</span></div>
+                                <div class="file-line">└── <span class="tech-item">cloudflare-workers</span> <span class="tech-item">render</span> <span class="tech-item">streamlit-cloud</span> <span class="tech-item">postman</span></div>
                             </div>
                         </li>
                     </ul>
 
                     <!-- Neural Network Graph View Container -->
                     <div id="skillsGraphContainer" style="display: none; position: relative; width: 100%;">
-                        <div class="skills-graph-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--secondary-text); border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem;">
-                            <span>🕸️ NEURAL_SKILL_GRAPH v1.0 (Interactive Nodes — Hover & Drag)</span>
-                            <span>● LIVE SIMULATION</span>
+                        <div class="skills-graph-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--secondary-text); border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                            <span>🕸️ NEURAL_SKILL_GRAPH v2.0 (Interactive Physics · Drag & Touch)</span>
+                            <span class="graph-status-badge">● LIVE SIMULATION</span>
                         </div>
-                        <canvas id="skillsGraphCanvas" style="width: 100%; height: 420px; display: block; background: rgba(13, 17, 23, 0.6); border-radius: 4px; border: 1px solid var(--border);"></canvas>
-                        <div class="skills-graph-legend" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;">
-                            <span><span style="color: #2ea44f;">●</span> Machine Learning</span>
-                            <span><span style="color: #d29922;">●</span> Deep Learning & NLP</span>
-                            <span><span style="color: #58a6ff;">●</span> Languages</span>
-                            <span><span style="color: #bc8cff;">●</span> Math & Architecture</span>
-                            <span><span style="color: #f0883e;">●</span> Tools & Deployment</span>
-                            <span><span style="color: var(--amber-yellow);">⚡</span> In-Progress Node</span>
+                        <canvas id="skillsGraphCanvas" style="width: 100%; height: 440px; display: block; background: rgba(13, 17, 23, 0.7); border-radius: 4px; border: 1px solid var(--border); touch-action: none;"></canvas>
+                        
+                        <div class="skills-graph-cue" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); flex-wrap: wrap; gap: 0.5rem;">
+                            <span>💡 Tip: Click filter pills below to isolate clusters · Drag / touch nodes to interact</span>
+                            <span id="graphFilterReset" onclick="filterGraphCategory('all')" style="cursor: pointer; color: var(--terminal-green); display: none;">[Reset Filter ↺]</span>
+                        </div>
+
+                        <!-- Interactive Category Filter Chips / Legend -->
+                        <div class="skills-graph-legend" id="skillsGraphLegend" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;">
+                            <button class="graph-filter-btn active" data-cat="all" onclick="filterGraphCategory('all')">All Nodes (26)</button>
+                            <button class="graph-filter-btn" data-cat="ml" onclick="filterGraphCategory('ml')"><span style="color: #2ea44f;">●</span> Machine Learning</button>
+                            <button class="graph-filter-btn" data-cat="dl_nlp" onclick="filterGraphCategory('dl_nlp')"><span style="color: #d29922;">●</span> Deep Learning & NLP</button>
+                            <button class="graph-filter-btn" data-cat="genai" onclick="filterGraphCategory('genai')"><span style="color: #f78166;">●</span> GenAI & Agents</button>
+                            <button class="graph-filter-btn" data-cat="lang" onclick="filterGraphCategory('lang')"><span style="color: #58a6ff;">●</span> Languages</button>
+                            <button class="graph-filter-btn" data-cat="math" onclick="filterGraphCategory('math')"><span style="color: #bc8cff;">●</span> Math & Foundations</button>
+                            <button class="graph-filter-btn" data-cat="tools" onclick="filterGraphCategory('tools')"><span style="color: #f0883e;">●</span> Tools & Deployment</button>
                         </div>
                     </div>
                 </div>

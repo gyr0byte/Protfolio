@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     /* Color Palette - Default GitHub Green Terminal */
     --bg: #0D1117;
     --card-bg: #161B22;
@@ -49,6 +49,7 @@ body.theme-matrix {
 }
 
 /* Light Terminal Theme */
+html.theme-light,
 body.theme-light {
     --bg: #F6F8FA;
     --card-bg: #FFFFFF;
@@ -61,4 +62,54 @@ body.theme-light {
     --cyan-blue: #0969DA;
     --cursor-color: #1A7F37;
     --glow-color: rgba(26, 127, 55, 0.25);
+}
+
+/* Light Theme Component Overrides */
+body.theme-light header.nav-header {
+    background-color: rgba(246, 248, 250, 0.94);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .terminal-header,
+body.theme-light .terminal-modal-header {
+    background-color: #EAEEF2;
+    border-bottom-color: #D0D7DE;
+}
+
+body.theme-light .terminal-window {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .whoami-bio,
+body.theme-light .whoami-box {
+    background-color: #FFFFFF;
+}
+
+body.theme-light .cell.lvl-0 {
+    background: #EBEDF0;
+    border-color: #D0D7DE;
+}
+
+body.theme-light .cli-floating-bar {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: #D0D7DE;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-light .terminal-modal-content {
+    background: #FFFFFF;
+    border-color: #D0D7DE;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+body.theme-light .form-control {
+    background: #FFFFFF;
+    color: #1F2328;
+    border-color: #D0D7DE;
+}
+
+body.theme-light .form-control:focus {
+    background: #FFFFFF;
+    border-color: #1A7F37;
+    box-shadow: 0 0 0 3px rgba(26, 127, 55, 0.2);
 }

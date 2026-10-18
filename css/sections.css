@@ -368,6 +368,13 @@
     text-transform: uppercase;
 }
 
+.featured-badge.stars {
+    background: rgba(247, 129, 102, 0.15);
+    color: var(--accent-orange);
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 8px rgba(247, 129, 102, 0.25);
+}
+
 .commit-card.coming-soon {
     border-color: rgba(210, 153, 34, 0.6);
     animation: border-pulse 3s infinite alternate;

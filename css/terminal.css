@@ -154,19 +154,43 @@ section {
 .terminal-dots {
     display: flex;
     gap: 8px;
+    align-items: center;
 }
 
-.dot {
+.dot,
+.terminal-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     cursor: pointer;
     flex-shrink: 0;
+    display: inline-block;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s ease;
+    position: relative;
 }
 
-.dot.red { background-color: #FF5F56; }
-.dot.yellow { background-color: #FFBD2E; }
-.dot.green { background-color: #27C93F; }
+.dot:hover,
+.terminal-dot:hover {
+    transform: scale(1.18);
+}
+
+.dot.red,
+.terminal-dot.red {
+    background-color: #FF5F56;
+    box-shadow: 0 0 7px rgba(255, 95, 86, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.dot.yellow,
+.terminal-dot.yellow {
+    background-color: #FFBD2E;
+    box-shadow: 0 0 7px rgba(255, 189, 46, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.dot.green,
+.terminal-dot.green {
+    background-color: #27C93F;
+    box-shadow: 0 0 7px rgba(39, 201, 63, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
 
 .terminal-title {
     color: var(--secondary-text);

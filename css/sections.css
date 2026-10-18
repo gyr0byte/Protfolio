@@ -117,11 +117,14 @@
     user-select: none;
 }
 
-.role-wrapper {
+.role-wrapper,
+.hero-sub {
     font-size: 1.4rem;
     margin-top: 1rem;
     color: var(--accent-orange);
-    min-height: 40px;
+    min-height: 2.2rem;
+    display: flex;
+    align-items: center;
 }
 
 .scroll-down-hint {
@@ -1004,8 +1007,10 @@ footer {
         letter-spacing: 2px;
     }
 
-    .role-wrapper {
+    .role-wrapper,
+    .hero-sub {
         font-size: 1.1rem;
+        min-height: 2.2rem;
     }
 
     .scroll-down-hint {

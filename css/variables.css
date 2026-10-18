@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Color Palette - Default GitHub Green Terminal */
     --bg: #0D1117;
     --card-bg: #161B22;
@@ -46,4 +46,19 @@ body.theme-matrix {
     --cyan-blue: #00FF41;
     --cursor-color: #00FF41;
     --glow-color: rgba(0, 255, 65, 0.6);
+}
+
+/* Light Terminal Theme */
+body.theme-light {
+    --bg: #F6F8FA;
+    --card-bg: #FFFFFF;
+    --border: #D0D7DE;
+    --white-text: #1F2328;
+    --secondary-text: #656D76;
+    --terminal-green: #1A7F37;
+    --accent-orange: #CF222E;
+    --amber-yellow: #9A6700;
+    --cyan-blue: #0969DA;
+    --cursor-color: #1A7F37;
+    --glow-color: rgba(26, 127, 55, 0.25);
 }

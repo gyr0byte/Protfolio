@@ -10,33 +10,18 @@ const virtualFileSystem = {
         children: {
             "whoami.txt": {
                 type: "file",
-                content: `Gaurav Dulal (gyr0byte) | Age 20 | Belbari-2, Morang, Nepal
-BHons Computing @ IIC / London Met University
-Target: University of Tübingen MSc Machine Learning (2028 Cohort)
-Motto: "Not a person, a process — always building, never stopping."`
+                get content() {
+                    const ageVal = typeof calculateAge === 'function' ? calculateAge() : 20;
+                    return `Gaurav Dulal (gyr0byte) | Age ${ageVal} | Belbari-2, Morang, Nepal\nBHons Computing @ IIC / London Met University\nTarget: University of Tübingen MSc Machine Learning (2028 Cohort)\nMotto: "Not a person, a process — always building, never stopping."`;
+                }
             },
             "resume.json": {
                 type: "file",
-                content: `{
-  "name": "Gaurav Dulal",
-  "alias": "gyr0byte",
-  "age": 20,
-  "location": "Belbari, Morang, Nepal",
-  "education": {
-    "current": "BHons Computing @ IIC / London Met University",
-    "target": "MSc Machine Learning — University of Tübingen (2028)"
-  },
-  "languages": ["Python", "Java", "JavaScript", "C", "C++", "SQL", "Bash"],
-  "ml_stack": ["PyTorch", "Scikit-Learn", "XGBoost", "TensorFlow", "Keras"],
-  "nlp": ["TF-IDF", "LSTM", "AST Parsing", "Stacking Ensembles", "Transformers"],
-  "tools": ["Git", "Streamlit", "Flask", "Jupyter", "Plotly", "Linux"],
-  "deploy": ["Render", "Streamlit Cloud", "Cloudflare"],
-  "repositories": "29+ public on GitHub",
-  "contributions": "3,700+",
-  "streak": "198+ days",
-  "research": "OOP Purity Quantitative Framework (Journal Submission 2026)",
-  "email": "gqurav69@gmail.com"
-}`
+                get content() {
+                    const ageVal = typeof calculateAge === 'function' ? calculateAge() : 20;
+                    const streakVal = window.liveCurrentStreak || (typeof localStorage !== 'undefined' && localStorage.getItem('cached_gh_streak')) || '233+';
+                    return `{\n  "name": "Gaurav Dulal",\n  "alias": "gyr0byte",\n  "age": ${ageVal},\n  "location": "Belbari, Morang, Nepal",\n  "education": {\n    "current": "BHons Computing @ IIC / London Met University",\n    "target": "MSc Machine Learning — University of Tübingen (2028)"\n  },\n  "languages": ["Python", "Java", "JavaScript", "C", "C++", "SQL", "Bash"],\n  "ml_stack": ["PyTorch", "Scikit-Learn", "XGBoost", "TensorFlow", "Keras"],\n  "nlp": ["TF-IDF", "LSTM", "AST Parsing", "Stacking Ensembles", "Transformers"],\n  "tools": ["Git", "Streamlit", "Flask", "Jupyter", "Plotly", "Linux"],\n  "deploy": ["Render", "Streamlit Cloud", "Cloudflare"],\n  "repositories": "32+ public on GitHub",\n  "contributions": "3,784+",\n  "streak": "${streakVal} days",\n  "research": "OOP Purity Quantitative Framework (Journal Submission 2026)",\n  "email": "gqurav69@gmail.com"\n}`;
+                }
             },
             ".bashrc": {
                 type: "file",
@@ -863,7 +848,8 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
             break;
 
         case 'whoami':
-            appendCliOutput(`Gaurav Dulal (gyr0byte) | Age 20 | Belbari-2, Morang, Nepal\nBHons Computing @ IIC / London Met | Targeting Tübingen MSc ML 2028\n"Not a person, a process — always building, never stopping."`);
+            const profileAge = typeof calculateAge === 'function' ? calculateAge() : 20;
+            appendCliOutput(`Gaurav Dulal (gyr0byte) | Age ${profileAge} | Belbari-2, Morang, Nepal\nBHons Computing @ IIC / London Met | Targeting Tübingen MSc ML 2028\n"Not a person, a process — always building, never stopping."`);
             document.getElementById('whoami')?.scrollIntoView({ behavior: 'smooth' });
             break;
 
@@ -876,7 +862,7 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
         case 'repositories':
         case 'repo':
         case 'git':
-            appendCliOutput(`1. CodeRoast [PyTorch, LLM, AST Analysis]\n2. OOP Purity Analyzer [Flask, Plotly, Research]\n3. Text Emotion Classifier [NLP, Stacking Classifier, Streamlit]\n4. ML-Foundations [NumPy → Transformers]\n5. WhatsApp Chat Analyzer [Streamlit, NLP, Pandas]\n6. Titanic Kaggle [78% accuracy]`);
+            appendCliOutput(`1. CodeRoast [PyTorch, LLM, AST Analysis] ★ Flagship\n2. OOP Purity Analyzer [Flask, Plotly, Research] ★ Research\n3. Text Emotion Classifier [NLP, Stacking Classifier, Streamlit]\n4. ML-Foundations [NumPy → Transformers]\n5. Generative AI with LangChain [LangChain, RAG, Agents]\n6. Kundali — Vedic Chart Platform [FastAPI, Swiss Ephemeris, Next.js]`);
             document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
             break;
 
@@ -887,8 +873,8 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
 
         case 'stats':
         case 'curl':
-            const repoCount = window.livePublicRepos ? `${window.livePublicRepos}+` : '29+';
-            const streakDisplay = window.liveCurrentStreak ? `${window.liveCurrentStreak}` : '198+';
+            const repoCount = window.livePublicRepos ? `${window.livePublicRepos}+` : '32+';
+            const streakDisplay = window.liveCurrentStreak || (typeof localStorage !== 'undefined' && localStorage.getItem('cached_gh_streak')) || '233+';
             appendCliOutput(`STREAK: ${streakDisplay} days active\nCOMMITS: 3784+ contributions\nREPOSITORIES: ${repoCount} public repositories`);
             document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' });
             break;
@@ -906,11 +892,17 @@ ML Stack: Scikit-learn, XGBoost, AST, NLP`
 
         case 'theme':
             const themeName = args[1]?.toLowerCase();
-            if (['green', 'amber', 'cyan', 'matrix'].includes(themeName)) {
-                setTheme(themeName);
+            if (['green', 'amber', 'cyan', 'matrix', 'light', 'dark'].includes(themeName)) {
+                if (themeName === 'light') {
+                    setTheme('light');
+                } else if (themeName === 'dark') {
+                    setTheme('green');
+                } else {
+                    setTheme(themeName);
+                }
                 appendCliOutput(`[SYSTEM] Theme switched to: ${themeName}`);
             } else {
-                appendCliOutput(`Usage: theme [green | amber | cyan | matrix]`);
+                appendCliOutput(`Usage: theme [green | amber | cyan | matrix | light | dark]`);
             }
             break;
 
@@ -1019,8 +1011,18 @@ function escapeHtml(str) {
 
 function setTheme(theme) {
     document.body.className = '';
-    if (theme !== 'green') {
-        document.body.classList.add(`theme-${theme}`);
+    document.documentElement.className = '';
+    if (theme === 'light') {
+        document.body.classList.add('theme-light');
+        document.documentElement.classList.add('theme-light');
+        try { localStorage.setItem('portfolio_theme_mode', 'light'); } catch(e){}
+        if (typeof updateThemeButtonLabels === 'function') updateThemeButtonLabels(true);
+    } else {
+        if (theme !== 'green') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+        try { localStorage.setItem('portfolio_theme_mode', 'dark'); } catch(e){}
+        if (typeof updateThemeButtonLabels === 'function') updateThemeButtonLabels(false);
     }
     showToast(`Theme updated to ${theme.toUpperCase()}`);
 }

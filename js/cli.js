@@ -77,10 +77,11 @@ CONTRIBUTIONS:
                     },
                     "deep_learning.txt": {
                         type: "file",
-                        content: `Deep Learning & NLP Stack [IN PROGRESS]:
-- PyTorch, TensorFlow, Keras
-- ANN, CNN, RNN, LSTM architectures
-- TF-IDF, Word2Vec, AST Parsing, Stacking Ensembles, Transformers`
+                        content: `Deep Learning, NLP & GenAI Stack [IN PROGRESS]:
+- PyTorch, TensorFlow, Keras, Hugging Face
+- ANN, CNN, RNN, LSTM architectures, Transformers
+- LangChain, RAG Pipelines, Tool-Using AI Agents, ChromaDB / Vector DBs
+- TF-IDF, Word2Vec, AST Parsing, Stacking Ensembles`
                     },
                     "languages.txt": {
                         type: "file",
@@ -92,9 +93,9 @@ CONTRIBUTIONS:
                     "tools.txt": {
                         type: "file",
                         content: `Engineering & Deployment Tools:
-- Git, GitHub Actions, Linux (Ubuntu / Arch / Debian)
-- Streamlit, Flask, Jupyter Lab, Plotly, Postman
-- Cloud: Render, Streamlit Cloud, Cloudflare Workers`
+- Git, GitHub Actions, Linux (Fedora / Debian / Ubuntu)
+- FastAPI, Streamlit, Flask, Jupyter Lab, Plotly, Postman
+- Cloud & DB: Cloudflare Workers, PostgreSQL / pgvector, Render, Streamlit Cloud`
                     }
                 }
             },

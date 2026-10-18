@@ -26,13 +26,13 @@ esume.json, and CLI whoami.
 - **Issue 11 (Performance & Lazy Loading):** Preconnected to GitHub & contributions APIs; lazy-loaded 370-day contribution heatmap with IntersectionObserver; staggered reveal animations for project cards.
 - **Issue 14 (Light/Dark Theme):** Added toggleThemeMode() to nav buttons and CLI (theme light/theme green/theme dark). Supported zero-flash init script and comprehensive light theme variables.
 - **Issue 16 (GitHub Audit & Data Sync):** Added `★ 45 STARS · 8 FORKS` glowing badge (.featured-badge.stars) to `ML-Foundations` in `index.html`; synced `#stats` counter card fallback baselines to live data (233 streak, 3500 commits, 32 repos); synced `about.html` with canonical `OOP_Purity_Analyzer` link, stars callout, and added `Kundali-SYP` & `Generative-AI`; standardized Schema.org JSON-LD LinkedIn URLs.
+- **Issue 7 (Skills Neural Network Graph v2.0 & GenAI Stack):** Expanded skills directory tree and graph to 26 nodes with LangChain, RAG Pipelines, ChromaDB / Vector DBs, FastAPI, and Hugging Face; added 6-category interactive filter chips with canvas dimming/lighting; implemented full mobile touch support (touchstart/move/end); added dual-line project linkage hover tooltips.
 
 ---
 
 ## 3. Pending Improvement Backlog (from Site Audit)
 - **Issue 3:** Research Paper status badge update.
 - **Issue 6:** Project preview thumbnails/screenshots for top cards.
-- **Issue 7:** Skills neural network graph view polish/cues.
 - **Issue 8:** Contact form subject chip hover & selection animations.
 - **Issue 9:** Floating scroll-to-top button for long page (~8000px).
 - **Issue 15:** Blog / technical notes section for SEO & AI indexing.

@@ -1,54 +1,80 @@
-// Interactive Neural Skill Network Graph Visualizer
+// Interactive Neural Skill Network Graph Visualizer v2.0
+// Features: Physics simulation, Shockwaves, Mobile Touch Support, Category Filtering & Project Linkages
 (function() {
     let canvas = null;
     let ctx = null;
     let animFrame = null;
     let isInitialized = false;
     let activeView = 'tree';
+    let selectedCategory = 'all';
 
     const skillNodes = [
-        // ML
-        { id: 'pytorch', label: 'PyTorch', category: 'Deep Learning', color: '#2ea44f', r: 18, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'scikit', label: 'Scikit-Learn', category: 'Machine Learning', color: '#2ea44f', r: 16, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'xgboost', label: 'XGBoost', category: 'Machine Learning', color: '#2ea44f', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'numpy', label: 'NumPy', category: 'Machine Learning', color: '#2ea44f', r: 13, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'pandas', label: 'Pandas', category: 'Data Analysis', color: '#2ea44f', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'stacking', label: 'Stacking Ensembles', category: 'Machine Learning', color: '#2ea44f', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
+        // Machine Learning (ml: #2ea44f)
+        { id: 'scikit', label: 'Scikit-Learn', category: 'ml', categoryName: 'Machine Learning', color: '#2ea44f', r: 16, usedIn: 'ML-Foundations, Sentimental Analysis', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'xgboost', label: 'XGBoost', category: 'ml', categoryName: 'Machine Learning', color: '#2ea44f', r: 14, usedIn: 'ML-Foundations', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'numpy', label: 'NumPy', category: 'ml', categoryName: 'Math / Arrays', color: '#2ea44f', r: 13, usedIn: 'ML-Foundations, Math Proofs', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'pandas', label: 'Pandas', category: 'ml', categoryName: 'Data Analysis', color: '#2ea44f', r: 14, usedIn: 'ML-Foundations, WhatsApp Analyzer', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'stacking', label: 'Stacking Ensembles', category: 'ml', categoryName: 'Ensemble Learning', color: '#2ea44f', r: 15, usedIn: 'Sentimental_Analysis, CodeRoast', x: 0, y: 0, vx: 0, vy: 0 },
 
-        // NLP
-        { id: 'tfidf', label: 'TF-IDF', category: 'NLP', color: '#d29922', r: 13, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'lstm', label: 'LSTM', category: 'NLP', color: '#d29922', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'ast', label: 'AST Parsing', category: 'NLP & Code', color: '#d29922', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'transformers', label: 'Transformers', category: 'NLP & Transformers', color: '#d29922', r: 18, inProgress: true, x: 0, y: 0, vx: 0, vy: 0 },
+        // Deep Learning & NLP (dl_nlp: #d29922)
+        { id: 'pytorch', label: 'PyTorch', category: 'dl_nlp', categoryName: 'Deep Learning', color: '#d29922', r: 18, usedIn: 'CodeRoast (LSTM Severity Scoring)', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'tensorflow', label: 'TensorFlow / Keras', category: 'dl_nlp', categoryName: 'Deep Learning', color: '#d29922', r: 15, usedIn: 'Next_Word_Prediction-LSTM-', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'tfidf', label: 'TF-IDF', category: 'dl_nlp', categoryName: 'NLP Vectorization', color: '#d29922', r: 13, usedIn: 'Emotion Classifier, CodeRoast', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'lstm', label: 'LSTM', category: 'dl_nlp', categoryName: 'Sequential Models', color: '#d29922', r: 15, usedIn: 'CodeRoast, Next Word Prediction', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'ast', label: 'AST Parsing', category: 'dl_nlp', categoryName: 'Code Analysis', color: '#d29922', r: 16, usedIn: 'CodeRoast, OOP Purity Analyzer', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'transformers', label: 'Transformers', category: 'dl_nlp', categoryName: 'NLP & Transformers', color: '#d29922', r: 17, inProgress: true, usedIn: 'Hugging Face Course', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'huggingface', label: 'Hugging Face', category: 'dl_nlp', categoryName: 'NLP & Transformers', color: '#d29922', r: 15, inProgress: true, usedIn: 'course/Transformers', x: 0, y: 0, vx: 0, vy: 0 },
 
-        // Languages
-        { id: 'python', label: 'Python', category: 'Languages', color: '#58a6ff', r: 20, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'java', label: 'Java', category: 'Languages', color: '#58a6ff', r: 16, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'cpp', label: 'C / C++', category: 'Languages', color: '#58a6ff', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'sql', label: 'SQL', category: 'Languages', color: '#58a6ff', r: 13, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'js', label: 'JavaScript', category: 'Languages', color: '#58a6ff', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
+        // GenAI & Agents (genai: #f78166)
+        { id: 'langchain', label: 'LangChain', category: 'genai', categoryName: 'LLM Orchestration', color: '#f78166', r: 17, usedIn: 'Generative-AI, AI Agents', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'rag', label: 'RAG Pipelines', category: 'genai', categoryName: 'Retrieval Augmented Gen', color: '#f78166', r: 17, usedIn: 'Generative-AI, Kundali-SYP', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'chromadb', label: 'Vector DBs', category: 'genai', categoryName: 'Vector Embeddings', color: '#f78166', r: 14, usedIn: 'ChromaDB, pgvector', x: 0, y: 0, vx: 0, vy: 0 },
 
-        // Foundations
-        { id: 'linalg', label: 'Linear Algebra', category: 'Math', color: '#bc8cff', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'stats', label: 'Probability & Stats', category: 'Math', color: '#bc8cff', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'oop', label: 'OOP Purity', category: 'Architecture', color: '#bc8cff', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
+        // Languages (lang: #58a6ff)
+        { id: 'python', label: 'Python 3.12', category: 'lang', categoryName: 'Core Language', color: '#58a6ff', r: 21, usedIn: '32+ Repositories & Research', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'java', label: 'Java', category: 'lang', categoryName: 'Object-Oriented', color: '#58a6ff', r: 15, usedIn: 'OOP Fundamentals, AI Subscription', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'cpp', label: 'C / C++', category: 'lang', categoryName: 'Systems Language', color: '#58a6ff', r: 14, usedIn: 'C-Programming, DSA', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'sql', label: 'SQL / Postgres', category: 'lang', categoryName: 'Databases & Vector', color: '#58a6ff', r: 14, usedIn: 'Kundali-SYP (pgvector)', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'js', label: 'JavaScript', category: 'lang', categoryName: 'Web & Scripts', color: '#58a6ff', r: 14, usedIn: 'Portfolio, Gyr0shell CLI', x: 0, y: 0, vx: 0, vy: 0 },
 
-        // Tools
-        { id: 'git', label: 'Git', category: 'Tools', color: '#f0883e', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'streamlit', label: 'Streamlit', category: 'Tools', color: '#f0883e', r: 15, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'flask', label: 'Flask', category: 'Tools', color: '#f0883e', r: 14, x: 0, y: 0, vx: 0, vy: 0 },
-        { id: 'linux', label: 'Linux', category: 'Tools', color: '#f0883e', r: 15, x: 0, y: 0, vx: 0, vy: 0 }
+        // Math & Foundations (math: #bc8cff)
+        { id: 'linalg', label: 'Linear Algebra', category: 'math', categoryName: 'Mathematical Foundations', color: '#bc8cff', r: 14, usedIn: 'ML-Foundations, Tensors', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'stats', label: 'Probability & Stats', category: 'math', categoryName: 'Mathematical Foundations', color: '#bc8cff', r: 14, usedIn: 'Binomial Calc, ML Proofs', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'oop', label: 'OOP Architecture', category: 'math', categoryName: 'Software Engineering', color: '#bc8cff', r: 15, usedIn: 'OOP Purity Quantitative Paper', x: 0, y: 0, vx: 0, vy: 0 },
+
+        // Tools & Deployment (tools: #f0883e)
+        { id: 'fastapi', label: 'FastAPI', category: 'tools', categoryName: 'Backend & Inference', color: '#f0883e', r: 16, usedIn: 'Kundali-SYP Backend Engine', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'streamlit', label: 'Streamlit', category: 'tools', categoryName: 'ML Web Apps', color: '#f0883e', r: 15, usedIn: 'CodeRoast, Sentiment Classifier', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'flask', label: 'Flask', category: 'tools', categoryName: 'Web Framework', color: '#f0883e', r: 14, usedIn: 'OOP Purity Analyzer', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'git', label: 'Git / GitHub', category: 'tools', categoryName: 'Version Control', color: '#f0883e', r: 14, usedIn: '32+ Public Repos, 3500+ Commits', x: 0, y: 0, vx: 0, vy: 0 },
+        { id: 'linux', label: 'Linux (Fedora/Debian)', category: 'tools', categoryName: 'Environments', color: '#f0883e', r: 14, usedIn: 'Development & CLI Tools', x: 0, y: 0, vx: 0, vy: 0 }
     ];
 
     const skillLinks = [
-        ['python', 'pytorch'], ['python', 'scikit'], ['python', 'pandas'], ['python', 'numpy'], ['python', 'ast'], ['python', 'flask'],
-        ['pytorch', 'transformers'], ['pytorch', 'lstm'], ['pytorch', 'stacking'],
+        // Python Central Hub
+        ['python', 'pytorch'], ['python', 'scikit'], ['python', 'pandas'], ['python', 'numpy'],
+        ['python', 'ast'], ['python', 'flask'], ['python', 'fastapi'], ['python', 'langchain'],
+
+        // Deep Learning & NLP
+        ['pytorch', 'transformers'], ['pytorch', 'lstm'], ['pytorch', 'stacking'], ['pytorch', 'tensorflow'],
+        ['tensorflow', 'lstm'],
+        ['transformers', 'huggingface'], ['huggingface', 'pytorch'],
+        ['tfidf', 'lstm'], ['tfidf', 'transformers'], ['tfidf', 'stacking'],
+
+        // GenAI & Agents
+        ['langchain', 'rag'], ['langchain', 'chromadb'], ['rag', 'chromadb'],
+        ['rag', 'transformers'], ['rag', 'fastapi'],
+
+        // ML & Math
         ['scikit', 'xgboost'], ['scikit', 'stacking'], ['scikit', 'stats'],
         ['pandas', 'numpy'], ['numpy', 'linalg'],
-        ['tfidf', 'lstm'], ['tfidf', 'transformers'],
         ['linalg', 'stats'], ['stats', 'scikit'],
+
+        // Languages & OOP
         ['java', 'oop'], ['python', 'oop'], ['cpp', 'oop'],
-        ['js', 'streamlit'], ['flask', 'python'], ['git', 'linux']
+
+        // Tools & Fullstack
+        ['fastapi', 'sql'], ['fastapi', 'streamlit'], ['js', 'streamlit'], ['flask', 'python'], ['git', 'linux']
     ];
 
     let hoveredNode = null;
@@ -63,23 +89,29 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-        // Position nodes randomly in center circle
+        // Position nodes evenly in central distributed field
         const w = canvas.width;
         const h = canvas.height;
         skillNodes.forEach((node, i) => {
             const angle = (i / skillNodes.length) * Math.PI * 2;
-            const radius = Math.min(w, h) * 0.28 + (Math.random() * 40 - 20);
+            const radius = Math.min(w, h) * 0.30 + (Math.sin(i * 1.5) * 45);
             node.x = w / 2 + Math.cos(angle) * radius;
             node.y = h / 2 + Math.sin(angle) * radius;
-            node.vx = (Math.random() - 0.5) * 0.5;
-            node.vy = (Math.random() - 0.5) * 0.5;
+            node.vx = (Math.random() - 0.5) * 0.4;
+            node.vy = (Math.random() - 0.5) * 0.4;
         });
 
-        // Event listeners
+        // Mouse Event Listeners
         canvas.addEventListener('mousemove', onMouseMove);
         canvas.addEventListener('mousedown', onMouseDown);
         canvas.addEventListener('mouseup', onMouseUp);
         canvas.addEventListener('mouseleave', () => { hoveredNode = null; draggedNode = null; });
+
+        // Mobile Touch Listeners (Full touch support)
+        canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+        canvas.addEventListener('touchend', onTouchEnd, { passive: false });
+        canvas.addEventListener('touchcancel', onTouchEnd, { passive: false });
 
         isInitialized = true;
         animate();
@@ -90,7 +122,7 @@
         const container = canvas.parentElement;
         if (container) {
             canvas.width = container.clientWidth;
-            canvas.height = Math.max(380, Math.min(window.innerHeight * 0.5, 520));
+            canvas.height = Math.max(400, Math.min(window.innerHeight * 0.55, 540));
         }
     }
 
@@ -112,9 +144,9 @@
         for (let node of skillNodes) {
             const dx = mx - node.x;
             const dy = my - node.y;
-            if (dx * dx + dy * dy <= node.r * node.r * 1.5) {
+            if (dx * dx + dy * dy <= (node.r + 6) * (node.r + 6)) {
                 hoveredNode = node;
-                canvas.style.cursor = 'pointer';
+                canvas.style.cursor = 'grab';
                 break;
             }
         }
@@ -130,8 +162,9 @@
         for (let node of skillNodes) {
             const dx = mx - node.x;
             const dy = my - node.y;
-            if (dx * dx + dy * dy <= node.r * node.r * 1.5) {
+            if (dx * dx + dy * dy <= (node.r + 6) * (node.r + 6)) {
                 draggedNode = node;
+                canvas.style.cursor = 'grabbing';
                 shockwaves.push({ x: node.x, y: node.y, r: node.r, maxR: 60, opacity: 0.8, color: node.color });
                 if (typeof playClickSound === 'function') playClickSound(850, 0.02);
                 break;
@@ -140,6 +173,44 @@
     }
 
     function onMouseUp() {
+        draggedNode = null;
+        if (canvas) canvas.style.cursor = hoveredNode ? 'grab' : 'default';
+    }
+
+    // Touch Event Handlers
+    function onTouchStart(e) {
+        if (!canvas || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const mx = touch.clientX - rect.left;
+        const my = touch.clientY - rect.top;
+
+        for (let node of skillNodes) {
+            const dx = mx - node.x;
+            const dy = my - node.y;
+            if (dx * dx + dy * dy <= (node.r + 14) * (node.r + 14)) {
+                draggedNode = node;
+                hoveredNode = node;
+                shockwaves.push({ x: node.x, y: node.y, r: node.r, maxR: 65, opacity: 0.85, color: node.color });
+                if (typeof playClickSound === 'function') playClickSound(850, 0.02);
+                e.preventDefault();
+                break;
+            }
+        }
+    }
+
+    function onTouchMove(e) {
+        if (!canvas || !draggedNode || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        draggedNode.x = touch.clientX - rect.left;
+        draggedNode.y = touch.clientY - rect.top;
+        draggedNode.vx = 0;
+        draggedNode.vy = 0;
+        e.preventDefault();
+    }
+
+    function onTouchEnd() {
         draggedNode = null;
     }
 
@@ -158,10 +229,10 @@
                 const dy = n2.y - n1.y;
                 const distSq = dx * dx + dy * dy || 1;
                 const dist = Math.sqrt(distSq);
-                const minDist = n1.r + n2.r + 35;
+                const minDist = n1.r + n2.r + 38;
 
                 if (dist < minDist) {
-                    const force = (minDist - dist) / dist * 0.05;
+                    const force = (minDist - dist) / dist * 0.06;
                     const fx = dx * force;
                     const fy = dy * force;
                     if (n1 !== draggedNode) { n1.x -= fx; n1.y -= fy; }
@@ -170,7 +241,7 @@
             }
         }
 
-        // Mild spring forces for links
+        // Mild spring forces for synaptic links
         skillLinks.forEach(([id1, id2]) => {
             const n1 = skillNodes.find(n => n.id === id1);
             const n2 = skillNodes.find(n => n.id === id2);
@@ -179,7 +250,7 @@
             const dx = n2.x - n1.x;
             const dy = n2.y - n1.y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-            const targetDist = 95;
+            const targetDist = 92;
             const force = (dist - targetDist) * 0.002;
 
             const fx = (dx / dist) * force;
@@ -189,7 +260,7 @@
             if (n2 !== draggedNode) { n2.vx -= fx; n2.vy -= fy; }
         });
 
-        // Center gravity + Movement update
+        // Center gravity + Brownian drift
         skillNodes.forEach(node => {
             if (node === draggedNode) return;
 
@@ -198,24 +269,23 @@
             node.vx = (node.vx + gx) * 0.92;
             node.vy = (node.vy + gy) * 0.92;
 
-            // Brownian drift
-            node.vx += (Math.random() - 0.5) * 0.1;
-            node.vy += (Math.random() - 0.5) * 0.1;
+            node.vx += (Math.random() - 0.5) * 0.08;
+            node.vy += (Math.random() - 0.5) * 0.08;
 
             node.x += node.vx;
             node.y += node.vy;
 
-            // Boundaries
-            const pad = node.r + 15;
+            // Boundaries protection
+            const pad = node.r + 18;
             if (node.x < pad) { node.x = pad; node.vx *= -0.5; }
             if (node.x > w - pad) { node.x = w - pad; node.vx *= -0.5; }
             if (node.y < pad) { node.y = pad; node.vy *= -0.5; }
             if (node.y > h - pad) { node.y = h - pad; node.vy *= -0.5; }
         });
 
-        // Update shockwaves
+        // Shockwaves
         shockwaves.forEach(sw => {
-            sw.r += 2.5;
+            sw.r += 2.8;
             sw.opacity -= 0.025;
         });
         shockwaves = shockwaves.filter(sw => sw.opacity > 0);
@@ -225,18 +295,35 @@
         if (!ctx || !canvas) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Links
+        // Draw Synaptic Links
         skillLinks.forEach(([id1, id2]) => {
             const n1 = skillNodes.find(n => n.id === id1);
             const n2 = skillNodes.find(n => n.id === id2);
             if (!n1 || !n2) return;
 
-            const isHighlighted = hoveredNode && (hoveredNode.id === id1 || hoveredNode.id === id2);
+            const isHoveredLink = hoveredNode && (hoveredNode.id === id1 || hoveredNode.id === id2);
+            const isCategoryActive = selectedCategory === 'all' || 
+                (n1.category === selectedCategory && n2.category === selectedCategory);
+            const isCategoryDimmed = selectedCategory !== 'all' && 
+                (n1.category !== selectedCategory && n2.category !== selectedCategory);
+
             ctx.beginPath();
             ctx.moveTo(n1.x, n1.y);
             ctx.lineTo(n2.x, n2.y);
-            ctx.strokeStyle = isHighlighted ? 'rgba(46, 160, 67, 0.8)' : 'rgba(48, 54, 61, 0.45)';
-            ctx.lineWidth = isHighlighted ? 2 : 1;
+
+            if (isHoveredLink) {
+                ctx.strokeStyle = 'rgba(63, 185, 80, 0.9)';
+                ctx.lineWidth = 2.2;
+            } else if (isCategoryActive && selectedCategory !== 'all') {
+                ctx.strokeStyle = n1.color;
+                ctx.lineWidth = 1.8;
+            } else if (isCategoryDimmed) {
+                ctx.strokeStyle = 'rgba(48, 54, 61, 0.15)';
+                ctx.lineWidth = 0.8;
+            } else {
+                ctx.strokeStyle = 'rgba(48, 54, 61, 0.45)';
+                ctx.lineWidth = 1;
+            }
             ctx.stroke();
         });
 
@@ -255,9 +342,13 @@
         skillNodes.forEach(node => {
             const isHover = hoveredNode === node;
             const r = isHover ? node.r + 4 : node.r;
+            const isDimmed = selectedCategory !== 'all' && node.category !== selectedCategory;
+            const isCatMatch = selectedCategory !== 'all' && node.category === selectedCategory;
+
+            ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
 
             // In-Progress Pulsing Aura Ring
-            if (node.inProgress) {
+            if (node.inProgress && !isDimmed) {
                 const pulseR = r + 5 + Math.sin(Date.now() * 0.005) * 4;
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, pulseR, 0, Math.PI * 2);
@@ -267,56 +358,79 @@
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
                 ctx.setLineDash([]);
-                ctx.globalAlpha = 1.0;
+                ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
             }
 
-            // Outer Glow
-            if (isHover) {
+            // Outer Glow (Hover or Filter match)
+            if (isHover || (isCatMatch && !isHover)) {
                 ctx.beginPath();
-                ctx.arc(node.x, node.y, r + 8, 0, Math.PI * 2);
+                ctx.arc(node.x, node.y, r + (isHover ? 8 : 5), 0, Math.PI * 2);
                 ctx.fillStyle = node.color;
-                ctx.globalAlpha = 0.25;
+                ctx.globalAlpha = isHover ? 0.35 : 0.15;
                 ctx.fill();
-                ctx.globalAlpha = 1.0;
+                ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
             }
 
-            // Node Circle
+            // Core Node Circle
             ctx.beginPath();
             ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
             ctx.fillStyle = '#0d1117';
-            ctx.strokeStyle = isHover ? '#ffffff' : node.color;
+            ctx.strokeStyle = isHover ? '#ffffff' : (isCatMatch ? '#ffffff' : node.color);
             ctx.lineWidth = isHover ? 2.5 : (node.inProgress ? 2 : 1.8);
             if (node.inProgress) ctx.setLineDash([4, 2]);
             ctx.fill();
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // Label
+            // Label text below node
             ctx.font = isHover ? 'bold 0.82rem JetBrains Mono, monospace' : '0.74rem JetBrains Mono, monospace';
-            ctx.fillStyle = isHover ? '#ffffff' : 'rgba(230, 237, 243, 0.9)';
+            ctx.fillStyle = isHover ? '#ffffff' : (isCatMatch ? '#ffffff' : 'rgba(230, 237, 243, 0.9)');
             ctx.textAlign = 'center';
             const labelText = node.inProgress ? `${node.label} ⚡` : node.label;
             ctx.fillText(labelText, node.x, node.y + r + 14);
+
+            ctx.globalAlpha = 1.0;
         });
 
-        // Draw Hover Tooltip Badge
+        // Draw Interactive Hover Tooltip Box
         if (hoveredNode) {
-            const statusTag = hoveredNode.inProgress ? ' [⚡ IN PROGRESS]' : '';
-            const badgeText = `[${hoveredNode.category.toUpperCase()}] ${hoveredNode.label}${statusTag}`;
-            ctx.font = '600 0.78rem JetBrains Mono, monospace';
-            const textWidth = ctx.measureText(badgeText).width;
-            const bx = Math.max(10, Math.min(canvas.width - textWidth - 30, hoveredNode.x - textWidth / 2 - 10));
-            const by = Math.max(25, hoveredNode.y - hoveredNode.r - 20);
+            const isCatDimmed = selectedCategory !== 'all' && hoveredNode.category !== selectedCategory;
+            if (!isCatDimmed) {
+                const statusTag = hoveredNode.inProgress ? ' [⚡ IN PROGRESS]' : '';
+                const titleLine = `[${(hoveredNode.categoryName || hoveredNode.category).toUpperCase()}] ${hoveredNode.label}${statusTag}`;
+                const projectLine = hoveredNode.usedIn ? `Used in: ${hoveredNode.usedIn}` : '';
 
-            ctx.fillStyle = 'rgba(22, 27, 34, 0.95)';
-            ctx.strokeStyle = hoveredNode.color;
-            ctx.lineWidth = 1;
-            ctx.fillRect(bx, by - 18, textWidth + 20, 24);
-            ctx.strokeRect(bx, by - 18, textWidth + 20, 24);
+                ctx.font = '600 0.78rem JetBrains Mono, monospace';
+                const titleWidth = ctx.measureText(titleLine).width;
+                ctx.font = '0.72rem JetBrains Mono, monospace';
+                const projWidth = projectLine ? ctx.measureText(projectLine).width : 0;
 
-            ctx.fillStyle = hoveredNode.color;
-            ctx.textAlign = 'left';
-            ctx.fillText(badgeText, bx + 10, by - 2);
+                const boxWidth = Math.max(titleWidth, projWidth) + 24;
+                const boxHeight = projectLine ? 46 : 28;
+
+                const bx = Math.max(12, Math.min(canvas.width - boxWidth - 12, hoveredNode.x - boxWidth / 2));
+                const by = Math.max(32, hoveredNode.y - hoveredNode.r - (projectLine ? 34 : 20));
+
+                // Tooltip background frame
+                ctx.fillStyle = 'rgba(13, 17, 23, 0.96)';
+                ctx.strokeStyle = hoveredNode.color;
+                ctx.lineWidth = 1.2;
+                ctx.fillRect(bx, by - 16, boxWidth, boxHeight);
+                ctx.strokeRect(bx, by - 16, boxWidth, boxHeight);
+
+                // Category & Title
+                ctx.font = '600 0.78rem JetBrains Mono, monospace';
+                ctx.fillStyle = hoveredNode.color;
+                ctx.textAlign = 'left';
+                ctx.fillText(titleLine, bx + 10, by);
+
+                // Project Linkage
+                if (projectLine) {
+                    ctx.font = '0.72rem JetBrains Mono, monospace';
+                    ctx.fillStyle = 'rgba(230, 237, 243, 0.88)';
+                    ctx.fillText(projectLine, bx + 10, by + 18);
+                }
+            }
         }
     }
 
@@ -356,5 +470,34 @@
         if (typeof playClickSound === 'function') playClickSound(700, 0.02);
     }
 
+    function filterGraphCategory(cat) {
+        selectedCategory = cat;
+
+        // Update button active state
+        document.querySelectorAll('.graph-filter-btn').forEach(btn => {
+            if (btn.getAttribute('data-cat') === cat) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        const resetBtn = document.getElementById('graphFilterReset');
+        if (resetBtn) {
+            resetBtn.style.display = cat === 'all' ? 'none' : 'inline-block';
+        }
+
+        // Trigger pleasant impulse shockwave on active category nodes
+        skillNodes.forEach(node => {
+            if (cat === 'all' || node.category === cat) {
+                shockwaves.push({ x: node.x, y: node.y, r: node.r, maxR: 45, opacity: 0.65, color: node.color });
+            }
+        });
+
+        if (typeof playClickSound === 'function') playClickSound(800, 0.02);
+    }
+
+    // Expose globals for onclick handlers
     window.switchSkillsView = switchSkillsView;
+    window.filterGraphCategory = filterGraphCategory;
 })();

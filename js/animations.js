@@ -42,4 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
 
     dividers.forEach(d => dividerObserver.observe(d));
+// Staggered reveal for project commit cards
+    const commitCards = document.querySelectorAll('.commit-card');
+    const cardObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+    commitCards.forEach((card, index) => {
+        card.classList.add('reveal');
+        card.style.transitionDelay = `${(index % 2) * 90}ms`;
+        cardObserver.observe(card);
+    });
 });

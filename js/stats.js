@@ -33,6 +33,9 @@ async function fetchAllGitHubData() {
 
             // Save live current streak globally & update hero section boot line
             window.liveCurrentStreak = currentStreak;
+            try {
+                localStorage.setItem('cached_gh_streak', currentStreak);
+            } catch (e) {}
             const heroStreak = document.getElementById('heroStreakVal');
             if (heroStreak) {
                 heroStreak.textContent = `${currentStreak} days and counting...`;
@@ -112,11 +115,12 @@ async function fetchAllGitHubData() {
 
 // ─── Fallback for Whoami Bars When All APIs Fail ───────────────────
 function applyFallbackBars() {
+    const cachedStreak = (typeof localStorage !== 'undefined' && localStorage.getItem('cached_gh_streak')) || '233+';
     const map = {
         whoamiStreakBar: buildProgressBar(20),
-        whoamiStreakVal: '158+ days (cached)',
+        whoamiStreakVal: `${cachedStreak} days (cached)`,
         whoamiCommitsBar: buildProgressBar(17),
-        whoamiCommitsVal: '2400+ (cached)',
+        whoamiCommitsVal: '3700+ (cached)',
         whoamiLeetcodeBar: buildProgressBar(7),
         whoamiLeetcodeVal: '66+ solved (cached)',
     };
@@ -297,3 +301,25 @@ async function generateContributionHeatmap() {
         }
     }
 }
+// ─── Heatmap Intersection Observer for Lazy Rendering ─────────────
+let heatmapRendered = false;
+function initHeatmapObserver() {
+    const statsSection = document.getElementById('stats');
+    if (!statsSection) {
+        generateContributionHeatmap();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !heatmapRendered) {
+                heatmapRendered = true;
+                generateContributionHeatmap();
+                obs.disconnect();
+            }
+        });
+    }, { rootMargin: '300px' });
+
+    observer.observe(statsSection);
+}
+

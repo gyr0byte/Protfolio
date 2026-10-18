@@ -108,6 +108,75 @@ window.nextAnimeQuote = nextAnimeQuote;
 window.prevAnimeQuote = prevAnimeQuote;
 
 // Main Application Initialization
+// ─── Dynamic Age & Metadata Calculation ───────────────────────────
+function calculateAge(birthDateStr = '2006-01-15') {
+    const birthDate = new Date(birthDateStr);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+function initDynamicElements() {
+    const ageEl = document.getElementById('dynamicAge');
+    if (ageEl) {
+        ageEl.textContent = `: ${calculateAge()}`;
+    }
+
+    const copyrightEl = document.getElementById('dynamicCopyright');
+    if (copyrightEl) {
+        const curYear = new Date().getFullYear();
+        copyrightEl.textContent = curYear <= 2025 ? '© 2025' : `© 2025–${curYear}`;
+    }
+}
+
+// ─── Light/Dark Theme Mode Toggle ─────────────────────────────────
+function toggleThemeMode() {
+    const isLight = document.body.classList.toggle('theme-light');
+    document.documentElement.classList.toggle('theme-light', isLight);
+    const mode = isLight ? 'light' : 'dark';
+    try {
+        localStorage.setItem('portfolio_theme_mode', mode);
+    } catch (e) {}
+
+    updateThemeButtonLabels(isLight);
+    if (typeof playClickSound === 'function') playClickSound(800, 0.02);
+    if (typeof showToast === 'function') {
+        showToast(`[THEME] Switched to ${isLight ? 'LIGHT' : 'DARK'} terminal mode`);
+    }
+}
+
+function updateThemeButtonLabels(isLight) {
+    const desktopBtn = document.getElementById('themeToggleBtn');
+    const mobileBtn = document.getElementById('themeToggleBtnMobile');
+
+    if (desktopBtn) {
+        desktopBtn.innerHTML = isLight ? '☀️ LIGHT' : '🌙 DARK';
+        desktopBtn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+    }
+    if (mobileBtn) {
+        mobileBtn.innerHTML = isLight ? '☀️ LIGHT' : '🌙 THEME';
+    }
+}
+
+function applyStoredTheme() {
+    try {
+        const saved = localStorage.getItem('portfolio_theme_mode');
+        const isLight = saved === 'light';
+        if (isLight) {
+            document.body.classList.add('theme-light');
+            document.documentElement.classList.add('theme-light');
+        } else {
+            document.body.classList.remove('theme-light');
+            document.documentElement.classList.remove('theme-light');
+        }
+        updateThemeButtonLabels(isLight);
+    } catch (e) {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Mouse Follower Crosshair
     const follower = document.getElementById('cursorFollower');
@@ -203,6 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 5. Initialize Modules
+    applyStoredTheme();
+    initDynamicElements();
     runBootSequence();
     updateUptimeBadge();
     startAnimeQuoteTimer();
@@ -211,5 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAllGitHubData().then(() => {
         initStatsObserver();
     });
-    generateContributionHeatmap();
+    if (typeof initHeatmapObserver === 'function') {
+        initHeatmapObserver();
+    } else {
+        generateContributionHeatmap();
+    }
 });

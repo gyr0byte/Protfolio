@@ -24,7 +24,8 @@ esume.json, and CLI whoami.
 - **Issue 4 (Dynamic Copyright):** Replaced hardcoded year with dynamic © 2025– in both index.html and bout.html.
 - **Issue 5 (Project Hierarchy):** Added .commit-card.featured styling (neon glow, gradient accent) and ★ FLAGSHIP / ★ RESEARCH badges.
 - **Issue 11 (Performance & Lazy Loading):** Preconnected to GitHub & contributions APIs; lazy-loaded 370-day contribution heatmap with IntersectionObserver; staggered reveal animations for project cards.
-- **Issue 14 (Light/Dark Theme):** Added 	oggleThemeMode() to nav buttons and CLI (	heme light/	heme green/	heme dark). Supported zero-flash init script and comprehensive light theme variables.
+- **Issue 14 (Light/Dark Theme):** Added toggleThemeMode() to nav buttons and CLI (theme light/theme green/theme dark). Supported zero-flash init script and comprehensive light theme variables.
+- **Issue 16 (GitHub Audit & Data Sync):** Added `★ 45 STARS · 8 FORKS` glowing badge (.featured-badge.stars) to `ML-Foundations` in `index.html`; synced `#stats` counter card fallback baselines to live data (233 streak, 3500 commits, 32 repos); synced `about.html` with canonical `OOP_Purity_Analyzer` link, stars callout, and added `Kundali-SYP` & `Generative-AI`; standardized Schema.org JSON-LD LinkedIn URLs.
 
 ---
 

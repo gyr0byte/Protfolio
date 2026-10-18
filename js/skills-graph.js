@@ -1,4 +1,4 @@
-// Interactive Neural Skill Network Graph Visualizer v2.0
+// Interactive Neural Skill Network Graph Visualizer v2.2
 // Features: Physics simulation, Shockwaves, Mobile Touch Support, Category Filtering & Project Linkages
 (function() {
     let canvas = null;
@@ -113,6 +113,8 @@
         canvas.addEventListener('touchend', onTouchEnd, { passive: false });
         canvas.addEventListener('touchcancel', onTouchEnd, { passive: false });
 
+        setupFilterButtonListeners();
+
         isInitialized = true;
         animate();
     }
@@ -142,6 +144,9 @@
 
         hoveredNode = null;
         for (let node of skillNodes) {
+            // Ignore hovering dimmed nodes when a category filter is active
+            if (selectedCategory !== 'all' && node.category !== selectedCategory) continue;
+
             const dx = mx - node.x;
             const dy = my - node.y;
             if (dx * dx + dy * dy <= (node.r + 6) * (node.r + 6)) {
@@ -160,6 +165,8 @@
         const my = e.clientY - rect.top;
 
         for (let node of skillNodes) {
+            if (selectedCategory !== 'all' && node.category !== selectedCategory) continue;
+
             const dx = mx - node.x;
             const dy = my - node.y;
             if (dx * dx + dy * dy <= (node.r + 6) * (node.r + 6)) {
@@ -186,6 +193,8 @@
         const my = touch.clientY - rect.top;
 
         for (let node of skillNodes) {
+            if (selectedCategory !== 'all' && node.category !== selectedCategory) continue;
+
             const dx = mx - node.x;
             const dy = my - node.y;
             if (dx * dx + dy * dy <= (node.r + 14) * (node.r + 14)) {
@@ -316,10 +325,10 @@
                 ctx.lineWidth = 2.2;
             } else if (isCategoryActive && selectedCategory !== 'all') {
                 ctx.strokeStyle = n1.color;
-                ctx.lineWidth = 1.8;
+                ctx.lineWidth = 2.0;
             } else if (isCategoryDimmed) {
-                ctx.strokeStyle = 'rgba(48, 54, 61, 0.15)';
-                ctx.lineWidth = 0.8;
+                ctx.strokeStyle = 'rgba(48, 54, 61, 0.08)';
+                ctx.lineWidth = 0.6;
             } else {
                 ctx.strokeStyle = 'rgba(48, 54, 61, 0.45)';
                 ctx.lineWidth = 1;
@@ -345,11 +354,24 @@
             const isDimmed = selectedCategory !== 'all' && node.category !== selectedCategory;
             const isCatMatch = selectedCategory !== 'all' && node.category === selectedCategory;
 
-            ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
+            // Heavily dim non-matching nodes to make the active cluster immediately visible
+            ctx.globalAlpha = isDimmed ? 0.08 : 1.0;
+
+            // Active category pulsing ring
+            if (isCatMatch && !isHover) {
+                ctx.beginPath();
+                const matchRingR = r + 5 + Math.sin(Date.now() * 0.005) * 3;
+                ctx.arc(node.x, node.y, matchRingR, 0, Math.PI * 2);
+                ctx.strokeStyle = node.color;
+                ctx.lineWidth = 1.5;
+                ctx.globalAlpha = 0.55;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+            }
 
             // In-Progress Pulsing Aura Ring
             if (node.inProgress && !isDimmed) {
-                const pulseR = r + 5 + Math.sin(Date.now() * 0.005) * 4;
+                const pulseR = r + 6 + Math.sin(Date.now() * 0.005) * 4;
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, pulseR, 0, Math.PI * 2);
                 ctx.strokeStyle = node.color;
@@ -358,17 +380,17 @@
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
                 ctx.setLineDash([]);
-                ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
+                ctx.globalAlpha = isDimmed ? 0.08 : 1.0;
             }
 
             // Outer Glow (Hover or Filter match)
             if (isHover || (isCatMatch && !isHover)) {
                 ctx.beginPath();
-                ctx.arc(node.x, node.y, r + (isHover ? 8 : 5), 0, Math.PI * 2);
+                ctx.arc(node.x, node.y, r + (isHover ? 8 : 6), 0, Math.PI * 2);
                 ctx.fillStyle = node.color;
-                ctx.globalAlpha = isHover ? 0.35 : 0.15;
+                ctx.globalAlpha = isHover ? 0.35 : 0.22;
                 ctx.fill();
-                ctx.globalAlpha = isDimmed ? 0.22 : 1.0;
+                ctx.globalAlpha = isDimmed ? 0.08 : 1.0;
             }
 
             // Core Node Circle
@@ -376,14 +398,14 @@
             ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
             ctx.fillStyle = '#0d1117';
             ctx.strokeStyle = isHover ? '#ffffff' : (isCatMatch ? '#ffffff' : node.color);
-            ctx.lineWidth = isHover ? 2.5 : (node.inProgress ? 2 : 1.8);
+            ctx.lineWidth = isHover ? 2.5 : (isCatMatch ? 2.2 : (node.inProgress ? 2 : 1.8));
             if (node.inProgress) ctx.setLineDash([4, 2]);
             ctx.fill();
             ctx.stroke();
             ctx.setLineDash([]);
 
             // Label text below node
-            ctx.font = isHover ? 'bold 0.82rem JetBrains Mono, monospace' : '0.74rem JetBrains Mono, monospace';
+            ctx.font = isHover ? 'bold 0.82rem JetBrains Mono, monospace' : (isCatMatch ? '600 0.78rem JetBrains Mono, monospace' : '0.74rem JetBrains Mono, monospace');
             ctx.fillStyle = isHover ? '#ffffff' : (isCatMatch ? '#ffffff' : 'rgba(230, 237, 243, 0.9)');
             ctx.textAlign = 'center';
             const labelText = node.inProgress ? `${node.label} ⚡` : node.label;
@@ -442,62 +464,132 @@
         animFrame = requestAnimationFrame(animate);
     }
 
-    function switchSkillsView(mode) {
-        activeView = mode;
-        const treeEl = document.querySelector('.skills-tree');
-        const graphEl = document.getElementById('skillsGraphContainer');
-        const btnTree = document.getElementById('btnViewTree');
-        const btnGraph = document.getElementById('btnViewGraph');
+    function setupFilterButtonListeners() {
+        const buttons = document.querySelectorAll('.graph-filter-btn');
+        buttons.forEach(btn => {
+            btn.onclick = function(e) {
+                if (e) e.preventDefault();
+                const cat = this.getAttribute('data-cat') || 'all';
+                filterGraphCategory(cat);
+            };
+        });
 
-        if (mode === 'graph') {
-            if (treeEl) treeEl.style.display = 'none';
-            if (graphEl) graphEl.style.display = 'block';
-            if (btnTree) btnTree.classList.remove('active');
-            if (btnGraph) btnGraph.classList.add('active');
-
-            if (!isInitialized) {
-                initGraphCanvas();
-            } else {
-                resizeCanvas();
-            }
-        } else {
-            if (treeEl) treeEl.style.display = 'block';
-            if (graphEl) graphEl.style.display = 'none';
-            if (btnTree) btnTree.classList.add('active');
-            if (btnGraph) btnGraph.classList.remove('active');
+        const resetBtn = document.getElementById('graphFilterReset');
+        if (resetBtn) {
+            resetBtn.onclick = function(e) {
+                if (e) e.preventDefault();
+                filterGraphCategory('all');
+            };
         }
-
-        if (typeof playClickSound === 'function') playClickSound(700, 0.02);
     }
 
     function filterGraphCategory(cat) {
         selectedCategory = cat;
 
-        // Update button active state
-        document.querySelectorAll('.graph-filter-btn').forEach(btn => {
-            if (btn.getAttribute('data-cat') === cat) {
+        // 1. Update button active states
+        const buttons = document.querySelectorAll('.graph-filter-btn');
+        buttons.forEach(btn => {
+            const btnCat = btn.getAttribute('data-cat');
+            if (btnCat === cat) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
 
+        // 2. Update reset button
         const resetBtn = document.getElementById('graphFilterReset');
         if (resetBtn) {
-            resetBtn.style.display = cat === 'all' ? 'none' : 'inline-block';
+            resetBtn.style.display = (cat === 'all') ? 'none' : 'inline-block';
         }
 
-        // Trigger pleasant impulse shockwave on active category nodes
+        // 3. Update status badge text & color
+        const badge = document.querySelector('.graph-status-badge');
+        if (badge) {
+            if (cat === 'all') {
+                badge.textContent = '● LIVE SIMULATION';
+                badge.style.color = 'var(--terminal-green)';
+            } else {
+                const count = skillNodes.filter(n => n.category === cat).length;
+                const catNames = {
+                    ml: 'Machine Learning',
+                    dl_nlp: 'Deep Learning & NLP',
+                    genai: 'GenAI & Agents',
+                    lang: 'Languages',
+                    math: 'Math & Foundations',
+                    tools: 'Tools & Deployment'
+                };
+                const catColors = {
+                    ml: '#2ea44f',
+                    dl_nlp: '#d29922',
+                    genai: '#f78166',
+                    lang: '#58a6ff',
+                    math: '#bc8cff',
+                    tools: '#f0883e'
+                };
+                const displayName = catNames[cat] || cat.toUpperCase();
+                badge.textContent = `● FILTER: [${displayName.toUpperCase()}] (${count} NODES)`;
+                badge.style.color = catColors[cat] || 'var(--terminal-green)';
+            }
+        }
+
+        // 4. Trigger impulse shockwave on active category nodes
         skillNodes.forEach(node => {
             if (cat === 'all' || node.category === cat) {
-                shockwaves.push({ x: node.x, y: node.y, r: node.r, maxR: 45, opacity: 0.65, color: node.color });
+                shockwaves.push({ x: node.x, y: node.y, r: node.r, maxR: 52, opacity: 0.8, color: node.color });
             }
         });
 
         if (typeof playClickSound === 'function') playClickSound(800, 0.02);
     }
 
-    // Expose globals for onclick handlers
+    function switchSkillsView(mode) {
+        activeView = mode;
+        const treeEl = document.querySelector('.skills-tree');
+        const graphEl = document.getElementById('skillsGraphContainer');
+        const btnTree = document.getElementById('btnViewTree');
+        const btnGraph = document.getElementById('btnViewGraph');
+        const treeControls = document.querySelector('.skills-controls > div');
+
+        if (mode === 'graph') {
+            if (treeEl) treeEl.style.display = 'none';
+            if (graphEl) graphEl.style.display = 'block';
+            if (btnTree) btnTree.classList.remove('active');
+            if (btnGraph) btnGraph.classList.add('active');
+            if (treeControls) treeControls.style.visibility = 'hidden';
+
+            if (!isInitialized) {
+                initGraphCanvas();
+            } else {
+                resizeCanvas();
+            }
+            setupFilterButtonListeners();
+        } else {
+            if (treeEl) treeEl.style.display = 'block';
+            if (graphEl) graphEl.style.display = 'none';
+            if (btnTree) btnTree.classList.add('active');
+            if (btnGraph) btnGraph.classList.remove('active');
+            if (treeControls) treeControls.style.visibility = 'visible';
+        }
+
+        if (typeof playClickSound === 'function') playClickSound(700, 0.02);
+    }
+
+    // Expose globals immediately
     window.switchSkillsView = switchSkillsView;
     window.filterGraphCategory = filterGraphCategory;
+    window._internalFilterGraphCategory = filterGraphCategory;
+
+    // Check if a category filter was clicked before script evaluation
+    if (window._pendingGraphCategory) {
+        filterGraphCategory(window._pendingGraphCategory);
+        delete window._pendingGraphCategory;
+    }
+
+    // Bind on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupFilterButtonListeners);
+    } else {
+        setupFilterButtonListeners();
+    }
 })();

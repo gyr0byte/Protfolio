@@ -24,3 +24,15 @@ function collapseAllSkills() {
 window.toggleDir = toggleDir;
 window.expandAllSkills = expandAllSkills;
 window.collapseAllSkills = collapseAllSkills;
+
+// Global fallback bridge for graph filter category
+if (typeof window.filterGraphCategory !== 'function') {
+    window.filterGraphCategory = function(cat) {
+        if (typeof window._internalFilterGraphCategory === 'function') {
+            window._internalFilterGraphCategory(cat);
+        } else {
+            window._pendingGraphCategory = cat;
+        }
+    };
+}
+

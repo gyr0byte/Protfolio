@@ -362,13 +362,13 @@
 
                         <!-- Interactive Category Filter Chips / Legend -->
                         <div class="skills-graph-legend" id="skillsGraphLegend" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;">
-                            <button class="graph-filter-btn active" data-cat="all" onclick="filterGraphCategory('all')">All Nodes (26)</button>
-                            <button class="graph-filter-btn" data-cat="ml" onclick="filterGraphCategory('ml')"><span style="color: #2ea44f;">●</span> Machine Learning</button>
-                            <button class="graph-filter-btn" data-cat="dl_nlp" onclick="filterGraphCategory('dl_nlp')"><span style="color: #d29922;">●</span> Deep Learning & NLP</button>
-                            <button class="graph-filter-btn" data-cat="genai" onclick="filterGraphCategory('genai')"><span style="color: #f78166;">●</span> GenAI & Agents</button>
-                            <button class="graph-filter-btn" data-cat="lang" onclick="filterGraphCategory('lang')"><span style="color: #58a6ff;">●</span> Languages</button>
-                            <button class="graph-filter-btn" data-cat="math" onclick="filterGraphCategory('math')"><span style="color: #bc8cff;">●</span> Math & Foundations</button>
-                            <button class="graph-filter-btn" data-cat="tools" onclick="filterGraphCategory('tools')"><span style="color: #f0883e;">●</span> Tools & Deployment</button>
+                            <button type="button" class="graph-filter-btn active" data-cat="all" onclick="filterGraphCategory('all')">All Nodes (26)</button>
+                            <button type="button" class="graph-filter-btn" data-cat="ml" onclick="filterGraphCategory('ml')"><span style="color: #2ea44f; pointer-events: none;">●</span> Machine Learning</button>
+                            <button type="button" class="graph-filter-btn" data-cat="dl_nlp" onclick="filterGraphCategory('dl_nlp')"><span style="color: #d29922; pointer-events: none;">●</span> Deep Learning & NLP</button>
+                            <button type="button" class="graph-filter-btn" data-cat="genai" onclick="filterGraphCategory('genai')"><span style="color: #f78166; pointer-events: none;">●</span> GenAI & Agents</button>
+                            <button type="button" class="graph-filter-btn" data-cat="lang" onclick="filterGraphCategory('lang')"><span style="color: #58a6ff; pointer-events: none;">●</span> Languages</button>
+                            <button type="button" class="graph-filter-btn" data-cat="math" onclick="filterGraphCategory('math')"><span style="color: #bc8cff; pointer-events: none;">●</span> Math & Foundations</button>
+                            <button type="button" class="graph-filter-btn" data-cat="tools" onclick="filterGraphCategory('tools')"><span style="color: #f0883e; pointer-events: none;">●</span> Tools & Deployment</button>
                         </div>
                     </div>
                 </div>
@@ -827,8 +827,8 @@
     <script src="js/matrix.js"></script>
     <script src="js/boot.js"></script>
     <script src="js/typewriter.js"></script>
-    <script src="js/skills.js"></script>
-    <script src="js/skills-graph.js"></script>
+    <script src="js/skills.js?v=2.2.0"></script>
+    <script src="js/skills-graph.js?v=2.2.0"></script>
     <script src="js/stats.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/cli.js"></script>

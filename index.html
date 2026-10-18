@@ -102,6 +102,9 @@
                 <button class="nav-btn" onclick="toggleMatrix()">
                     🌧️ MATRIX
                 </button>
+                <button class="nav-btn" id="themeToggleBtn" onclick="toggleThemeMode()" title="Toggle Light/Dark">
+                    🌙 DARK
+                </button>
                 <a href="resume/Gaurav_Dulal_Resume.pdf" target="_blank" class="nav-btn" style="text-decoration: none;">
                     📄 RESUME.pdf ↓
                 </a>
@@ -116,6 +119,7 @@
                 <button class="nav-btn" onclick="toggleTerminalModal()">⚡ CLI</button>
                 <button class="nav-btn" id="soundToggleBtnMobile" onclick="toggleAudio()">🔇 AUDIO</button>
                 <button class="nav-btn" onclick="toggleMatrix()">🌧️ MATRIX</button>
+                <button class="nav-btn" id="themeToggleBtnMobile" onclick="toggleThemeMode()">🌙 THEME</button>
                 <a href="resume/Gaurav_Dulal_Resume.pdf" target="_blank" class="nav-btn" style="text-decoration: none;">📄 RESUME</a>
             </li>
             <li><a href="#whoami" class="active">whoami</a></li>
@@ -198,7 +202,7 @@
                 </div>
                 <div class="whoami-row">
                     <span class="whoami-label">AGE</span>
-                    <span class="whoami-val">: 20</span>
+                    <span class="whoami-val" id="dynamicAge">: 20</span>
                 </div>
                 <div class="whoami-row">
                     <span class="whoami-label">LOCATION</span>
@@ -361,7 +365,7 @@
             <div class="projects-grid">
 
                 <!-- Project 1: CodeRoast -->
-                <article class="commit-card">
+                <article class="commit-card featured">
                     <div class="commit-meta">
                         <div>● commit <span class="commit-hash" onclick="copyCommitHash('c4d90ef')" title="Click to copy hash">c4d90ef</span> (<span style="color: var(--accent-orange);">HEAD -&gt; main</span>)</div>
                         <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
@@ -386,7 +390,7 @@
                 </article>
 
                 <!-- Project 2: OOP Purity Analyzer -->
-                <article class="commit-card">
+                <article class="commit-card featured">
                     <div class="commit-meta">
                         <div>● commit <span class="commit-hash" onclick="copyCommitHash('a3f8c2d')" title="Click to copy hash">a3f8c2d</span></div>
                         <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
@@ -744,7 +748,7 @@
                 <span class="prompt-user">gaurav@gyr0byte:~$</span> <span>exit</span>
             </p>
             <p class="footer-quote">"Not a person, a process — always building, never stopping."</p>
-            <p>© 2026 gyr0byte | Targeting Tübingen MSc ML 2028</p>
+            <p><span id="dynamicCopyright">© 2026</span> gyr0byte | Targeting Tübingen MSc ML 2028</p>
             <div class="uptime-badge" id="uptimeBadge">[System uptime: calculating...]</div>
         </div>
     </footer>

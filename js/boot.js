@@ -1,11 +1,12 @@
 // Hero Boot Sequence & ASCII Glitch Title
+const initialStreak = (typeof localStorage !== 'undefined' && localStorage.getItem('cached_gh_streak')) || '233+';
 const bootLines = [
     "> Initializing system...",
     "> Loading profile: <span class='highlight'>Gaurav Dulal</span>...",
     "> Location: Belbari-2, Morang, Nepal",
     "> Status: <span class='highlight'>BHons Computing @ IIC | London Met University</span>",
     "> Mission: <span class='highlight-accent'>MSc Machine Learning → University of Tübingen (2028)</span>",
-    "> GitHub streak: <span class='highlight' id='heroStreakVal'>158+ days and counting...</span>",
+    `> GitHub streak: <span class='highlight' id='heroStreakVal'>${initialStreak} days and counting...</span>`,
     "> [<span style='color: var(--terminal-green);'>████████████████████</span>] 100% — System ready."
 ];
 
@@ -16,8 +17,9 @@ function runBootSequence() {
     if (!bootContainer) return;
 
     if (bootIndex < bootLines.length) {
-        if (bootIndex === 5 && window.liveCurrentStreak) {
-            bootLines[5] = `> GitHub streak: <span class='highlight' id='heroStreakVal'>${window.liveCurrentStreak} days and counting...</span>`;
+        if (bootIndex === 5) {
+            const currentStreak = window.liveCurrentStreak || (typeof localStorage !== 'undefined' && localStorage.getItem('cached_gh_streak')) || '233+';
+            bootLines[5] = `> GitHub streak: <span class='highlight' id='heroStreakVal'>${currentStreak} days and counting...</span>`;
         }
 
         const line = document.createElement('div');

@@ -245,8 +245,16 @@
     <a class="back-link" href="/">Back to terminal</a>
 
     <footer>
-        <p>&copy; 2025 Gaurav Dulal (gyr0byte). All rights reserved.</p>
+        <p><span id="dynamicCopyright">&copy; 2025–2026</span> Gaurav Dulal (gyr0byte). All rights reserved.</p>
     </footer>
+
+    <script>
+        const copyrightEl = document.getElementById('dynamicCopyright');
+        if (copyrightEl) {
+            const y = new Date().getFullYear();
+            copyrightEl.innerHTML = y <= 2025 ? '&copy; 2025' : `&copy; 2025–${y}`;
+        }
+    </script>
 
 </body>
 </html>

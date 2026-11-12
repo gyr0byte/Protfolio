@@ -146,6 +146,36 @@
         });
     }
 
+    function syncFilterUI() {
+        const data = window.SKILLS_DATA;
+        document.querySelectorAll('.graph-filter-btn').forEach((btn) => {
+            if (btn.getAttribute('data-cat') === selectedCategory) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        const resetBtn = document.getElementById('graphFilterReset');
+        if (resetBtn) {
+            resetBtn.style.display = selectedCategory === 'all' ? 'none' : 'inline-block';
+        }
+
+        const badge = document.querySelector('.graph-status-badge');
+        if (badge) {
+            if (selectedCategory === 'all') {
+                badge.textContent = `● LIVE SIMULATION (${skillNodes.length} SKILLS)`;
+                badge.style.color = 'var(--terminal-green)';
+            } else {
+                const catMeta = data ? data.getCategoryById(selectedCategory) : null;
+                const count = skillNodes.filter(n => n.category === selectedCategory).length;
+                const label = catMeta ? catMeta.name.toUpperCase() : selectedCategory.toUpperCase();
+                badge.textContent = `● FILTER: [${label}] (${count} NODES)`;
+                badge.style.color = catMeta ? catMeta.color : 'var(--terminal-green)';
+            }
+        }
+    }
+
     function renderFilterControls() {
         const legend = document.getElementById('skillsGraphLegend');
         const data = window.SKILLS_DATA;
@@ -156,7 +186,7 @@
 
         const allBtn = document.createElement('button');
         allBtn.type = 'button';
-        allBtn.className = 'graph-filter-btn' + (selectedCategory === 'all' ? ' active' : '');
+        allBtn.className = 'graph-filter-btn';
         allBtn.setAttribute('data-cat', 'all');
         allBtn.textContent = `All Nodes (${totalSkills})`;
         allBtn.onclick = function(e) {
@@ -169,7 +199,7 @@
             const count = skillNodes.filter(n => n.category === cat.id).length;
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'graph-filter-btn' + (selectedCategory === cat.id ? ' active' : '');
+            btn.className = 'graph-filter-btn';
             btn.setAttribute('data-cat', cat.id);
 
             const dot = document.createElement('span');
@@ -198,6 +228,8 @@
                 filterGraphCategory('all');
             };
         }
+
+        syncFilterUI();
     }
 
     function updateTargetHomes(snapPositions) {
@@ -1125,34 +1157,7 @@
             hoveredNode = null;
         }
 
-        // Update filter button active states
-        document.querySelectorAll('.graph-filter-btn').forEach((btn) => {
-            if (btn.getAttribute('data-cat') === selectedCategory) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-
-        const resetBtn = document.getElementById('graphFilterReset');
-        if (resetBtn) {
-            resetBtn.style.display = selectedCategory === 'all' ? 'none' : 'inline-block';
-        }
-
-        // Update dynamic status badge
-        const badge = document.querySelector('.graph-status-badge');
-        if (badge) {
-            if (selectedCategory === 'all') {
-                badge.textContent = `● LIVE SIMULATION (${skillNodes.length} SKILLS)`;
-                badge.style.color = 'var(--terminal-green)';
-            } else {
-                const catMeta = data ? data.getCategoryById(selectedCategory) : null;
-                const count = skillNodes.filter(n => n.category === selectedCategory).length;
-                const label = catMeta ? catMeta.name.toUpperCase() : selectedCategory.toUpperCase();
-                badge.textContent = `● FILTER: [${label}] (${count} NODES)`;
-                badge.style.color = catMeta ? catMeta.color : 'var(--terminal-green)';
-            }
-        }
+        syncFilterUI();
 
         if (isInitialized) {
             updateTargetHomes(false);

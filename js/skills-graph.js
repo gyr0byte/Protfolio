@@ -449,6 +449,9 @@
         }
 
         updateTargetHomes(Boolean(snap));
+        if (activeView === 'graph' && ctx && allNodes.length > 0) {
+            draw();
+        }
     }
 
     function isNodeInteractable(node) {
@@ -1182,7 +1185,11 @@
 
         if (mode === 'graph') {
             if (treeEl) treeEl.style.display = 'none';
-            if (graphEl) graphEl.style.display = 'block';
+            if (graphEl) {
+                graphEl.style.display = 'block';
+                const gr = graphEl.getBoundingClientRect();
+                isInViewport = gr.bottom > 0 && gr.top < window.innerHeight;
+            }
             if (btnTree) btnTree.classList.remove('active');
             if (btnGraph) btnGraph.classList.add('active');
             if (treeControls) treeControls.style.visibility = 'hidden';

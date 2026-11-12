@@ -282,94 +282,23 @@
 
             <div class="terminal-window">
                 <div class="terminal-body">
-                    <ul class="skills-tree">
-                        <!-- Machine Learning -->
-                        <li class="dir-item">
-                            <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Machine_Learning/</span>
-                            </div>
-                            <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">numpy</span> <span class="tech-item">pandas</span> <span class="tech-item">matplotlib</span> <span class="tech-item">seaborn</span></div>
-                                <div class="file-line">├── <span class="tech-item">scikit-learn</span> <span class="tech-item">xgboost</span> <span class="tech-item">random-forest</span></div>
-                                <div class="file-line">├── <span class="tech-item">linear-regression</span> <span class="tech-item">logistic-regression</span> <span class="tech-item">svm</span></div>
-                                <div class="file-line">├── <span class="tech-item">decision-trees</span> <span class="tech-item">kmeans</span> <span class="tech-item">dbscan</span> <span class="tech-item">pca</span></div>
-                                <div class="file-line">└── <span class="tech-item">10-fold-stratified-cv</span> <span class="tech-item">feature-engineering</span> <span class="tech-item">grid-searchcv</span></div>
-                            </div>
-                        </li>
-
-                        <!-- Deep Learning, NLP & GenAI -->
-                        <li class="dir-item">
-                            <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Deep_Learning,_NLP_&_GenAI/</span>
-                                <span class="badge-in-progress"><span class="pulse-dot"></span>IN PROGRESS</span>
-                            </div>
-                            <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">pytorch</span> <span class="tech-item">tensorflow</span> <span class="tech-item">keras</span> <span class="tech-item">huggingface</span></div>
-                                <div class="file-line">├── <span class="tech-item">ann</span> <span class="tech-item">cnn</span> <span class="tech-item">rnn</span> <span class="tech-item">lstm</span> <span class="tech-item">transformers</span></div>
-                                <div class="file-line">├── <span class="tech-item">langchain</span> <span class="tech-item">rag-pipelines</span> <span class="tech-item">ai-agents</span> <span class="tech-item">chromadb</span></div>
-                                <div class="file-line">└── <span class="tech-item">tf-idf</span> <span class="tech-item">ast-parsing</span> <span class="tech-item">stacking-ensemble</span> <span class="tech-item">text-classification</span></div>
-                            </div>
-                        </li>
-
-                        <!-- Languages -->
-                        <li class="dir-item">
-                            <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Languages/</span>
-                            </div>
-                            <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">python</span> <span class="tech-item">java</span> <span class="tech-item">javascript</span> <span class="tech-item">c</span> <span class="tech-item">c++</span></div>
-                                <div class="file-line">└── <span class="tech-item">sql</span> <span class="tech-item">postgresql</span> <span class="tech-item">html5</span> <span class="tech-item">css3</span> <span class="tech-item">bash</span></div>
-                            </div>
-                        </li>
-
-                        <!-- Math & Foundations -->
-                        <li class="dir-item">
-                            <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Math_&_Foundations/</span>
-                            </div>
-                            <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">linear-algebra</span> <span class="tech-item">probability-&-stats</span></div>
-                                <div class="file-line">├── <span class="tech-item">binomial-distributions</span> <span class="tech-item">hypothesis-testing</span></div>
-                                <div class="file-line">└── <span class="tech-item">oop-paradigm-design</span> <span class="tech-item">dsa-patterns</span></div>
-                            </div>
-                        </li>
-
-                        <!-- Tools & Deployment -->
-                        <li class="dir-item">
-                            <div class="dir-header" onclick="toggleDir(this)">
-                                <span>📁</span> <span>drwxr-xr-x Tools_&_Deployment/</span>
-                            </div>
-                            <div class="dir-contents">
-                                <div class="file-line">├── <span class="tech-item">git</span> <span class="tech-item">github</span> <span class="tech-item">fastapi</span> <span class="tech-item">streamlit</span> <span class="tech-item">flask</span></div>
-                                <div class="file-line">├── <span class="tech-item">jupyter</span> <span class="tech-item">vscode</span> <span class="tech-item">linux</span> <span class="tech-item">plotly</span> <span class="tech-item">pgvector</span></div>
-                                <div class="file-line">└── <span class="tech-item">cloudflare-workers</span> <span class="tech-item">render</span> <span class="tech-item">streamlit-cloud</span> <span class="tech-item">postman</span></div>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="skills-tree" id="skillsTree"></ul>
 
                     <!-- Neural Network Graph View Container -->
                     <div id="skillsGraphContainer" style="display: none; position: relative; width: 100%;">
                         <div class="skills-graph-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--secondary-text); border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                            <span>🕸️ NEURAL_SKILL_GRAPH v2.0 (Interactive Physics · Drag & Touch)</span>
+                            <span>🕸️ NEURAL_SKILL_GRAPH v3.0 (Interactive Physics · Drag &amp; Touch)</span>
                             <span class="graph-status-badge">● LIVE SIMULATION</span>
                         </div>
-                        <canvas id="skillsGraphCanvas" style="width: 100%; height: 440px; display: block; background: rgba(13, 17, 23, 0.7); border-radius: 4px; border: 1px solid var(--border); touch-action: none;"></canvas>
+                        <canvas id="skillsGraphCanvas" class="skills-graph-canvas"></canvas>
                         
                         <div class="skills-graph-cue" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); flex-wrap: wrap; gap: 0.5rem;">
-                            <span>💡 Tip: Click filter pills below to isolate clusters · Drag / touch nodes to interact</span>
+                            <span>💡 Tip: Hover or tap nodes for details · Click filter pills below to isolate clusters · Drag nodes</span>
                             <span id="graphFilterReset" onclick="filterGraphCategory('all')" style="cursor: pointer; color: var(--terminal-green); display: none;">[Reset Filter ↺]</span>
                         </div>
 
-                        <!-- Interactive Category Filter Chips / Legend -->
-                        <div class="skills-graph-legend" id="skillsGraphLegend" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;">
-                            <button type="button" class="graph-filter-btn active" data-cat="all" onclick="filterGraphCategory('all')">All Nodes (26)</button>
-                            <button type="button" class="graph-filter-btn" data-cat="ml" onclick="filterGraphCategory('ml')"><span style="color: #2ea44f; pointer-events: none;">●</span> Machine Learning</button>
-                            <button type="button" class="graph-filter-btn" data-cat="dl_nlp" onclick="filterGraphCategory('dl_nlp')"><span style="color: #d29922; pointer-events: none;">●</span> Deep Learning & NLP</button>
-                            <button type="button" class="graph-filter-btn" data-cat="genai" onclick="filterGraphCategory('genai')"><span style="color: #f78166; pointer-events: none;">●</span> GenAI & Agents</button>
-                            <button type="button" class="graph-filter-btn" data-cat="lang" onclick="filterGraphCategory('lang')"><span style="color: #58a6ff; pointer-events: none;">●</span> Languages</button>
-                            <button type="button" class="graph-filter-btn" data-cat="math" onclick="filterGraphCategory('math')"><span style="color: #bc8cff; pointer-events: none;">●</span> Math & Foundations</button>
-                            <button type="button" class="graph-filter-btn" data-cat="tools" onclick="filterGraphCategory('tools')"><span style="color: #f0883e; pointer-events: none;">●</span> Tools & Deployment</button>
-                        </div>
+                        <!-- Interactive Category Filter Chips / Legend (Populated dynamically from SKILLS_DATA) -->
+                        <div class="skills-graph-legend" id="skillsGraphLegend" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; font-size: 0.75rem; color: var(--secondary-text); font-family: var(--font-mono); justify-content: center;"></div>
                     </div>
                 </div>
             </div>
@@ -827,8 +756,9 @@
     <script src="js/matrix.js"></script>
     <script src="js/boot.js"></script>
     <script src="js/typewriter.js"></script>
-    <script src="js/skills.js?v=2.2.0"></script>
-    <script src="js/skills-graph.js?v=2.2.0"></script>
+    <script src="js/skills-data.js?v=3.0.0"></script>
+    <script src="js/skills.js?v=3.0.0"></script>
+    <script src="js/skills-graph.js?v=3.0.0"></script>
     <script src="js/stats.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/cli.js"></script>

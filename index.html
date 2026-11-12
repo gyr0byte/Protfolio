@@ -307,168 +307,252 @@
 
         <!-- SECTION 4: PROJECTS / git log -->
         <div class="section-divider"><span>cd ~/projects</span></div>
-        <section id="projects">
-            <div class="command-header">
+        <section id="projects" aria-labelledby="projects-command-heading">
+            <div class="command-header" id="projects-command-heading">
                 <span class="prompt-user">gaurav@gyr0byte:~$</span>
-                <span>git log --oneline --all</span>
+                <span>ls -la ~/projects --sort=priority</span>
             </div>
 
-            <div class="projects-grid">
+            <div class="projects-showcase">
 
-                <!-- Project 1: CodeRoast -->
-                <article class="commit-card featured">
-                    <div class="commit-meta">
-                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('c4d90ef')" title="Click to copy hash">c4d90ef</span> (<span style="color: var(--accent-orange);">HEAD -&gt; main</span>)</div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
-                    </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">1. CodeRoast</h3>
-                        <span class="featured-badge">★ FLAGSHIP</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tag">NLP</span>
-                        <span class="tag">Deep Learning</span>
-                        <span class="tag">AST</span>
-                        <span class="tag">Streamlit</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Multi-stage critique engine: Static AST parsing + PyTorch LSTM severity scoring + Savage LLM roasts</li>
-                        <li>Persistent zero-refusal persona ensuring comedy roasts with precise static code feedback</li>
-                        <li>Interactive Streamlit UI featuring radar chart metric breakdowns and automated scorecards</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/CodeRoast" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
+                <!-- 01 — Physics Lab (Primary Flagship) -->
+                <article class="project-card project-featured-primary">
+                    <div class="project-split">
+                        <div class="project-body">
+                            <div class="project-topline">
+                                <span class="project-index">01 // FLAGSHIP</span>
+                                <span class="project-status status-active">ACTIVE DEVELOPMENT</span>
+                            </div>
+                            <h3 class="project-name">Physics Lab</h3>
+                            <p class="project-summary">
+                                An offline-first interactive physics simulation laboratory designed for Nepal's Grade 11 and Grade 12 Physics curriculum. Supports Android TV, desktop browsers and touch devices.
+                            </p>
+                            <div class="tech-tags" aria-label="Physics Lab technologies">
+                                <span class="tag">Kotlin</span>
+                                <span class="tag">Jetpack Compose</span>
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">Vite</span>
+                                <span class="tag">Canvas</span>
+                                <span class="tag">Vitest</span>
+                            </div>
+                            <ul class="project-highlights">
+                                <li>Four implemented curriculum-aligned simulations: Projectile Motion and Newton's Second Law, Simple Harmonic Motion and Mechanical Resonance, and Work, Energy and Power</li>
+                                <li>Interactive physical models with real-time measurements and analytical graphs</li>
+                                <li>D-pad navigation and touch-friendly interaction engineered for large screens, desktop browsers, and touch devices</li>
+                            </ul>
+                            <div class="project-links">
+                                <a href="https://github.com/gyr0byte/physics-lab" target="_blank" rel="noopener noreferrer" class="btn-link btn-primary">View Repo ↗</a>
+                            </div>
+                        </div>
+
+                        <figure class="project-visual-frame">
+                            <img src="assets/project-previews/physics-lab.svg"
+                                 alt="Vector diagram illustrating 2D projectile motion with velocity vectors on a coordinate grid and a spring-mass oscillator"
+                                 width="640" height="380" loading="lazy" decoding="async">
+                            <figcaption class="visual-caption">Schematic // Kinematics &amp; SHM simulation models</figcaption>
+                        </figure>
                     </div>
                 </article>
 
-                <!-- Project 2: OOP Purity Analyzer -->
-                <article class="commit-card featured">
-                    <div class="commit-meta">
-                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('a3f8c2d')" title="Click to copy hash">a3f8c2d</span></div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
-                    </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">2. OOP Purity Analyzer</h3>
-                        <span class="featured-badge">★ RESEARCH</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tag">Flask</span>
-                        <span class="tag">GitHub API</span>
-                        <span class="tag">Plotly</span>
-                        <span class="tag">Research</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Novel 7-category, 24-sub-criterion objective scoring matrix for OOP paradigm compliance</li>
-                        <li>Automated static AST analyzer parsing codebases across Python, Java, C++, and JavaScript</li>
-                        <li>Interactive Plotly analytics dashboard with CSV export underpinning undergraduate research</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/OOP_Purity_Analyzer" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
-                        <a href="https://oop-purity-analyzer-1.onrender.com" target="_blank" rel="noopener" class="btn-link">Live App ↗</a>
+                <!-- 02 — CodeRoast (Secondary Featured) -->
+                <article class="project-card project-featured-secondary">
+                    <div class="project-split project-split-reverse">
+                        <div class="project-body">
+                            <div class="project-topline">
+                                <span class="project-index">02 // FEATURED APP</span>
+                                <span class="project-status status-live">LIVE</span>
+                            </div>
+                            <h3 class="project-name">CodeRoast</h3>
+                            <p class="project-summary">
+                                An AI-assisted code critique application combining static code analysis, machine learning-based severity scoring and LLM-generated feedback.
+                            </p>
+                            <div class="tech-tags" aria-label="CodeRoast technologies">
+                                <span class="tag">Python</span>
+                                <span class="tag">Streamlit</span>
+                                <span class="tag">NLP</span>
+                                <span class="tag">PyTorch</span>
+                                <span class="tag">Scikit-learn</span>
+                                <span class="tag">Transformers</span>
+                            </div>
+                            <ul class="project-highlights">
+                                <li>Static code analysis paired with automated code-quality diagnostics</li>
+                                <li>ML-based severity scoring powered by deep-learning and Transformer components</li>
+                                <li>Interactive web workflow delivering English and Romanized Nepali feedback</li>
+                            </ul>
+                            <div class="project-links">
+                                <a href="https://coderoast.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-link btn-live">Live Demo ↗</a>
+                                <a href="https://github.com/gyr0byte/CodeRoast" target="_blank" rel="noopener noreferrer" class="btn-link">View Repo ↗</a>
+                            </div>
+                        </div>
+
+                        <figure class="project-visual-frame">
+                            <img src="assets/project-previews/coderoast.svg"
+                                 alt="Conceptual terminal-inspired architecture diagram showing source code analysis findings and severity indicators"
+                                 width="640" height="380" loading="lazy" decoding="async">
+                            <figcaption class="visual-caption">Conceptual diagram // Not an application screenshot</figcaption>
+                        </figure>
                     </div>
                 </article>
 
-                <!-- Project 3: Sentimental Analysis -->
-                <article class="commit-card">
-                    <div class="commit-meta">
-                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('f5a43b1')" title="Click to copy hash">f5a43b1</span></div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
-                    </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">3. Text Emotion Classifier</h3>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tag">NLP</span>
-                        <span class="tag">TF-IDF</span>
-                        <span class="tag">Stacking Classifier</span>
-                        <span class="tag">Streamlit</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Multi-class text emotion classification engine predicting core emotional states from prose</li>
-                        <li>TF-IDF n-gram vectorization paired with a Scikit-Learn Stacking Ensemble Classifier</li>
-                        <li>Production Streamlit web application with real-time inference and probability distribution</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/Sentimental_Analysis" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
-                        <a href="https://sentiment-analysis-me.streamlit.app/" target="_blank" rel="noopener" class="btn-link">Live App ↗</a>
-                    </div>
-                </article>
+                <!-- 03–05 Compact Primary Row -->
+                <div class="projects-compact-grid">
 
-                <!-- Project 4: ML-Foundations -->
-                <article class="commit-card">
-                    <div class="commit-meta">
-                        <div>● commit <span class="commit-hash" onclick="copyCommitHash('d910fe3')" title="Click to copy hash">d910fe3</span></div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
-                    </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">4. ML-Foundations</h3>
-                        <span class="featured-badge stars">★ 45 STARS · 8 FORKS</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Jupyter</span>
-                        <span class="tag">Scikit-learn</span>
-                        <span class="tag">XGBoost</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Community-validated ML roadmap with 45+ GitHub stars and 8 forks covering math proofs through deep learning</li>
-                        <li>Modular first-principles implementations spanning NumPy, Pandas, Scikit-Learn, and PyTorch</li>
-                        <li>End-to-end Jupyter Notebooks featuring data preprocessing, EDA, algorithm proofs, and model evaluation</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/ML-Foundations" target="_blank" rel="noopener" class="btn-link">View Repo ↗</a>
-                    </div>
-                </article>
+                    <!-- 03 — OOP Purity Analyzer -->
+                    <article class="project-card project-compact">
+                        <figure class="project-visual-frame project-visual-compact">
+                            <img src="assets/project-previews/oop-purity-analyzer.svg"
+                                 alt="Evaluation pipeline diagram from GitHub Repository through Code Analysis and 7-Category Rubric to Analytics and PDF Report"
+                                 width="640" height="380" loading="lazy" decoding="async">
+                        </figure>
+                        <div class="project-body">
+                            <div class="project-topline">
+                                <span class="project-index">03</span>
+                                <span class="project-status status-research">RESEARCH</span>
+                            </div>
+                            <h3 class="project-name">OOP Purity Analyzer</h3>
+                            <p class="project-summary">
+                                A repository-level Object-Oriented Programming evaluation framework built around a seven-category, 24-sub-criterion scoring rubric.
+                            </p>
+                            <div class="tech-tags" aria-label="OOP Purity Analyzer technologies">
+                                <span class="tag">Python</span>
+                                <span class="tag">Flask</span>
+                                <span class="tag">SQLite</span>
+                                <span class="tag">Plotly</span>
+                                <span class="tag">ReportLab</span>
+                                <span class="tag">GitHub API</span>
+                            </div>
+                            <ul class="project-highlights">
+                                <li>Repository analysis &amp; quantitative OOP rubric evaluation</li>
+                                <li>Interactive Plotly comparison dashboards with SQLite history</li>
+                                <li>REST API endpoints and structured ReportLab PDF reports</li>
+                            </ul>
+                            <div class="project-links">
+                                <a href="https://oop-purity-analyzer-1.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-link btn-live">Live Demo ↗</a>
+                                <a href="https://github.com/gyr0byte/OOP_Purity_Analyzer" target="_blank" rel="noopener noreferrer" class="btn-link">View Repo ↗</a>
+                            </div>
+                        </div>
+                    </article>
 
-                <!-- Project 5: Generative-AI -->
-                <article class="commit-card">
-                    <div class="commit-meta">
-                        <div>&#x25CF; commit <span class="commit-hash" onclick="copyCommitHash('a1c73f2')" title="Click to copy hash">a1c73f2</span></div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
-                    </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">5. Generative AI with LangChain</h3>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tag">LangChain</span>
-                        <span class="tag">RAG</span>
-                        <span class="tag">AI Agents</span>
-                        <span class="tag">Embeddings</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Hands-on LangChain integration covering chat models, retrieval-augmented generation, and tool-using agents</li>
-                        <li>End-to-end RAG pipelines with document loading, chunking, embedding, and vector store retrieval</li>
-                        <li>Multi-provider API orchestration demonstrating prompt chaining, memory, and agentic workflows</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/Generative-AI" target="_blank" rel="noopener" class="btn-link">View Repo &#x2197;</a>
-                    </div>
-                </article>
+                    <!-- 04 — Emotion Classifier -->
+                    <article class="project-card project-compact">
+                        <figure class="project-visual-frame project-visual-compact">
+                            <img src="assets/project-previews/emotion-classifier.svg"
+                                 alt="Diagram showing TF-IDF extraction with 13,361 features feeding a Stacking Classifier for six emotion classes"
+                                 width="640" height="380" loading="lazy" decoding="async">
+                        </figure>
+                        <div class="project-body">
+                            <div class="project-topline">
+                                <span class="project-index">04</span>
+                                <span class="project-status status-completed">COMPLETED</span>
+                            </div>
+                            <h3 class="project-name">Emotion Classifier</h3>
+                            <p class="project-summary">
+                                A six-class emotion classification application built around TF-IDF vectorization and an ensemble classifier.
+                            </p>
+                            <div class="tech-tags" aria-label="Emotion Classifier technologies">
+                                <span class="tag">Python</span>
+                                <span class="tag">Scikit-learn</span>
+                                <span class="tag">TF-IDF</span>
+                                <span class="tag">Stacking Classifier</span>
+                                <span class="tag">Streamlit</span>
+                            </div>
+                            <ul class="project-highlights">
+                                <li>Six classes (joy, sadness, anger, fear, love, surprise) on 16,000 samples</li>
+                                <li>13,361 TF-IDF features into a Decision Tree, SVC, Logistic Regression stack</li>
+                                <li>Documented 88.75% test-set accuracy behind an interactive Streamlit UI</li>
+                            </ul>
+                            <div class="project-links">
+                                <a href="https://github.com/gyr0byte/Sentimental_Analysis" target="_blank" rel="noopener noreferrer" class="btn-link">View Repo ↗</a>
+                            </div>
+                        </div>
+                    </article>
 
-                <!-- Project 6: Kundali-SYP -->
-                <article class="commit-card">
-                    <div class="commit-meta">
-                        <div>&#x25CF; commit <span class="commit-hash" onclick="copyCommitHash('d4b92e7')" title="Click to copy hash">d4b92e7</span></div>
-                        <div>Author: <span class="commit-author">gyr0byte &lt;gqurav69@gmail.com&gt;</span> | 2026</div>
+                    <!-- 05 — ML Foundations -->
+                    <article class="project-card project-compact">
+                        <figure class="project-visual-frame project-visual-compact">
+                            <img src="assets/project-previews/ml-foundations.svg"
+                                 alt="Curriculum diagram showing progression across 65 Jupyter notebooks from Python and Math to Machine Learning, Deep Learning, and NLP"
+                                 width="640" height="380" loading="lazy" decoding="async">
+                        </figure>
+                        <div class="project-body">
+                            <div class="project-topline">
+                                <span class="project-index">05</span>
+                                <span class="project-status status-completed">COMPLETED</span>
+                            </div>
+                            <h3 class="project-name">ML Foundations</h3>
+                            <p class="project-summary">
+                                A structured repository of 65 Jupyter notebooks documenting the progression from Python and mathematical foundations through classical Machine Learning, Deep Learning and NLP.
+                            </p>
+                            <div class="tech-tags" aria-label="ML Foundations technologies">
+                                <span class="tag">Python</span>
+                                <span class="tag">Jupyter</span>
+                                <span class="tag">NumPy</span>
+                                <span class="tag">Pandas</span>
+                                <span class="tag">Scikit-learn</span>
+                                <span class="tag">PyTorch</span>
+                                <span class="tag">TensorFlow</span>
+                            </div>
+                            <ul class="project-highlights">
+                                <li>65 notebooks spanning EDA, statistics, classical ML, Deep Learning &amp; NLP</li>
+                                <li>First-principles implementations paired with practical experiments</li>
+                            </ul>
+                            <div class="project-links">
+                                <a href="https://github.com/gyr0byte/ML-Foundations" target="_blank" rel="noopener noreferrer" class="btn-link">View Repo ↗</a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Secondary Work / Experiments -->
+                <div class="other-work-section">
+                    <div class="other-work-header">
+                        <span class="prompt-user">$</span>
+                        <h3 class="other-work-title">OTHER WORK / EXPERIMENTS</h3>
                     </div>
-                    <div class="project-title-row">
-                        <h3 class="project-name">6. Kundali &#x2014; Vedic Chart Platform</h3>
+
+                    <div class="experiments-grid">
+
+                        <article class="experiment-card">
+                            <div class="project-topline">
+                                <h4 class="experiment-name">Generative AI</h4>
+                                <span class="project-status status-experiments">EXPERIMENTS</span>
+                            </div>
+                            <p class="experiment-summary">
+                                A collection of hands-on LangChain experiments and working examples covering prompts, RAG workflows, embeddings, vector retrieval, agents and local LLM usage.
+                            </p>
+                            <div class="tech-tags" aria-label="Generative AI technologies">
+                                <span class="tag">LangChain</span>
+                                <span class="tag">LangGraph</span>
+                                <span class="tag">RAG</span>
+                                <span class="tag">ChromaDB</span>
+                                <span class="tag">Ollama</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gyr0byte/Generative-AI" target="_blank" rel="noopener noreferrer" class="btn-link btn-compact">View Repo ↗</a>
+                            </div>
+                        </article>
+
+                        <article class="experiment-card">
+                            <div class="project-topline">
+                                <h4 class="experiment-name">Kundali</h4>
+                                <span class="project-status status-dev">IN DEVELOPMENT</span>
+                            </div>
+                            <p class="experiment-summary">
+                                A Vedic astrology engine under active development. Features an implemented deterministic Swiss Ephemeris astronomical engine and authentication foundations, while the frontend, AI interpretation and remaining modules remain unfinished.
+                            </p>
+                            <div class="tech-tags" aria-label="Kundali technologies">
+                                <span class="tag">Python</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Swiss Ephemeris</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gyr0byte/Kundali-SYP" target="_blank" rel="noopener noreferrer" class="btn-link btn-compact">View Repo ↗</a>
+                            </div>
+                        </article>
+
                     </div>
-                    <div class="tech-tags">
-                        <span class="tag">FastAPI</span>
-                        <span class="tag">Swiss Ephemeris</span>
-                        <span class="tag">Full-Stack</span>
-                        <span class="tag">Python</span>
-                    </div>
-                    <ul class="bullets-list">
-                        <li>Full-stack Vedic astrology platform computing birth charts via Swiss Ephemeris with sub-degree precision</li>
-                        <li>FastAPI backend with modular calculation engine, comprehensive test suite, and CLI entry point</li>
-                        <li>Production-ready architecture with environment isolation, ephemeris data management, and AGPL-3.0 licensing</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/gyr0byte/Kundali-SYP" target="_blank" rel="noopener" class="btn-link">View Repo &#x2197;</a>
-                    </div>
-                </article>
+                </div>
 
             </div>
         </section>

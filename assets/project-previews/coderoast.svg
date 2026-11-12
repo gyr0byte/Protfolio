@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="coderoast-title coderoast-desc">
+  <title id="coderoast-title">CodeRoast Architecture Schematic</title>
+  <desc id="coderoast-desc">Technical pipeline illustration showing source code inspection, static analysis markers, machine-learning severity scoring, and multilingual EN / Romanized Nepali critique output.</desc>
+  <defs>
+    <marker id="cr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#39d353"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="380" rx="6" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="639" height="379" rx="5.5" fill="none" stroke="#263040"/>
+
+  <!-- Top Schematic Bar -->
+  <rect x="0" y="0" width="640" height="34" rx="6" fill="#121822"/>
+  <line x1="0" y1="34" x2="640" y2="34" stroke="#263040" stroke-width="1"/>
+  <circle cx="18" cy="17" r="4" fill="#ff5f56"/>
+  <circle cx="32" cy="17" r="4" fill="#ffbd2e"/>
+  <circle cx="46" cy="17" r="4" fill="#27c93f"/>
+  <text x="68" y="21" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="11">SCHEMATIC // CODEROAST CRITIQUE ENGINE</text>
+  <rect x="526" y="8" width="96" height="18" rx="3" fill="#162230" stroke="#39d353" stroke-width="1"/>
+  <text x="574" y="20" text-anchor="middle" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">ARCHITECTURE</text>
+
+  <!-- LEFT BLOCK: Source Input & Static Findings -->
+  <rect x="24" y="54" width="280" height="248" rx="4" fill="#0b1017" stroke="#263040"/>
+  <text x="38" y="76" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">01. SOURCE + STATIC CHECKS</text>
+  <line x1="38" y1="84" x2="290" y2="84" stroke="#1e2736"/>
+
+  <!-- Code Line 1 -->
+  <text x="38" y="106" fill="#48556a" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">01</text>
+  <text x="60" y="106" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">def score(items=[]):</text>
+  <rect x="240" y="95" width="48" height="14" rx="2" fill="#2d1719" stroke="#ff5f56"/>
+  <text x="264" y="105" text-anchor="middle" fill="#ff7b72" font-family="'JetBrains Mono', Consolas, monospace" font-size="8.5">MUTABLE</text>
+
+  <!-- Code Line 2 -->
+  <text x="38" y="132" fill="#48556a" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">02</text>
+  <text x="60" y="132" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">  for x in items:</text>
+
+  <!-- Code Line 3 -->
+  <text x="38" y="158" fill="#48556a" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">03</text>
+  <text x="60" y="158" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">    for y in items:</text>
+  <rect x="240" y="147" width="48" height="14" rx="2" fill="#2c2212" stroke="#ff9f43"/>
+  <text x="264" y="157" text-anchor="middle" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="8.5">O(N^2)</text>
+
+  <!-- Code Line 4 -->
+  <text x="38" y="184" fill="#48556a" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">04</text>
+  <text x="60" y="184" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">      except: pass</text>
+  <rect x="240" y="173" width="48" height="14" rx="2" fill="#2d1719" stroke="#ff5f56"/>
+  <text x="264" y="183" text-anchor="middle" fill="#ff7b72" font-family="'JetBrains Mono', Consolas, monospace" font-size="8.5">BARE_EX</text>
+
+  <!-- Extracted Metrics Box -->
+  <rect x="38" y="206" width="252" height="82" rx="3" fill="#121822" stroke="#263040"/>
+  <text x="48" y="224" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">EXTRACTED SIGNAL VECTOR:</text>
+  <text x="48" y="243" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">- Nesting Depth   : high</text>
+  <text x="48" y="260" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">- Error Handling  : unsafe</text>
+  <text x="48" y="277" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">- Static Findings : 3 flagged</text>
+
+  <!-- Flow Connector Arrow -->
+  <line x1="304" y1="178" x2="332" y2="178" stroke="#39d353" stroke-width="2" marker-end="url(#cr-arrow)"/>
+
+  <!-- RIGHT TOP: ML & Transformer Severity Scoring -->
+  <rect x="336" y="54" width="280" height="122" rx="4" fill="#0b1017" stroke="#263040"/>
+  <text x="350" y="76" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">02. ML + DL SEVERITY SCORING</text>
+  <line x1="350" y1="84" x2="602" y2="84" stroke="#1e2736"/>
+
+  <!-- Severity Meter 1 -->
+  <text x="350" y="106" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">CRITICAL / LOGIC</text>
+  <rect x="466" y="96" width="110" height="10" rx="2" fill="#161b22" stroke="#263040"/>
+  <rect x="466" y="96" width="90" height="10" rx="2" fill="#ff5f56"/>
+  <text x="584" y="105" fill="#ff7b72" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">0.82</text>
+
+  <!-- Severity Meter 2 -->
+  <text x="350" y="132" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">COMPLEXITY</text>
+  <rect x="466" y="122" width="110" height="10" rx="2" fill="#161b22" stroke="#263040"/>
+  <rect x="466" y="122" width="72" height="10" rx="2" fill="#ff9f43"/>
+  <text x="584" y="131" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">0.65</text>
+
+  <!-- Severity Meter 3 -->
+  <text x="350" y="158" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">MAINTAINABILITY</text>
+  <rect x="466" y="148" width="110" height="10" rx="2" fill="#161b22" stroke="#263040"/>
+  <rect x="466" y="148" width="44" height="10" rx="2" fill="#39d353"/>
+  <text x="584" y="157" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">0.40</text>
+
+  <!-- Vertical Flow Connector -->
+  <line x1="476" y1="176" x2="476" y2="196" stroke="#39d353" stroke-width="2" marker-end="url(#cr-arrow)"/>
+
+  <!-- RIGHT BOTTOM: LLM Feedback Synthesis -->
+  <rect x="336" y="200" width="280" height="102" rx="4" fill="#0b1017" stroke="#263040"/>
+  <text x="350" y="222" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">03. BILINGUAL LLM CRITIQUE</text>
+  <line x1="350" y1="230" x2="602" y2="230" stroke="#1e2736"/>
+
+  <rect x="350" y="242" width="118" height="22" rx="3" fill="#162230" stroke="#58a6ff"/>
+  <text x="409" y="257" text-anchor="middle" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">EN MODE</text>
+
+  <rect x="484" y="242" width="118" height="22" rx="3" fill="#1b261d" stroke="#39d353"/>
+  <text x="543" y="257" text-anchor="middle" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">ROMANIZED NE</text>
+
+  <text x="350" y="286" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">Actionable diagnostics + ranked fixes</text>
+
+  <!-- Bottom Pipeline Footer -->
+  <rect x="24" y="320" width="592" height="40" rx="4" fill="#121822" stroke="#263040"/>
+  <text x="320" y="344" text-anchor="middle" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">
+    STATIC ANALYSIS  --&gt;  PYTORCH / SKLEARN SCORING  --&gt;  STREAMLIT REPORT
+  </text>
+</svg>
+

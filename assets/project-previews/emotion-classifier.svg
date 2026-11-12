@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="emotion-title emotion-desc">
+  <title id="emotion-title">Emotion Classifier Architecture &amp; Classes</title>
+  <desc id="emotion-desc">NLP classification diagram showing text input, TF-IDF vectorization with 13,361 features, a stacking ensemble of Decision Tree, SVC, and Logistic Regression, and 6 predicted emotion classes with 88.75% documented test-set accuracy.</desc>
+  <defs>
+    <marker id="em-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#39d353"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="380" rx="6" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="639" height="379" rx="5.5" fill="none" stroke="#263040"/>
+
+  <!-- Top Header -->
+  <rect x="0" y="0" width="640" height="34" rx="6" fill="#121822"/>
+  <line x1="0" y1="34" x2="640" y2="34" stroke="#263040"/>
+  <text x="20" y="21" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="11">EMOTION_CLASSIFIER // 6_CLASS_NLP_PIPELINE</text>
+  <text x="620" y="21" text-anchor="end" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">88.75% TEST SET ACC</text>
+
+  <!-- Step 1: Dataset & Input -->
+  <rect x="24" y="58" width="144" height="104" rx="4" fill="#121822" stroke="#58a6ff" stroke-width="1.4"/>
+  <text x="96" y="84" text-anchor="middle" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">INPUT TEXT</text>
+  <line x1="40" y1="94" x2="152" y2="94" stroke="#263040"/>
+  <text x="96" y="114" text-anchor="middle" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">16,000 samples</text>
+  <text x="96" y="134" text-anchor="middle" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">Tokenization +</text>
+  <text x="96" y="148" text-anchor="middle" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">Normalization</text>
+
+  <line x1="168" y1="110" x2="196" y2="110" stroke="#39d353" stroke-width="1.8" marker-end="url(#em-arrow)"/>
+
+  <!-- Step 2: TF-IDF Vectorizer -->
+  <rect x="200" y="58" width="166" height="104" rx="4" fill="#121822" stroke="#ff9f43" stroke-width="1.4"/>
+  <text x="283" y="84" text-anchor="middle" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">TF-IDF MATRIX</text>
+  <line x1="216" y1="94" x2="350" y2="94" stroke="#263040"/>
+  <text x="283" y="116" text-anchor="middle" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="bold">13,361 features</text>
+  <text x="283" y="138" text-anchor="middle" fill="#8b949e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">Sparse weighted n-grams</text>
+
+  <line x1="366" y1="110" x2="394" y2="110" stroke="#39d353" stroke-width="1.8" marker-end="url(#em-arrow)"/>
+
+  <!-- Step 3: Stacking Ensemble -->
+  <rect x="398" y="58" width="218" height="104" rx="4" fill="#121822" stroke="#39d353" stroke-width="1.5"/>
+  <text x="507" y="84" text-anchor="middle" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">STACKING ENSEMBLE</text>
+  <line x1="414" y1="94" x2="600" y2="94" stroke="#263040"/>
+  <text x="507" y="113" text-anchor="middle" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">Base: Decision Tree + SVC</text>
+  <text x="507" y="131" text-anchor="middle" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">      + Logistic Regression</text>
+  <text x="507" y="149" text-anchor="middle" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">Meta: Logistic Regression</text>
+
+  <!-- 6-Class Output Breakdown -->
+  <rect x="24" y="186" width="592" height="170" rx="4" fill="#0b1017" stroke="#263040"/>
+  <text x="40" y="210" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5" font-weight="bold">6-CLASS EMOTION TARGETS // CLASSIFIED OUTPUTS</text>
+  <line x1="40" y1="218" x2="600" y2="218" stroke="#1e2736"/>
+
+  <!-- Left 3 Classes -->
+  <rect x="40" y="232" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="58" cy="247" r="5" fill="#39d353"/>
+  <text x="74" y="251" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">01. joy</text>
+  <text x="294" y="251" text-anchor="end" fill="#39d353" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">POSITIVE</text>
+
+  <rect x="40" y="272" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="58" cy="287" r="5" fill="#58a6ff"/>
+  <text x="74" y="291" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">02. sadness</text>
+  <text x="294" y="291" text-anchor="end" fill="#58a6ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">LOW_VALENCE</text>
+
+  <rect x="40" y="312" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="58" cy="327" r="5" fill="#ff5f56"/>
+  <text x="74" y="331" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">03. anger</text>
+  <text x="294" y="331" text-anchor="end" fill="#ff7b72" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">HIGH_AROUSAL</text>
+
+  <!-- Right 3 Classes -->
+  <rect x="332" y="232" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="350" cy="247" r="5" fill="#ff9f43"/>
+  <text x="366" y="251" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">04. fear</text>
+  <text x="586" y="251" text-anchor="end" fill="#ff9f43" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">THREAT</text>
+
+  <rect x="332" y="272" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="350" cy="287" r="5" fill="#d2a8ff"/>
+  <text x="366" y="291" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">05. love</text>
+  <text x="586" y="291" text-anchor="end" fill="#d2a8ff" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">AFFECTION</text>
+
+  <rect x="332" y="312" width="268" height="30" rx="3" fill="#121822" stroke="#263040"/>
+  <circle cx="350" cy="327" r="5" fill="#ffbd2e"/>
+  <text x="366" y="331" fill="#e6edf3" font-family="'JetBrains Mono', Consolas, monospace" font-size="10.5">06. surprise</text>
+  <text x="586" y="331" text-anchor="end" fill="#ffbd2e" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.5">NOVELTY</text>
+</svg>
+

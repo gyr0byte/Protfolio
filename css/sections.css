@@ -420,111 +420,148 @@ body.theme-light .graph-filter-btn {
 }
 
 /* Section 4: Projects */
-.projects-grid {
+#projects .projects-showcase {
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 1.5rem;
 }
 
-.commit-card {
+#projects .project-card,
+#projects .experiment-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1.5rem;
+    border-radius: 5px;
+    min-width: 0;
     position: relative;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+#projects .project-card {
+    padding: 1.4rem;
+}
+
 @media (hover: hover) {
-    .commit-card:hover {
+    #projects .project-card:hover,
+    #projects .experiment-card:hover {
         transform: translateY(-2px);
         border-color: var(--terminal-green);
-        box-shadow: 0 4px 20px var(--glow-color);
+        box-shadow: 0 6px 24px var(--glow-color);
     }
 }
 
-.commit-card.featured {
-    border-color: rgba(63, 185, 80, 0.5);
-    background: linear-gradient(180deg, rgba(63, 185, 80, 0.05) 0%, var(--card-bg) 40%);
-    box-shadow: 0 2px 16px rgba(63, 185, 80, 0.12);
+/* Tier 1: Primary Flagship (01 — Physics Lab) */
+#projects .project-featured-primary {
+    border-color: rgba(63, 185, 80, 0.58);
+    background: linear-gradient(155deg, rgba(63, 185, 80, 0.08) 0%, var(--card-bg) 52%);
+    box-shadow: 0 4px 22px rgba(63, 185, 80, 0.14);
+    padding: 1.65rem;
 }
 
-@media (hover: hover) {
-    .commit-card.featured:hover {
-        border-color: var(--terminal-green);
-        box-shadow: 0 6px 26px rgba(63, 185, 80, 0.28);
-    }
+/* Tier 2: Secondary Featured (02 — CodeRoast) */
+#projects .project-featured-secondary {
+    border-color: rgba(88, 166, 255, 0.44);
+    background: linear-gradient(155deg, rgba(88, 166, 255, 0.06) 0%, var(--card-bg) 54%);
+    box-shadow: 0 3px 18px rgba(88, 166, 255, 0.1);
 }
 
-.featured-badge {
+#projects .project-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+#projects .project-split-reverse {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.12fr);
+}
+
+#projects .project-split-reverse .project-visual-frame {
+    order: -1;
+}
+
+#projects .project-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#projects .project-topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.55rem;
+}
+
+#projects .project-index {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--terminal-green);
+}
+
+#projects .project-featured-secondary .project-index {
+    color: var(--cyan-blue);
+}
+
+#projects .project-status {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    background: rgba(63, 185, 80, 0.15);
-    color: var(--terminal-green);
-    border: 1px solid var(--terminal-green);
-    padding: 2px 8px;
-    font-size: 0.72rem;
+    gap: 0.35rem;
+    padding: 2px 9px;
+    font-size: 0.7rem;
     font-weight: 700;
     border-radius: 3px;
-    letter-spacing: 0.5px;
-    box-shadow: 0 0 8px rgba(63, 185, 80, 0.2);
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+    border: 1px solid var(--border);
+    white-space: nowrap;
 }
 
-.featured-badge.stars {
-    background: rgba(247, 129, 102, 0.15);
-    color: var(--accent-orange);
-    border-color: var(--accent-orange);
-    box-shadow: 0 0 8px rgba(247, 129, 102, 0.25);
-}
-
-.commit-card.coming-soon {
-    border-color: rgba(210, 153, 34, 0.6);
-    animation: border-pulse 3s infinite alternate;
-}
-
-@keyframes border-pulse {
-    0% { box-shadow: 0 0 4px rgba(210, 153, 34, 0.2); }
-    100% { box-shadow: 0 0 14px rgba(210, 153, 34, 0.5); }
-}
-
-.commit-meta {
-    color: var(--secondary-text);
-    font-size: 0.85rem;
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.6rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.commit-hash {
-    color: var(--accent-orange);
-    font-weight: 600;
-    cursor: pointer;
-}
-
-@media (hover: hover) {
-    .commit-hash:hover {
-        text-decoration: underline;
-    }
-}
-
-.commit-author {
+#projects .status-active {
     color: var(--terminal-green);
+    background: rgba(63, 185, 80, 0.14);
+    border-color: rgba(63, 185, 80, 0.55);
 }
 
-.project-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.6rem;
+#projects .status-live {
+    color: var(--terminal-green);
+    background: rgba(63, 185, 80, 0.18);
+    border-color: var(--terminal-green);
+}
+
+#projects .status-live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--terminal-green);
+    box-shadow: 0 0 6px var(--terminal-green);
+}
+
+#projects .status-research {
+    color: var(--cyan-blue);
+    background: rgba(88, 166, 255, 0.12);
+    border-color: rgba(88, 166, 255, 0.5);
+}
+
+#projects .status-completed {
+    color: var(--amber-yellow);
+    background: rgba(210, 153, 34, 0.13);
+    border-color: rgba(210, 153, 34, 0.5);
+}
+
+#projects .status-experiments {
+    color: var(--secondary-text);
+    background: rgba(139, 148, 158, 0.12);
+    border-color: rgba(139, 148, 158, 0.45);
+}
+
+#projects .status-dev {
+    color: var(--accent-orange);
+    background: rgba(247, 129, 102, 0.12);
+    border-color: rgba(247, 129, 102, 0.5);
 }
 
 .project-name {
@@ -533,21 +570,38 @@ body.theme-light .graph-filter-btn {
     font-weight: 700;
 }
 
-.status-tag {
-    background: rgba(210, 153, 34, 0.15);
-    color: var(--amber-yellow);
-    border: 1px solid var(--amber-yellow);
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    border-radius: 3px;
-    font-weight: 600;
+#projects .project-featured-primary .project-name {
+    font-size: 1.48rem;
+    line-height: 1.25;
+}
+
+#projects .project-featured-secondary .project-name {
+    font-size: 1.32rem;
+    line-height: 1.28;
+}
+
+#projects .project-compact .project-name {
+    font-size: 1.12rem;
+    line-height: 1.3;
+}
+
+#projects .project-summary {
+    color: var(--secondary-text);
+    font-size: 0.91rem;
+    line-height: 1.55;
+    margin-top: 0.45rem;
+    overflow-wrap: break-word;
+}
+
+#projects .project-featured-primary .project-summary {
+    font-size: 0.95rem;
 }
 
 .tech-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin: 0.8rem 0;
+    margin: 0.85rem 0;
 }
 
 .tag {
@@ -557,6 +611,11 @@ body.theme-light .graph-filter-btn {
     padding: 2px 8px;
     border-radius: 3px;
     font-size: 0.78rem;
+}
+
+#projects .tech-tags .tag {
+    font-size: 0.74rem;
+    padding: 2px 7px;
 }
 
 .bullets-list {
@@ -579,10 +638,93 @@ body.theme-light .graph-filter-btn {
     color: var(--terminal-green);
 }
 
-.project-links {
+#projects .project-highlights {
+    list-style: none;
+    margin: 0.25rem 0 0.85rem;
+    padding: 0;
+    color: var(--secondary-text);
+}
+
+#projects .project-highlights li {
+    position: relative;
+    padding-left: 1.15rem;
+    margin-bottom: 0.42rem;
+    font-size: 0.86rem;
+    line-height: 1.48;
+    overflow-wrap: break-word;
+}
+
+#projects .project-highlights li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--terminal-green);
+}
+
+#projects .project-visual-frame {
+    margin: 0;
+    padding: 0.5rem;
+    background: #0b1017;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    min-width: 0;
+}
+
+#projects .project-visual-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 640 / 380;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+#projects .visual-caption {
+    margin-top: 0.45rem;
+    font-size: 0.71rem;
+    color: #8b949e;
+    text-align: right;
+    letter-spacing: 0.02em;
+}
+
+/* Tier 3: Compact Primary Row (03–05) */
+#projects .projects-compact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+#projects .project-compact {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.2rem;
+    flex-direction: column;
+    padding: 1.15rem;
+}
+
+#projects .project-visual-compact {
+    margin-bottom: 0.9rem;
+    padding: 0.35rem;
+}
+
+#projects .project-compact .project-body {
+    flex: 1 1 auto;
+}
+
+#projects .project-compact .project-summary {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+#projects .project-compact .project-highlights li {
+    font-size: 0.81rem;
+    margin-bottom: 0.35rem;
+}
+
+#projects .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: auto;
+    padding-top: 0.55rem;
 }
 
 .btn-link {
@@ -594,10 +736,23 @@ body.theme-light .graph-filter-btn {
     background: transparent;
     padding: 6px 14px;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     border-radius: 3px;
     transition: all 0.2s ease;
     cursor: pointer;
+    min-height: 36px;
+}
+
+#projects .btn-link.btn-primary,
+#projects .btn-link.btn-live {
+    background: rgba(63, 185, 80, 0.14);
+    font-weight: 600;
+}
+
+#projects .btn-link.btn-compact {
+    padding: 5px 11px;
+    font-size: 0.8rem;
+    min-height: 34px;
 }
 
 @media (hover: hover) {
@@ -605,6 +760,132 @@ body.theme-light .graph-filter-btn {
         background: var(--terminal-green);
         color: #0D1117;
         box-shadow: 0 0 10px var(--glow-color);
+    }
+}
+
+#projects .btn-link:focus-visible {
+    outline: 2px solid var(--terminal-green);
+    outline-offset: 2px;
+}
+
+/* Tier 4: Secondary Work / Experiments */
+#projects .other-work-section {
+    margin-top: 0.35rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--border);
+}
+
+#projects .other-work-header {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.9rem;
+}
+
+#projects .other-work-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+}
+
+#projects .experiments-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+}
+
+#projects .experiment-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.15rem;
+    background-color: var(--card-bg);
+}
+
+#projects .experiment-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white-text);
+}
+
+#projects .experiment-summary {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--secondary-text);
+    margin-top: 0.35rem;
+    overflow-wrap: break-word;
+}
+
+/* Light Theme Contrast & Framing Overrides */
+body.theme-light #projects .project-featured-primary {
+    background: linear-gradient(155deg, rgba(26, 127, 55, 0.08) 0%, var(--card-bg) 52%);
+    border-color: rgba(26, 127, 55, 0.55);
+}
+
+body.theme-light #projects .project-featured-secondary {
+    background: linear-gradient(155deg, rgba(9, 105, 218, 0.07) 0%, var(--card-bg) 54%);
+    border-color: rgba(9, 105, 218, 0.45);
+}
+
+body.theme-light #projects .status-completed {
+    color: #9a6700;
+    background: rgba(212, 167, 44, 0.16);
+    border-color: rgba(154, 103, 0, 0.45);
+}
+
+body.theme-light #projects .status-dev {
+    color: #bc4c00;
+    background: rgba(188, 76, 0, 0.1);
+    border-color: rgba(188, 76, 0, 0.42);
+}
+
+body.theme-light #projects .status-experiments {
+    color: #57606a;
+    background: rgba(87, 96, 106, 0.1);
+    border-color: rgba(87, 96, 106, 0.35);
+}
+
+body.theme-light #projects .btn-link:hover {
+    color: #ffffff;
+}
+
+body.theme-light #projects .project-visual-frame {
+    box-shadow: 0 2px 10px rgba(31, 35, 40, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #projects .project-card,
+    #projects .experiment-card,
+    #projects .btn-link {
+        transition: none;
+    }
+}
+
+@media (max-width: 980px) {
+    #projects .project-split,
+    #projects .project-split-reverse {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.15rem;
+    }
+
+    #projects .project-split-reverse .project-visual-frame {
+        order: 0;
+    }
+
+    #projects .projects-compact-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #projects .project-compact {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 1.15rem;
+        align-items: start;
+    }
+
+    #projects .project-compact .project-visual-compact {
+        margin-bottom: 0;
     }
 }
 
@@ -1287,33 +1568,36 @@ footer {
     }
 
     /* ── Projects ──────────────────── */
-    .commit-card {
+    #projects .project-card,
+    #projects .project-featured-primary {
         padding: 1rem;
     }
 
-    .commit-meta {
-        font-size: 0.75rem;
-        flex-direction: column;
-        align-items: flex-start;
+    #projects .project-featured-primary .project-name {
+        font-size: 1.24rem;
     }
 
-    .project-name {
-        font-size: 1.05rem;
+    #projects .project-featured-secondary .project-name {
+        font-size: 1.15rem;
+    }
+
+    #projects .project-compact {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    #projects .experiments-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .bullets-list li {
         font-size: 0.85rem;
     }
 
-    .project-links {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .btn-link {
-        font-size: 0.8rem;
+    #projects .btn-link {
+        font-size: 0.82rem;
         padding: 8px 12px;
-        justify-content: center;
+        min-height: 40px;
     }
 
     /* ── Research ──────────────────── */
@@ -1425,5 +1709,48 @@ footer {
         min-height: 38px;
         display: inline-flex;
         align-items: center;
+    }
+}
+
+@media (max-width: 640px) {
+    #projects .project-compact {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #projects .project-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #projects .btn-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #projects .project-visual-frame {
+        padding: 0.35rem;
+    }
+
+    #projects .visual-caption {
+        text-align: left;
+        font-size: 0.68rem;
+    }
+}
+
+@media (max-width: 360px) {
+    #projects .project-card,
+    #projects .project-featured-primary,
+    #projects .experiment-card {
+        padding: 0.85rem;
+    }
+
+    #projects .project-featured-primary .project-name {
+        font-size: 1.12rem;
+    }
+
+    #projects .project-summary,
+    #projects .project-highlights li,
+    #projects .experiment-summary {
+        font-size: 0.8rem;
     }
 }

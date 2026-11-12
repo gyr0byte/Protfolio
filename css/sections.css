@@ -848,6 +848,12 @@ body.theme-light #projects .status-experiments {
     border-color: rgba(87, 96, 106, 0.35);
 }
 
+body.theme-light #projects .tech-tags .tag {
+    background: rgba(175, 184, 193, 0.22);
+    color: var(--white-text);
+    border-color: rgba(175, 184, 193, 0.7);
+}
+
 body.theme-light #projects .btn-link:hover {
     color: #ffffff;
 }
@@ -1596,7 +1602,8 @@ footer {
         font-size: 0.85rem;
     }
 
-    #projects .btn-link {
+    #projects .btn-link,
+    #projects .btn-link.btn-compact {
         font-size: 0.82rem;
         padding: 8px 12px;
         min-height: 40px;

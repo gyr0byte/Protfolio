@@ -239,3 +239,4 @@
     }
     global.SKILLS_DATA = skillsData;
 })(typeof window !== 'undefined' ? window : globalThis);
+

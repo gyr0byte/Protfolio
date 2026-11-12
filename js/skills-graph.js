@@ -403,7 +403,7 @@
         logicalWidth = rectWidth;
         const isMobile = logicalWidth < 560;
         logicalHeight = isMobile
-            ? Math.max(480, Math.min(Math.round(window.innerHeight * 0.68), 560))
+            ? Math.max(510, Math.min(Math.round(window.innerHeight * 0.70), 580))
             : Math.max(520, Math.min(Math.round(window.innerHeight * 0.68), 620));
 
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -707,38 +707,51 @@
         return !(a.x + a.w < b.x || b.x + b.w < a.x || a.y + a.h < b.y || b.y + b.h < a.y);
     }
 
+    function makeClampedPillBox(centerX, centerY, boxW, boxH) {
+        const clampedCx = Math.max(boxW / 2 + 4, Math.min(logicalWidth - boxW / 2 - 4, centerX));
+        const bx = clampedCx - boxW / 2;
+        const by = Math.max(4, Math.min(logicalHeight - boxH - 4, centerY - boxH / 2));
+        return { x: bx, y: by, w: boxW, h: boxH, cx: clampedCx };
+    }
+
     function drawPillLabel(text, cx, cy, fontSpec, textColor, bgColor, borderColor, drawnBoxes, altCy, allowSkip) {
         ctx.font = fontSpec;
         const metrics = ctx.measureText(text);
         const fontSize = parseInt(fontSpec.match(/(\d+)px/)?.[1] || '11', 10);
         const padX = 6;
         const padY = 3;
-        const boxW = metrics.width + padX * 2;
+        const boxW = Math.min(logicalWidth - 8, metrics.width + padX * 2);
         const boxH = fontSize + padY * 2;
 
-        const clampedCx = Math.max(boxW / 2 + 4, Math.min(logicalWidth - boxW / 2 - 4, cx));
-        let bx = clampedCx - boxW / 2;
-        let by = cy - boxH / 2;
-        let box = { x: bx, y: by, w: boxW, h: boxH };
+        const candidates = [[cx, cy]];
+        if (altCy !== null && altCy !== undefined) {
+            candidates.push([cx, altCy]);
+        }
+        candidates.push([cx, cy + 16], [cx, cy - 16]);
+        if (altCy !== null && altCy !== undefined) {
+            candidates.push([cx, altCy - 16], [cx, altCy + 16]);
+        }
+        candidates.push([cx - 24, cy], [cx + 24, cy]);
 
-        const hitsExisting = drawnBoxes.some(b => boxesOverlap(box, b));
-        if (hitsExisting && altCy !== null) {
-            const altBox = { x: bx, y: altCy - boxH / 2, w: boxW, h: boxH };
-            if (!drawnBoxes.some(b => boxesOverlap(altBox, b))) {
-                box = altBox;
-                by = altBox.y;
-            } else if (allowSkip) {
-                return false;
+        let chosen = null;
+        for (let i = 0; i < candidates.length; i++) {
+            const candidateBox = makeClampedPillBox(candidates[i][0], candidates[i][1], boxW, boxH);
+            if (!drawnBoxes.some(b => boxesOverlap(candidateBox, b))) {
+                chosen = candidateBox;
+                break;
             }
-        } else if (hitsExisting && allowSkip) {
-            return false;
         }
 
-        // Clamp vertically inside canvas
-        box.y = Math.max(4, Math.min(logicalHeight - boxH - 4, box.y));
-        by = box.y;
+        if (!chosen) {
+            if (allowSkip) return false;
+            chosen = makeClampedPillBox(cx, cy, boxW, boxH);
+        }
 
-        drawnBoxes.push(box);
+        const bx = chosen.x;
+        const by = chosen.y;
+        const clampedCx = chosen.cx;
+
+        drawnBoxes.push(chosen);
 
         ctx.fillStyle = bgColor;
         ctx.beginPath();
